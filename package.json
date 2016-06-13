@@ -4,7 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "webpack main.js bundle.js --module-bind 'js=babel-loader'",
+    "start": "webpack main.js bundle.js --watch --module-bind 'js=babel-loader'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -12,6 +12,7 @@
   "dependencies": {
     "babel-core": "^6.9.1",
     "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
