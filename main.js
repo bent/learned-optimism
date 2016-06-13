@@ -14,15 +14,19 @@ var AdversityList = props => (
   </ul>
 );
 
-var Adversities = props => (
-  <div>
-    <form>
-      <input type='text' placeholder='Adversity'/>
-      <input type="submit" value="Go" />
-    </form>
-    <AdversityList value={props.value}/>
-  </div>
-);
+var Adversities = React.createClass({
+  render: function() {
+    return (
+      <div>
+        <form>
+          <input type='text' placeholder='Adversity'/>
+          <input type="submit" value="Go" />
+        </form>
+        <AdversityList value={this.props.value}/>
+      </div>
+    );
+  }
+}); 
 
 ReactDOM.render(
   <Adversities value={adversities}/>,
