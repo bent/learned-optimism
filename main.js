@@ -2,14 +2,14 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var adversities = [
-  {description: 'cat died'}, 
-  {description: "didn't get that promotion"}
+  {id: 1, description: 'cat died'}, 
+  {id: 2, description: "didn't get that promotion"}
 ];
 
 var Adversities = (props) => (
   <ul>
   {props.value.map(adversity => (
-    <li>{adversity.description}</li>
+    <li key={adversity.id}>{adversity.description}</li>
   ))}
   </ul>
 );
