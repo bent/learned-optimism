@@ -8,9 +8,9 @@ var adversities = [
 
 var Adversities = (props) => (
   <ul>
-  {props.value.map(adversity => (
-    <li key={adversity.id}>{adversity.description}</li>
-  ))}
+    {props.value.map(adversity => (
+      <li key={adversity.id}>{adversity.description}</li>
+    ))}
   </ul>
 );
 
