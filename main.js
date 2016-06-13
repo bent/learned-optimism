@@ -6,12 +6,21 @@ var adversities = [
   {id: 2, description: "didn't get that promotion"}
 ];
 
-var Adversities = props => (
+var AdversityList = props => (
   <ul>
     {props.value.map(adversity => (
       <li key={adversity.id}>{adversity.description}</li>
     ))}
   </ul>
+);
+
+var Adversities = props => (
+  <div>
+    <form>
+      <input type='text' placeholder='Adversity'/>
+    </form>
+    <AdversityList value={props.value}/>
+  </div>
 );
 
 ReactDOM.render(
