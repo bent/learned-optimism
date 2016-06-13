@@ -15,16 +15,33 @@ var AdversityList = props => (
 );
 
 var Adversities = React.createClass({
+  getInitialState: function() {
+    return {data: [], description: ''};
+  },
   render: function() {
     return (
       <div>
-        <form>
-          <input type='text' placeholder='Adversity'/>
+        <form onSubmit={this.handleSubmit}>
+          <input type='text' 
+                 placeholder='Adversity' 
+                 value={this.state.description}
+                 onChange={this.handleChange}/>
           <input type="submit" value="Go" />
         </form>
-        <AdversityList value={this.props.value}/>
+        <AdversityList value={this.state.data}/>
       </div>
     );
+  },
+  handleChange: function(e) {
+    e.preventDefault();
+    this.setState({description: e.target.value});
+  },
+  handleSubmit: function(e) {
+    e.preventDefault();
+    this.setState({
+      data: this.state.data.concat({id: Date.now(), description: this.state.description}),
+      description: ''
+    });
   }
 }); 
 
