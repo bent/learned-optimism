@@ -6,13 +6,13 @@ var adversities = [
 	{description: "didn't get that promotion"}
 ];
 
-var Adversities = (props) => {
-	return <ul>
-		{props.value.map(adversity => {
-			return <li>{adversity.description}</li>;
-		})}
-	</ul>;
-};
+var Adversities = (props) => (
+	<ul>
+		{props.value.map(adversity => (
+			<li>{adversity.description}</li>
+		))}
+	</ul>
+);
 
 ReactDOM.render(
   <Adversities value={adversities}/>,
