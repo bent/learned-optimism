@@ -6,7 +6,7 @@ var adversities = [
   {id: 2, description: "didn't get that promotion"}
 ];
 
-var Adversities = (props) => (
+var Adversities = props => (
   <ul>
     {props.value.map(adversity => (
       <li key={adversity.id}>{adversity.description}</li>
