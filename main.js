@@ -18,6 +18,7 @@ var Adversities = props => (
   <div>
     <form>
       <input type='text' placeholder='Adversity'/>
+      <input type="submit" value="Go" />
     </form>
     <AdversityList value={props.value}/>
   </div>
