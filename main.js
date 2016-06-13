@@ -6,14 +6,6 @@ var adversities = [
   {id: 2, description: "didn't get that promotion"}
 ];
 
-var AdversityList = props => (
-  <ul>
-    {props.value.map(adversity => (
-      <li key={adversity.id}>{adversity.description}</li>
-    ))}
-  </ul>
-);
-
 var Adversities = React.createClass({
   getInitialState: function() {
     return {data: [], description: ''};
@@ -28,7 +20,11 @@ var Adversities = React.createClass({
                  onChange={this.handleChange}/>
           <input type="submit" value="Go" />
         </form>
-        <AdversityList value={this.state.data}/>
+        <ul>
+          {this.state.data.map(adversity => (
+            <li key={adversity.id}>{adversity.description}</li>
+          ))}
+        </ul>
       </div>
     );
   },
