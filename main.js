@@ -1,9 +1,20 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var Adversities = () => <h1>Hello, world!</h1>;
+var adversities = [
+	{description: 'cat died'}, 
+	{description: "didn't get that promotion"}
+];
+
+var Adversities = (props) => {
+	return <ul>
+		{props.value.map(adversity => {
+			return <li>{adversity.description}</li>;
+		})}
+	</ul>;
+};
 
 ReactDOM.render(
-  <Adversities/>,
+  <Adversities value={adversities}/>,
   document.getElementById('example')
 );
