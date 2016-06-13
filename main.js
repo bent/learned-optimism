@@ -1,14 +1,15 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var adversities = [
-  {id: 1, description: 'cat died'}, 
-  {id: 2, description: "didn't get that promotion"}
-];
-
 var Adversities = React.createClass({
   getInitialState: function() {
-    return {data: [], description: ''};
+    return {
+      data: [
+        {id: 1, description: 'cat died'}, 
+        {id: 2, description: "didn't get that promotion"}
+      ], 
+      description: ''
+    };
   },
   render: function() {
     return (
@@ -42,6 +43,6 @@ var Adversities = React.createClass({
 }); 
 
 ReactDOM.render(
-  <Adversities value={adversities}/>,
+  <Adversities/>,
   document.getElementById('example')
 );
