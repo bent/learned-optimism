@@ -1,4 +1,4 @@
-import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -63,7 +63,7 @@ const Adversity = React.createClass({
 });
 
 ReactDOM.render((
-  <Router history={browserHistory}>
+  <Router history={hashHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Adversities}/>
       <Route path="adversities" component={Adversity}/>
