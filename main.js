@@ -35,7 +35,7 @@ var Adversities = React.createClass({
         </form>
         <ul>
           {this.state.data.map(adversity => (
-            <li key={adversity.id}><Link to="/adversities">{adversity.description}</Link></li>
+            <li key={adversity.id}><Link to={`/adversities/${adversity.id}`}>{adversity.description}</Link></li>
           ))}
         </ul>
       </div>
@@ -57,7 +57,7 @@ var Adversities = React.createClass({
 const Adversity = React.createClass({
   render: function() {
     return(
-      <span>Hello</span>
+      <span>Adversity ID={this.props.params.adversityId}</span>
     );
   }
 });
@@ -66,7 +66,7 @@ ReactDOM.render((
   <Router history={hashHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Adversities}/>
-      <Route path="adversities" component={Adversity}/>
+      <Route path="adversities/:adversityId" component={Adversity}/>
     </Route>
   </Router>
 ), document.getElementById('example'));
