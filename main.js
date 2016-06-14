@@ -1,6 +1,6 @@
 import { Router, Route, Link } from 'react-router';
-var React = require('react');
-var ReactDOM = require('react-dom');
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 var Adversities = React.createClass({
   getInitialState: function() {
