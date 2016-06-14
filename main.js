@@ -35,7 +35,9 @@ var Adversities = React.createClass({
         </form>
         <ul>
           {this.state.data.map(adversity => (
-            <li key={adversity.id}><Link to={`/adversities/${adversity.id}`}>{adversity.description}</Link></li>
+            <li key={adversity.id}>
+              <Link to={`/adversities/${adversity.id}`}>{adversity.description}</Link>
+            </li>
           ))}
         </ul>
       </div>
