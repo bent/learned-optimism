@@ -35,7 +35,7 @@ var Adversities = React.createClass({
         </form>
         <ul>
           {this.state.data.map(adversity => (
-            <li key={adversity.id}>{adversity.description}</li>
+            <li key={adversity.id}><Link to="/adversities">{adversity.description}</Link></li>
           ))}
         </ul>
       </div>
@@ -52,13 +52,21 @@ var Adversities = React.createClass({
       description: ''
     });
   }
-}); 
+});
+
+const Adversity = React.createClass({
+  render: function() {
+    return(
+      <span>Hello</span>
+    );
+  }
+});
 
 ReactDOM.render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Adversities}/>
+      <Route path="adversities" component={Adversity}/>
     </Route>
-      
   </Router>
 ), document.getElementById('example'));
