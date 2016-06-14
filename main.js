@@ -1,6 +1,17 @@
-import { Router, Route, Link, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+const App = React.createClass({
+  render: function() {
+    return (
+      <div>
+        <h1>Learned Optimism</h1>
+        {this.props.children}
+      </div>
+    );
+  }
+});
 
 var Adversities = React.createClass({
   getInitialState: function() {
@@ -45,6 +56,9 @@ var Adversities = React.createClass({
 
 ReactDOM.render((
   <Router history={browserHistory}>
-    <Route path="/" component={Adversities}/>
+    <Route path="/" component={App}>
+      <IndexRoute component={Adversities}/>
+    </Route>
+      
   </Router>
 ), document.getElementById('example'));
