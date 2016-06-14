@@ -1,4 +1,4 @@
-import { Router, Route, Link } from 'react-router';
+import { Router, Route, Link, browserHistory } from 'react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -43,7 +43,8 @@ var Adversities = React.createClass({
   }
 }); 
 
-ReactDOM.render(
-  <Adversities/>,
-  document.getElementById('example')
-);
+ReactDOM.render((
+  <Router history={browserHistory}>
+    <Route path="/" component={Adversities}/>
+  </Router>
+), document.getElementById('example'));
