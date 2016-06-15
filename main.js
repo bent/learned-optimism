@@ -44,11 +44,14 @@ var Adversities = React.createClass({
           <input type="submit" value="Go" />
         </form>
         <ul>
-          {this.state.adversities.map(adversity => (
-            <li key={adversity['.key']}>
-              <Link to={`/adversities/${adversity['.key']}`}>{adversity.description}</Link>
-            </li>
-          ))}
+          {this.state.adversities.map(adversity => {
+            const id = adversity['.key']; 
+            return (
+              <li key={id}>
+                <Link to={`/adversities/${id}`}>{adversity.description}</Link>
+              </li>
+            );
+          })}
         </ul>
       </div>
     );
