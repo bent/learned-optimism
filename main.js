@@ -1,6 +1,15 @@
 import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import firebase from 'firebase';
+import ReactFireMixin from 'reactfire';
+
+firebase.initializeApp({
+  apiKey: "AIzaSyCyOJbtSPGfyI7_rjfxPNSVDh2DwUb4LnI",
+  authDomain: "learned-optimism-64fce.firebaseapp.com",
+  databaseURL: "https://learned-optimism-64fce.firebaseio.com",
+  storageBucket: "",
+});
 
 const App = React.createClass({
   render: function() {
@@ -14,12 +23,13 @@ const App = React.createClass({
 });
 
 var Adversities = React.createClass({
+  mixins: [ReactFireMixin],
+  componentWillMount: function() {
+    var ref = firebase.database().ref('adversities');
+    this.bindAsArray(ref, 'data');
+  },
   getInitialState: function() {
     return {
-      data: [
-        {id: 1, description: 'cat died'}, 
-        {id: 2, description: "didn't get that promotion"}
-      ], 
       description: ''
     };
   },
@@ -49,8 +59,10 @@ var Adversities = React.createClass({
   },
   handleSubmit: function(e) {
     e.preventDefault();
+    this.state.data.push({
+      description: this.state.description
+    });
     this.setState({
-      data: this.state.data.concat({id: Date.now(), description: this.state.description}),
       description: ''
     });
   }
