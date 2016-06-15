@@ -26,7 +26,7 @@ var Adversities = React.createClass({
   mixins: [ReactFireMixin],
   componentWillMount: function() {
     var ref = firebase.database().ref('adversities');
-    this.bindAsArray(ref, 'data');
+    this.bindAsArray(ref, 'adversities');
   },
   getInitialState: function() {
     return {
@@ -44,7 +44,7 @@ var Adversities = React.createClass({
           <input type="submit" value="Go" />
         </form>
         <ul>
-          {this.state.data.map(adversity => (
+          {this.state.adversities.map(adversity => (
             <li key={adversity.id}>
               <Link to={`/adversities/${adversity.id}`}>{adversity.description}</Link>
             </li>
@@ -59,7 +59,7 @@ var Adversities = React.createClass({
   },
   handleSubmit: function(e) {
     e.preventDefault();
-    this.state.data.push({
+    this.firebaseRefs.adversities.push({
       description: this.state.description
     });
     this.setState({
