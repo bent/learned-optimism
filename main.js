@@ -11,6 +11,8 @@ firebase.initializeApp({
   storageBucket: "",
 });
 
+const adversitiesRef = firebase.database().ref('adversities');
+
 const App = React.createClass({
   render: function() {
     return (
@@ -25,8 +27,7 @@ const App = React.createClass({
 const Adversities = React.createClass({
   mixins: [ReactFireMixin],
   componentWillMount: function() {
-    const ref = firebase.database().ref('adversities');
-    this.bindAsArray(ref, 'adversities');
+    this.bindAsArray(adversitiesRef, 'adversities');
   },
   getInitialState: function() {
     return {
@@ -79,13 +80,12 @@ const Adversity = React.createClass({
     };
   },
   componentWillMount: function() {
-    const ref = firebase.database().ref('adversities/' + this.props.params.adversityId);
-    this.bindAsObject(ref, 'adversity');
+    this.bindAsObject(adversitiesRef.child(this.props.params.adversityId), 'adversity');
   },
   render: function() {
     const adversity = this.state.adversity;
     return(
-      <span>Adversity ID={adversity && adversity.description}</span>
+      <span>Adversity={adversity && adversity.description}</span>
     );
   }
 });
