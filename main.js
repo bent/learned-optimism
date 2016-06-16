@@ -80,11 +80,13 @@ const Adversity = React.createClass({
     };
   },
   componentWillMount: function() {
-    this.bindAsObject(adversitiesRef.child(this.props.params.adversityId), 'adversity');
+    const adversityRef = adversitiesRef.child(this.props.params.adversityId);
+    this.bindAsObject(adversityRef, 'adversity');
+    this.bindAsArray(adversityRef.child('beliefs'), 'beliefs');
   },
   render: function() {
     const adversity = this.state.adversity;
-    const beliefs = adversity && adversity.beliefs;
+    const beliefs = this.state.beliefs;
 
     return(adversity ? 
       <div>
@@ -102,7 +104,7 @@ const Adversity = React.createClass({
             {beliefs.map(belief => {
               return (
                 <li key={belief['.key']}>
-                  <Link to={`/adversities/${id}/beliefs/`}>{belief.description}</Link>
+                  {belief.description}
                 </li>
               );
             })}
