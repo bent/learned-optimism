@@ -84,8 +84,13 @@ const Adversity = React.createClass({
   },
   render: function() {
     const adversity = this.state.adversity;
-    return(
-      <span>Adversity={adversity && adversity.description}</span>
+    return(adversity ? 
+      <div>
+        <h2>{adversity.description}</h2>
+        <span>What beliefs do you have about this adversity?</span>
+      </div>
+      :
+      <div/>
     );
   }
 });
