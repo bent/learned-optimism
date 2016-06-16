@@ -139,4 +139,4 @@ ReactDOM.render((
       <Route path="adversities/:adversityId" component={Adversity}/>
     </Route>
   </Router>
-), document.getElementById('example'));
+), document.getElementById('app'));
