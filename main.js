@@ -108,7 +108,7 @@ const Adversity = React.createClass({
             })}
           </ul>
           :
-          <span>There are no beliefs</span>
+          <div/>
         }
       </div>
       :
