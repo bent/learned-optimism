@@ -17,7 +17,6 @@ const App = React.createClass({
   render: function() {
     return (
       <div>
-        <h1>Learned Optimism</h1>
         {this.props.children}
       </div>
     );
@@ -37,6 +36,7 @@ const Adversities = React.createClass({
   render: function() {
     return (
       <div>
+        <h1>Adversities</h1>
         <form onSubmit={this.handleSubmit}>
           <input type='text' 
                  placeholder='Adversity' 
