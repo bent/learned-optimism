@@ -22,10 +22,10 @@ const App = React.createClass({
   }
 });
 
-var Adversities = React.createClass({
+const Adversities = React.createClass({
   mixins: [ReactFireMixin],
   componentWillMount: function() {
-    var ref = firebase.database().ref('adversities');
+    const ref = firebase.database().ref('adversities');
     this.bindAsArray(ref, 'adversities');
   },
   getInitialState: function() {
@@ -79,7 +79,7 @@ const Adversity = React.createClass({
     };
   },
   componentWillMount: function() {
-    var ref = firebase.database().ref('adversities/' + this.props.params.adversityId);
+    const ref = firebase.database().ref('adversities/' + this.props.params.adversityId);
     this.bindAsObject(ref, 'adversity');
   },
   render: function() {
