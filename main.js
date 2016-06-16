@@ -76,7 +76,7 @@ const Adversity = React.createClass({
   mixins: [ReactFireMixin],
   getInitialState: function() {
     return {
-      description: ''
+      beliefDescription: ''
     };
   },
   componentWillMount: function() {
@@ -84,14 +84,49 @@ const Adversity = React.createClass({
   },
   render: function() {
     const adversity = this.state.adversity;
+    const beliefs = adversity && adversity.beliefs;
+
     return(adversity ? 
       <div>
         <h2>{adversity.description}</h2>
         <span>What beliefs do you have about this adversity?</span>
+        <form onSubmit={this.handleSubmit}>
+          <input type='text' 
+                 placeholder='Belief' 
+                 value={this.state.beliefDescription}
+                 onChange={this.handleChange}/>
+          <input type="submit" value="Add" />
+        </form>
+        {beliefs ? 
+          <ul>
+            {beliefs.map(belief => {
+              return (
+                <li key={belief['.key']}>
+                  <Link to={`/adversities/${id}/beliefs/`}>{belief.description}</Link>
+                </li>
+              );
+            })}
+          </ul>
+          :
+          <span>There are no beliefs</span>
+        }
       </div>
       :
       <div/>
     );
+  },
+  handleChange: function(e) {
+    e.preventDefault();
+    this.setState({beliefDescription: e.target.value});
+  },
+  handleSubmit: function(e) {
+    e.preventDefault();
+    this.firebaseRefs.beliefs.push({
+      description: this.state.beliefDescription
+    });
+    this.setState({
+      beliefDescription: ''
+    });
   }
 });
 
