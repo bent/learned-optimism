@@ -104,7 +104,7 @@ const Adversity = React.createClass({
             {beliefs.map(belief => {
               return (
                 <li key={belief['.key']}>
-                  <Link to={`/adversities/${id}/beliefs/`}>{belief.description}</Link>
+                  {belief.description}
                 </li>
               );
             })}
