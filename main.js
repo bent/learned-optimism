@@ -72,9 +72,20 @@ var Adversities = React.createClass({
 });
 
 const Adversity = React.createClass({
+  mixins: [ReactFireMixin],
+  getInitialState: function() {
+    return {
+      description: ''
+    };
+  },
+  componentWillMount: function() {
+    var ref = firebase.database().ref('adversities/' + this.props.params.adversityId);
+    this.bindAsObject(ref, 'adversity');
+  },
   render: function() {
+    const adversity = this.state.adversity;
     return(
-      <span>Adversity ID={this.props.params.adversityId}</span>
+      <span>Adversity ID={adversity && adversity.description}</span>
     );
   }
 });
