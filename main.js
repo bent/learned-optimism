@@ -1,18 +1,11 @@
 import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import firebase from 'firebase';
 import ReactFireMixin from 'reactfire';
 import { Button, FormControl, Form } from 'react-bootstrap';
+import adversitiesRef from './adversitiesRef';
 
-firebase.initializeApp({
-  apiKey: "AIzaSyCyOJbtSPGfyI7_rjfxPNSVDh2DwUb4LnI",
-  authDomain: "learned-optimism-64fce.firebaseapp.com",
-  databaseURL: "https://learned-optimism-64fce.firebaseio.com",
-  storageBucket: "",
-});
-
-const adversitiesRef = firebase.database().ref('adversities');
+import Adversities from './adversities';
 
 const App = React.createClass({
   render: function() {
@@ -21,55 +14,6 @@ const App = React.createClass({
         {this.props.children}
       </div>
     );
-  }
-});
-
-const Adversities = React.createClass({
-  mixins: [ReactFireMixin],
-  componentWillMount: function() {
-    this.bindAsArray(adversitiesRef, 'adversities');
-  },
-  getInitialState: function() {
-    return {
-      description: ''
-    };
-  },
-  render: function() {
-    return (
-      <div>
-        <h1>Adversities</h1>
-        <Form inline>
-          <FormControl type='text' 
-                 placeholder='Adversity' 
-                 value={this.state.description}
-                 onChange={this.handleChange}/>
-          <Button onClick={this.handleSubmit}>Go</Button>
-        </Form>
-        <ul>
-          {this.state.adversities.map(adversity => {
-            const id = adversity['.key']; 
-            return (
-              <li key={id}>
-                <Link to={`/adversities/${id}`}>{adversity.description}</Link>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    );
-  },
-  handleChange: function(e) {
-    e.preventDefault();
-    this.setState({description: e.target.value});
-  },
-  handleSubmit: function(e) {
-    e.preventDefault();
-    this.firebaseRefs.adversities.push({
-      description: this.state.description
-    });
-    this.setState({
-      description: ''
-    });
   }
 });
 
