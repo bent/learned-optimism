@@ -12,6 +12,7 @@
   "dependencies": {
     "firebase": "^3.0.5",
     "react": "^15.1.0",
+    "react-bootstrap": "^0.29.4",
     "react-dom": "^15.1.0",
     "react-router": "^2.4.1",
     "reactfire": "^1.0.0"
