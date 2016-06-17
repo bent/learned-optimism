@@ -93,13 +93,13 @@ const Adversity = React.createClass({
       <div>
         <h2>{adversity.description}</h2>
         <span>What beliefs do you have about this adversity?</span>
-        <form onSubmit={this.handleSubmit}>
-          <input type='text' 
+        <Form inline>
+          <FormControl type='text' 
                  placeholder='Belief' 
                  value={this.state.beliefDescription}
                  onChange={this.handleChange}/>
-          <input type="submit" value="Add" />
-        </form>
+          <Button onClick={this.handleSubmit}>Add</Button>
+        </Form>
         {beliefs ? 
           <ul>
             {beliefs.map(belief => {
