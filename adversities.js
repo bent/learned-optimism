@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactFireMixin from 'reactfire';
-import adversitiesRef from './adversitiesRef';
 import { Button, FormControl, Form } from 'react-bootstrap';
 import { Link } from 'react-router';
+
+import adversitiesRef from './adversitiesRef';
 
 module.exports = React.createClass({
   mixins: [ReactFireMixin],
