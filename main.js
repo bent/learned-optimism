@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import firebase from 'firebase';
 import ReactFireMixin from 'reactfire';
-import { Button } from 'react-bootstrap';
+import { Button, FormControl, Form } from 'react-bootstrap';
 
 firebase.initializeApp({
   apiKey: "AIzaSyCyOJbtSPGfyI7_rjfxPNSVDh2DwUb4LnI",
@@ -38,13 +38,13 @@ const Adversities = React.createClass({
     return (
       <div>
         <h1>Adversities</h1>
-        <form>
-          <input type='text' 
+        <Form inline>
+          <FormControl type='text' 
                  placeholder='Adversity' 
                  value={this.state.description}
                  onChange={this.handleChange}/>
           <Button onClick={this.handleSubmit}>Go</Button>
-        </form>
+        </Form>
         <ul>
           {this.state.adversities.map(adversity => {
             const id = adversity['.key']; 
