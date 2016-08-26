@@ -3,7 +3,7 @@ module.exports = {
   devtool: 'source-map',
   
   output: {
-    filename: 'bundle.js',
+    filename: 'public/bundle.js',
     publicPath: ''
   },
 
