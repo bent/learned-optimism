@@ -19,7 +19,6 @@ module.exports = withRouter(React.createClass({
   render() {
     const {belief} = this.props;
     const beliefId = belief['.key'];
-    const {alternatives} = this.state;
     const {createHref} = this.props.router;
 
     return(belief ?

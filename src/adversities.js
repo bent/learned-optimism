@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import ReactFireMixin from 'reactfire';
 import { Button, FormControl, Form, FormGroup, InputGroup } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router';
@@ -18,7 +17,7 @@ module.exports = withRouter(React.createClass({
     }
   },
   componentWillReceiveProps(nextProps) {
-    if (nextProps.userRef != this.props.userRef) {
+    if (nextProps.userRef !== this.props.userRef) {
       if (this.firebaseRefs.adversities) this.unbind('adversities');
       this._loadData(nextProps.userRef);
     }

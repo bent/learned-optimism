@@ -12,8 +12,8 @@ module.exports = React.createClass({
     const nextUserRef = nextProps.userRef;
     const nextBeliefId = nextProps.params.beliefId;
 
-    if (nextUserRef != this.props.userRef ||
-        nextBeliefId != this.props.params.beliefId) {
+    if (nextUserRef !== this.props.userRef ||
+        nextBeliefId !== this.props.params.beliefId) {
         if (this.firebaseRefs.belief) this.unbind('belief');
         if (this.firebaseRefs.adversity) this.unbind('adversity');
         this._loadData(nextUserRef, nextBeliefId);

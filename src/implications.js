@@ -14,51 +14,52 @@ module.exports = withRouter(React.createClass({
     };
   },
   componentWillMount() {
-    this.bindAsArray(this.props.beliefRef.child('evidence'), 'evidence');
+    this.bindAsArray(this.props.beliefRef.child('implications'), 'implications');
   },
   render() {
     const belief = this.props.belief;
-    const evidence = this.state.evidence;
-    const beliefs = this.props.beliefs;
     const beliefId = belief['.key'];
+    const beliefs = this.props.beliefs;
     const index = beliefs.findIndex(b => b['.key'] === beliefId);
-    if (index < 0) throw `Belief with ID ${beliefId} not found`;
+    if (index < 0) throw new Error(`Belief with ID ${beliefId} not found`);
     const createHref = this.props.router.createHref;
 
-    let previousText = 'Beliefs';
-    let previousPath = `/adversities/${belief.adversityId}`;
+    let nextText = 'Finish';
+    let nextPath = `/adversities/${belief.adversityId}`;
 
-    if (index > 0) {
-      previousText = 'Previous Belief';
-      previousPath = `/beliefs/${beliefs[index - 1]['.key']}/alternatives`;
+    if (index < (beliefs.length - 1)) {
+      nextText = 'Next Belief';
+      nextPath = `/beliefs/${beliefs[index + 1]['.key']}/evidence`;
     }
 
     return(belief ?
       <div>
         <Form onSubmit={this.handleSubmit}>
           <ControlLabel>
-            What evidence is there that&nbsp;
+            What are the implications if&nbsp;
             {lowerCaseFirstLetter(belief.description)}?
           </ControlLabel>
           <FormGroup>
             <InputGroup>
               <FormControl type='text' 
-                           placeholder='Evidence' 
+                           placeholder='Implication' 
                            value={this.state.description}
                            onChange={this.handleChange}/>
               <InputGroup.Button>
-                <Button type="submit" disabled={this.state.isSaving}>Add</Button>
+                <Button type="submit" disabled={this.state.isSaving}>
+                  Add
+                </Button>
               </InputGroup.Button>
             </InputGroup>
           </FormGroup>
         </Form>
-        <List value={this.state.evidence}/>
+        <List value={this.state.implications}/>
         <Pager>
-          <PageItem previous href={createHref(previousPath)}>
-            &larr; {previousText}
+          <PageItem previous href={createHref(`/beliefs/${beliefId}/alternatives`)}>
+            &larr; Alternatives
           </PageItem>
-          <PageItem next href={createHref(`/beliefs/${beliefId}/alternatives`)}>
-            Alternatives &rarr;
+          <PageItem next href={createHref(nextPath)}>
+            {nextText} &rarr;
           </PageItem>
         </Pager>
       </div>
@@ -74,10 +75,18 @@ module.exports = withRouter(React.createClass({
     e.preventDefault();
     this.setState({isSaving: true});
 
-    this.firebaseRefs.evidence.push({
+    this.firebaseRefs.implications.push({
       description: this.state.description
     }).then(() => {
       this.setState({description: '', isSaving: false});
     });
+  },
+  handleBack(e) {
+    e.preventDefault();
+    this.props.router.push(`/beliefs/${this.props.beliefRef.key}/alternatives`);
+  },
+  handleNext(e) {
+    e.preventDefault();
+    this.props.router.push(`/beliefs/${this.props.beliefRef.key}/implications`);
   }
 }));

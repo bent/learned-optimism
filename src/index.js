@@ -1,8 +1,10 @@
-import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router';
+import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import App from './app';
+import 'react-spinner/react-spinner.css';
+
+import App from './App';
 import Login from './login';
 import Register from './register';
 import Adversities from './adversities';
@@ -12,7 +14,9 @@ import Evidence from './evidence';
 import Alternatives from './alternatives';
 import Implications from './implications';
 
-ReactDOM.render((
+import './index.css';
+
+ReactDOM.render(
   <Router history={hashHistory}>
     <Route path="/" component={App}>
       <Route path="login" component={Login}/>
@@ -25,5 +29,6 @@ ReactDOM.render((
         <Route path="implications" component={Implications}/>
       </Route>
     </Route>
-  </Router>
-), document.getElementById('app'));
+  </Router>,
+  document.getElementById('root')
+);
