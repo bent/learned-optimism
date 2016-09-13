@@ -5,14 +5,14 @@ import ReactDOM from 'react-dom';
 import 'react-spinner/react-spinner.css';
 
 import App from './App';
-import Login from './login';
-import Register from './register';
-import Adversities from './adversities';
-import Adversity from './adversity';
-import Belief from './belief';
-import Evidence from './evidence';
-import Alternatives from './alternatives';
-import Implications from './implications';
+import Login from './Login';
+import Register from './Register';
+import Adversities from './Adversities';
+import Adversity from './Adversity';
+import Belief from './Belief';
+import Evidence from './Evidence';
+import Alternatives from './Alternatives';
+import Implications from './Implications';
 
 import './index.css';
 

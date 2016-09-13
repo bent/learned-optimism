@@ -4,7 +4,7 @@ import { Button, FormControl, Form, FormGroup, InputGroup, ControlLabel, Pager, 
 import { withRouter } from 'react-router';
 
 import lowerCaseFirstLetter from './lowerCaseFirstLetter';
-import List from './list';
+import List from './List';
 
 module.exports = withRouter(React.createClass({
   mixins: [ReactFireMixin],

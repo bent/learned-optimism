@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactFireMixin from 'reactfire';
 
-import AdversityPanel from './adversityPanel';
+import AdversityPanel from './AdversityPanel';
 
 module.exports = React.createClass({
   mixins: [ReactFireMixin],

@@ -3,8 +3,8 @@ import ReactFireMixin from 'reactfire';
 import { Button, ButtonToolbar, FormControl, Form, FormGroup, InputGroup, ControlLabel } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 
-import AdversityPanel from './adversityPanel';
-import List from './list';
+import AdversityPanel from './AdversityPanel';
+import List from './List';
 
 module.exports = withRouter(React.createClass({
   mixins: [ReactFireMixin],
