@@ -41,7 +41,7 @@ module.exports = withRouter(React.createClass({
           </FormGroup>
         </Form>
         <div className="list-group">
-          {adversities.length > 0 ? adversities.map(adversity => {
+          {this.state.loaded ? adversities.map(adversity => {
             const id = adversity['.key']; 
             return (
               <Link key={id} 
@@ -73,6 +73,8 @@ module.exports = withRouter(React.createClass({
   _loadData(userRef) {
     if (userRef) {
       this.bindAsArray(userRef.child('adversities'), 'adversities');    
+      // Once the data has loaded for the first time, stop displaying the spinner
+      this.firebaseRefs.adversities.once('value').then(() => this.setState({loaded: true}));
     }
   }
 }));
