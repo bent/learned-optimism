@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactFireMixin from 'reactfire';
+import Spinner from 'react-spinner';
 
 import AdversityPanel from './AdversityPanel';
 
@@ -31,7 +32,7 @@ module.exports = React.createClass({
         })}
       </AdversityPanel>
       :
-      <div/>
+      <Spinner/>
     );
   },
   _loadData(userRef, beliefId) {
