@@ -14,8 +14,8 @@ import Evidence from './Evidence';
 import Alternatives from './Alternatives';
 import Implications from './Implications';
 
-import './index.css';
 import './bootstrap.css';
+import './index.css';
 
 ReactDOM.render(
   <Router history={hashHistory}>
