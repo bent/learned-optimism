@@ -5,6 +5,8 @@ import { withRouter } from 'react-router';
 
 import firebase from './firebase';
 
+import logo from './logo.svg';
+
 const auth = firebase.auth();
 const usersRef = firebase.database().ref('users');
 
@@ -34,7 +36,7 @@ module.exports = withRouter(React.createClass({
         <Navbar expanded={this.state.navbarExpanded} onToggle={this.toggle}>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link to="/">Learned Optimism</Link>
+              <Link to="/"><img src={logo} role="presentation"/><span>Learned Optimism</span></Link>
             </Navbar.Brand>
             {userRef && <Navbar.Toggle/>}
           </Navbar.Header>

@@ -1,8 +1,24 @@
 h2 {
-    margin-top: 0px;
+  margin-top: 0px;
 }
 
 .react-spinner_bar {
   margin-top: 20px;
-	background-color: darkgrey;
+  background-color: darkgrey;
+}
+
+.navbar-brand {
+    padding-left: 10px;
+}
+
+.navbar-brand > img {
+  width: 30px;
+  display: inline;
+  margin-right: 5px;
+  margin-top: -8px;
+}
+
+.navbar-default .navbar-toggle {
+  border-color: transparent;
+  margin-right: 5px;
 }
