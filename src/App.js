@@ -19,9 +19,15 @@ module.exports = withRouter(React.createClass({
   },
   componentWillMount() {
     this.unsubscribeAuthStateChanged = auth.onAuthStateChanged(user => {
-      this.setState({
-        userRef: user && usersRef.child(user.uid)
-      });
+      if (user) {
+        this.setState({userRef: usersRef.child(user.uid)});
+        this.props.router.push('/');
+      } else {
+        if (this.props.location.pathname !== '/login') {
+          this.setState({userRef: undefined});
+          this.props.router.push('/login');
+        }
+      }
     });
   },
   componentWillUnmount() {
@@ -48,7 +54,7 @@ module.exports = withRouter(React.createClass({
         </Navbar>
         <div className='container'>
           {children && React.cloneElement(children, {
-            setUser: this.setUser,
+            login: this.login,
             userRef: this.state.userRef
           })}
         </div>
@@ -58,14 +64,9 @@ module.exports = withRouter(React.createClass({
   toggle() {
     this.setState({navbarExpanded: !this.state.navbarExpanded});
   },
-  setUser(user) {
-    this.setState({userRef: user && usersRef.child(user.uid)});
-  },
   logout() {
-    auth.signOut().then(() => {
-      this.props.router.push('/login');
-      this.setState({userRef: undefined, navbarExpanded: false});
-    }).catch(error => {
+    this.setState({navbarExpanded: false});
+    auth.signOut().catch(error => {
       console.log(error);
     });
   }
