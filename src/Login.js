@@ -50,6 +50,7 @@ module.exports = withRouter(React.createClass({
     firebase.auth().signInWithEmailAndPassword(
       this.state.email, this.state.password
     ).catch(error => {
+      console.error(error);
       this.setState({errorMessage: error.message, isLoggingIn: false});
     });
   }

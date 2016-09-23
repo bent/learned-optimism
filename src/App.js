@@ -13,7 +13,7 @@ const usersRef = firebase.database().ref('users');
 module.exports = withRouter(React.createClass({
   getInitialState() {
     console.debug('currentUser=' + auth.currentUser);
-    
+
     return {
       userRef: auth.currentUser && usersRef.child(auth.currentUser.uid),
       navbarExpanded: false
@@ -21,15 +21,19 @@ module.exports = withRouter(React.createClass({
   },
   componentWillMount() {
     this.unsubscribeAuthStateChanged = auth.onAuthStateChanged(user => {
-      console.debug('user=' + user);
-      if (user) {
-        this.setState({userRef: usersRef.child(user.uid)});
-        this.props.router.push('/');
-      } else {
-        if (this.props.location.pathname !== '/login') {
-          this.setState({userRef: undefined});
-          this.props.router.push('/login');
+      try {
+        console.debug('user=' + user);
+        if (user) {
+          this.setState({userRef: usersRef.child(user.uid)});
+          this.props.router.push('/');
+        } else {
+          if (this.props.location.pathname !== '/login') {
+            this.props.router.push('/login');
+            this.setState({userRef: undefined});
+          }
         }
+      } catch (error) {
+        console.error(error);
       }
     });
   },
@@ -57,7 +61,6 @@ module.exports = withRouter(React.createClass({
         </Navbar>
         <div className='container'>
           {children && React.cloneElement(children, {
-            login: this.login,
             userRef: this.state.userRef
           })}
         </div>
