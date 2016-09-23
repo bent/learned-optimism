@@ -12,13 +12,16 @@ const usersRef = firebase.database().ref('users');
 
 module.exports = withRouter(React.createClass({
   getInitialState() {
+    console.debug('currentUser=' + auth.currentUser);
+    
     return {
-      userRef: auth.currentUser && usersRef.child(auth.currenUser.uid),
+      userRef: auth.currentUser && usersRef.child(auth.currentUser.uid),
       navbarExpanded: false
     };
   },
   componentWillMount() {
     this.unsubscribeAuthStateChanged = auth.onAuthStateChanged(user => {
+      console.debug('user=' + user);
       if (user) {
         this.setState({userRef: usersRef.child(user.uid)});
         this.props.router.push('/');
