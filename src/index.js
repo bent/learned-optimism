@@ -19,19 +19,19 @@ import './bootstrap.css';
 import './index.css';
 
 const redirectToLoginIfNotLoggedIn = (nextState, replace) => {
-  if (!firebase.auth().currentUser) {
+  if (nextState.location.pathname !== '/login' && nextState.location.pathname !== '/register' && !firebase.auth().currentUser) {
     replace('/login');
   }
 };
 
 ReactDOM.render(
   <Router history={hashHistory}>
-    <Route path="/" component={App}>
+    <Route path="/" component={App} onEnter={redirectToLoginIfNotLoggedIn}>
       <Route path="login" component={Login}/>
       <Route path="register" component={Register}/>
-      <IndexRoute component={Adversities} onEnter={redirectToLoginIfNotLoggedIn}/>
-      <Route path="adversities/:adversityId" component={Adversity} onEnter={redirectToLoginIfNotLoggedIn}/>
-      <Route path="beliefs/:beliefId" component={Belief} onEnter={redirectToLoginIfNotLoggedIn}>
+      <IndexRoute component={Adversities}/>
+      <Route path="adversities/:adversityId" component={Adversity}/>
+      <Route path="beliefs/:beliefId" component={Belief}>
         <Route path="evidence" component={Evidence}/>
         <Route path="alternatives" component={Alternatives}/>
         <Route path="implications" component={Implications}/>
