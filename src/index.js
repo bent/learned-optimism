@@ -1,4 +1,4 @@
-import { Router, Route, IndexRoute, hashHistory } from 'react-router';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import firebase from './firebase';
@@ -25,7 +25,7 @@ const redirectToLoginIfNotLoggedIn = (nextState, replace) => {
 };
 
 ReactDOM.render(
-  <Router history={hashHistory}>
+  <Router history={browserHistory}>
     <Route path="/" component={App} onEnter={redirectToLoginIfNotLoggedIn}>
       <Route path="login" component={Login}/>
       <Route path="register" component={Register}/>
