@@ -28,7 +28,7 @@ module.exports = withRouter(React.createClass({
     let previousPath = `/adversities/${belief.adversityId}`;
 
     if (index > 0) {
-      previousText = 'Previous Belief';
+      previousText = 'Prev. Belief';
       previousPath = `/beliefs/${beliefs[index - 1]['.key']}/alternatives`;
     }
 
