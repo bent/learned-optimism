@@ -21,7 +21,7 @@ module.exports = withRouter(React.createClass({
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.userRef !== this.props.userRef) {
-      if (this.firebaseRefs.adversities) this.unbind('adversities');
+      if (this.firebaseRefs.adversity) this.unbind('adversity');
       if (this.firebaseRefs.beliefs) this.unbind('beliefs');
       this._loadData(nextProps.userRef);
     }
