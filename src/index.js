@@ -19,7 +19,9 @@ import './bootstrap.css';
 import './index.css';
 
 const redirectToLoginIfNotLoggedIn = (nextState, replace) => {
-  if (nextState.location.pathname !== '/login' && nextState.location.pathname !== '/register' && !firebase.auth().currentUser) {
+  const pathname = nextState.location.pathname;
+  
+  if (!firebase.auth().currentUser && pathname !== '/login' && pathname !== '/register') {
     replace('/login');
   }
 };
