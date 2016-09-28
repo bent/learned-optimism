@@ -1,11 +1,11 @@
 import React from 'react';
-import ReactFireMixin from 'reactfire';
 import { Button, FormControl, Form, FormGroup, InputGroup } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router';
 import Spinner from 'react-spinner';
 
+import arrayFrom from './arrayFrom';
+
 module.exports = withRouter(React.createClass({
-  mixins: [ReactFireMixin],
   getInitialState() {
     return {
       description: ''
@@ -18,7 +18,6 @@ module.exports = withRouter(React.createClass({
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.userRef !== this.props.userRef) {
-      if (this.firebaseRefs.adversities) this.unbind('adversities');
       this._loadData(nextProps.userRef);
     }
   },
@@ -64,7 +63,7 @@ module.exports = withRouter(React.createClass({
   handleSubmit(e) {
     e.preventDefault();
     this.setState({isSaving: true});
-    this.firebaseRefs.adversities.push({
+    this.props.userRef.child('adversities').push({
       description: this.state.description
     }).then(adversity => {
       this.props.router.push(`/adversities/${adversity.key}`);
@@ -72,9 +71,10 @@ module.exports = withRouter(React.createClass({
   },
   _loadData(userRef) {
     if (userRef) {
-      this.bindAsArray(userRef.child('adversities'), 'adversities');    
       // Once the data has loaded for the first time, stop displaying the spinner
-      this.firebaseRefs.adversities.once('value').then(() => this.setState({loaded: true}));
+      userRef.child('adversities').once('value').then(snapshot => {
+        this.setState({loaded: true, adversities: arrayFrom(snapshot)});
+      });
     }
   }
 }));

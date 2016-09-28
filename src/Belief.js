@@ -3,6 +3,7 @@ import ReactFireMixin from 'reactfire';
 import Spinner from 'react-spinner';
 
 import AdversityPanel from './AdversityPanel';
+import arrayFrom from './arrayFrom';
 
 module.exports = React.createClass({
   mixins: [ReactFireMixin],
@@ -48,14 +49,8 @@ module.exports = React.createClass({
         this.bindAsObject(
           userRef.child('adversities').child(adversityId), 'adversity'
         );
-        beliefsRef.orderByChild('adversityId').equalTo(adversityId).once('value').then(snapshot => {
-          let beliefs = [];
-
-          snapshot.forEach(data => {
-            beliefs = beliefs.concat(Object.assign({'.key': data.key}, data.val()));
-          });
-
-          this.setState({beliefs});
+        beliefsRef.orderByChild('adversityId').equalTo(adversityId).once('value').then(beliefsSnapshot => {
+          this.setState({beliefs: arrayFrom(beliefsSnapshot)});
         });
       });
     }
