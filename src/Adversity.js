@@ -1,14 +1,13 @@
 import React from 'react';
-import ReactFireMixin from 'reactfire';
 import { Button, ButtonToolbar, FormControl, Form, FormGroup, InputGroup, ControlLabel } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 import Spinner from 'react-spinner';
 
 import AdversityPanel from './AdversityPanel';
 import List from './List';
+import arrayFrom from './arrayFrom';
 
 module.exports = withRouter(React.createClass({
-  mixins: [ReactFireMixin],
   getInitialState() {
     return {
       beliefDescription: ''
@@ -21,8 +20,6 @@ module.exports = withRouter(React.createClass({
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.userRef !== this.props.userRef) {
-      if (this.firebaseRefs.adversity) this.unbind('adversity');
-      if (this.firebaseRefs.beliefs) this.unbind('beliefs');
       this._loadData(nextProps.userRef);
     }
   },
@@ -67,14 +64,15 @@ module.exports = withRouter(React.createClass({
   handleSubmit(e) {
     e.preventDefault();
     this.setState({isSaving: true});
+    const adversityId = this.props.params.adversityId;
+    const description = this.state.beliefDescription;
 
-    this.firebaseRefs.beliefs.push({
-      adversityId: this.state.adversity['.key'],
-      description: this.state.beliefDescription
-    }).then(() => {
-      this.setState({
-        beliefDescription: '', isSaving: false
-      });
+    this.props.userRef.child('beliefs').push({adversityId, description}).then(value => {
+      this.setState(state => ({
+        beliefDescription: '', 
+        isSaving: false,
+        beliefs: state.beliefs.concat({'.key': value.getKey(), adversityId, description})
+      }));
     });
   },
   startDisputation() {
@@ -83,15 +81,14 @@ module.exports = withRouter(React.createClass({
   _loadData(userRef) {
     const adversityId = this.props.params.adversityId;
 
-    this.bindAsObject(userRef.child('adversities').child(adversityId), 'adversity');
-    this.bindAsArray(
-      userRef.child('beliefs').orderByChild('adversityId').equalTo(adversityId), 'beliefs'
-    );
-
     // Once the data has loaded for the first time, stop displaying the spinner
     Promise.all([
-      this.firebaseRefs.adversity.once('value'),
-      this.firebaseRefs.beliefs.once('value')
-    ]).then(() => this.setState({loaded: true}));
+      userRef.child('adversities').child(adversityId).once('value'),
+      userRef.child('beliefs').orderByChild('adversityId').equalTo(adversityId).once('value')
+    ]).then(values => {
+      this.setState({
+        loaded: true, adversity: values[0].val(), beliefs: arrayFrom(values[1])
+      });
+    });
   }
 }));
