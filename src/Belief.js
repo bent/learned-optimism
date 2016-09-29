@@ -20,7 +20,7 @@ module.exports = React.createClass({
   render() {
     const children = this.props.children;
 
-    return(this.state && this.state.belief && this.state.beliefs ?
+    return(this.state && this.state.adversity && this.state.belief && this.state.beliefs ?
       <AdversityPanel value={this.state.adversity}>
         {children && React.cloneElement(children, {
           beliefRef: this.props.userRef.child('beliefs').child(this.props.params.beliefId),
