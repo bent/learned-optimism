@@ -1,7 +1,6 @@
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import firebase from './firebase';
 
 import 'react-spinner/react-spinner.css';
 
@@ -18,17 +17,9 @@ import Implications from './Implications';
 import './bootstrap.css';
 import './index.css';
 
-const redirectToLoginIfNotLoggedIn = (nextState, replace) => {
-  const pathname = nextState.location.pathname;
-  
-  if (!firebase.auth().currentUser && pathname !== '/login' && pathname !== '/register') {
-    replace('/login');
-  }
-};
-
 ReactDOM.render(
   <Router history={hashHistory}>
-    <Route path="/" component={App} onEnter={redirectToLoginIfNotLoggedIn}>
+    <Route path="/" component={App}>
       <Route path="login" component={Login}/>
       <Route path="register" component={Register}/>
       <IndexRoute component={Adversities}/>
