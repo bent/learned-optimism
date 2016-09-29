@@ -41,16 +41,13 @@ module.exports = React.createClass({
       // that we can set up links correctly
       beliefRef.once('value').then(snapshot => {
         const belief = Object.assign({'.key': snapshot.key}, snapshot.val());
-
-        this.setState({belief});
-
         const adversityId = belief.adversityId;
 
         Promise.all([
           userRef.child('adversities').child(adversityId).once('value'),
           beliefsRef.orderByChild('adversityId').equalTo(adversityId).once('value')
         ]).then(results => {
-          this.setState({adversity: results[0].val(), beliefs: arrayFrom(results[1])});
+          this.setState({belief, adversity: results[0].val(), beliefs: arrayFrom(results[1])});
         });
       });
     }
