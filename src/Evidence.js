@@ -4,18 +4,13 @@ import { withRouter } from 'react-router';
 
 import lowerCaseFirstLetter from './lowerCaseFirstLetter';
 import List from './List';
-import arrayFrom from './arrayFrom';
 
 module.exports = withRouter(React.createClass({
   getInitialState() {
     return {
-      description: ''
+      description: '',
+      evidence: this.props.evidence
     };
-  },
-  componentWillMount() {
-    this.props.beliefRef.child('evidence').once('value').then(snapshot => {
-      this.setState({evidence: arrayFrom(snapshot)});
-    });
   },
   render() {
     const belief = this.props.belief;

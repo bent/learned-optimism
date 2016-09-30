@@ -20,7 +20,7 @@ module.exports = React.createClass({
   render() {
     const children = this.props.children;
 
-    return(this.state && this.state.adversity && this.state.belief && this.state.beliefs ?
+    const result = (this.state && this.state.adversity && this.state.belief && this.state.beliefs ?
       <AdversityPanel value={this.state.adversity}>
         {children && React.cloneElement(children, {
           beliefRef: this.props.userRef.child('beliefs').child(this.props.params.beliefId),
@@ -31,6 +31,8 @@ module.exports = React.createClass({
       :
       <Spinner/>
     );
+
+    return result;
   },
   _loadData(userRef, beliefId) {
     if (userRef && beliefId) {
@@ -40,8 +42,16 @@ module.exports = React.createClass({
       // Once we've got the belief, load the adversity that it belongs to, and all of its beliefs so
       // that we can set up links correctly
       beliefRef.once('value').then(snapshot => {
-        const belief = Object.assign({'.key': snapshot.key}, snapshot.val());
-        const adversityId = belief.adversityId;
+        const val = snapshot.val();
+        const adversityId = val.adversityId;
+        const belief = {
+          '.key': snapshot.key, 
+          description: val.description, 
+          adversityId,
+          evidence: toArray(val.evidence), 
+          alternatives: toArray(val.alternatives),
+          implications: toArray(val.implications)
+        };
 
         Promise.all([
           userRef.child('adversities').child(adversityId).once('value'),
@@ -53,3 +63,15 @@ module.exports = React.createClass({
     }
   }
 });
+
+function toArray(object) {
+  let array = [];
+
+  for (const property in object) {
+    if (true) {
+      array = array.concat({'.key': property, description: object[property].description});  
+    }
+  };
+
+  return array;
+}
