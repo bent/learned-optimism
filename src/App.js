@@ -13,7 +13,7 @@ const usersRef = firebase.database().ref('users');
 module.exports = withRouter(React.createClass({
   getInitialState() {
     return {
-      userRef: auth.currentUser && usersRef.child(auth.currenUser.uid),
+      userRef: auth.currentUser && usersRef.child(auth.currentUser.uid),
       navbarExpanded: false
     };
   },
