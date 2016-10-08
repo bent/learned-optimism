@@ -11,6 +11,10 @@ const auth = firebase.auth();
 const usersRef = firebase.database().ref('users');
 
 module.exports = withRouter(React.createClass({
+  propTypes: {
+    // Because this is a root route, we always expect it will have children
+    children: React.PropTypes.element.isRequired
+  },
   getInitialState() {
     return {
       userRef: auth.currentUser && usersRef.child(auth.currentUser.uid),
