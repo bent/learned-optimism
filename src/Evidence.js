@@ -5,8 +5,10 @@ import { withRouter } from 'react-router';
 
 import lowerCaseFirstLetter from './lowerCaseFirstLetter';
 import List from './List';
+import disputationPropTypes from './disputationPropTypes'
 
 module.exports = withRouter(React.createClass({
+  propTypes: disputationPropTypes,
   mixins: [ReactFireMixin],
   getInitialState() {
     return {
