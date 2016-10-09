@@ -1,6 +1,6 @@
 import React from 'react';
 
-module.exports = props => {
+const Component = props => {
   const list = props.value;
 
   return (
@@ -16,3 +16,11 @@ module.exports = props => {
       </div>
   );
 }
+
+Component.propTypes = {
+  value: React.PropTypes.arrayOf(React.PropTypes.shape({
+    description: React.PropTypes.string.isRequired
+  })).isRequired,
+};
+
+module.exports = Component;
