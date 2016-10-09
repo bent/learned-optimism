@@ -11,7 +11,10 @@ import List from './List';
 module.exports = withRouter(React.createClass({
   mixins: [ReactFireMixin],
   propTypes: {
-    userRef: React.PropTypes.instanceOf(firebase.database.Reference)
+    userRef: React.PropTypes.instanceOf(firebase.database.Reference),
+    params: React.PropTypes.shape({
+      adversityId: React.PropTypes.string
+    }).isRequired,
   },
   getInitialState() {
     return {
