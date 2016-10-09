@@ -11,7 +11,7 @@ const Component = props => {
 
 Component.propTypes = {
   value: React.PropTypes.shape({
-    description: React.PropTypes.string
+    description: React.PropTypes.string.isRequired
   }).isRequired,
   children: React.PropTypes.oneOfType([
     React.PropTypes.arrayOf(React.PropTypes.element),
