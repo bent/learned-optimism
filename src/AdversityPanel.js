@@ -1,6 +1,6 @@
 import React from 'react';
 
-module.exports = props => {
+const Component = props => {
   const adversity = props.value;
 
   return(adversity ?
@@ -12,3 +12,12 @@ module.exports = props => {
     <div/>
   );
 };
+
+Component.propTypes = {
+  children: React.PropTypes.oneOfType([
+    React.PropTypes.arrayOf(React.PropTypes.element),
+    React.PropTypes.element
+  ]).isRequired
+};
+
+module.exports = Component;
