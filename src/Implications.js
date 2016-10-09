@@ -34,7 +34,7 @@ module.exports = withRouter(React.createClass({
       nextPath = `/beliefs/${beliefs[index + 1]['.key']}/evidence`;
     }
 
-    return(belief ?
+    return(
       <div>
         <Form onSubmit={this.handleSubmit}>
           <ControlLabel>
@@ -65,8 +65,6 @@ module.exports = withRouter(React.createClass({
           </Pager.Item>
         </Pager>
       </div>
-      :
-      <div/>
     );
   },
   handleChange(e) {
