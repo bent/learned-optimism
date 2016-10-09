@@ -1,19 +1,18 @@
 import React from 'react';
 
 const Component = props => {
-  const adversity = props.value;
-
-  return(adversity ?
+  return(
     <div>
-      <h2>{adversity.description}</h2>
+      <h2>{props.value.description}</h2>
       {props.children}
     </div>
-    :
-    <div/>
   );
 };
 
 Component.propTypes = {
+  value: React.PropTypes.shape({
+    description: React.PropTypes.string
+  }).isRequired,
   children: React.PropTypes.oneOfType([
     React.PropTypes.arrayOf(React.PropTypes.element),
     React.PropTypes.element
