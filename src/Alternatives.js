@@ -31,7 +31,7 @@ module.exports = withRouter(React.createClass({
     const beliefId = belief['.key'];
     const {createHref} = this.props.router;
 
-    return(belief ?
+    return(
       <div>
         <Form onSubmit={this.handleSubmit}>
           <ControlLabel>
@@ -62,8 +62,6 @@ module.exports = withRouter(React.createClass({
           </Pager.Item>
         </Pager>
       </div>
-      :
-      <div/>
     );
   },
   handleChange(e) {
