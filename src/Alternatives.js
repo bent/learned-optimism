@@ -11,7 +11,8 @@ module.exports = withRouter(React.createClass({
   mixins: [ReactFireMixin],
   propTypes: {
     belief: React.PropTypes.shape({
-      '.key': React.PropTypes.string.isRequired
+      '.key': React.PropTypes.string.isRequired,
+      description: React.PropTypes.string.isRequired
     }).isRequired,
     router: React.PropTypes.shape({
       createHref: React.PropTypes.func.isRequired
