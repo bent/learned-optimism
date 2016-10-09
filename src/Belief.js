@@ -8,6 +8,7 @@ import AdversityPanel from './AdversityPanel';
 module.exports = React.createClass({
   mixins: [ReactFireMixin],
   propTypes: {
+    children: React.PropTypes.element.isRequired,
     userRef: React.PropTypes.instanceOf(firebase.database.Reference),
     beliefId: React.PropTypes.string
   },
@@ -26,11 +27,9 @@ module.exports = React.createClass({
     }
   },
   render() {
-    const children = this.props.children;
-
     return(this.state && this.state.belief && this.state.beliefs ?
       <AdversityPanel value={this.state.adversity}>
-        {children && React.cloneElement(children, {
+        {React.cloneElement(this.props.children, {
           beliefRef: this.firebaseRefs.belief,
           belief:  this.state.belief,
           beliefs: this.state.beliefs
