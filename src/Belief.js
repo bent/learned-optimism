@@ -9,8 +9,10 @@ module.exports = React.createClass({
   mixins: [ReactFireMixin],
   propTypes: {
     children: React.PropTypes.element.isRequired,
-    userRef: React.PropTypes.instanceOf(firebase.database.Reference),
-    beliefId: React.PropTypes.string
+    params: React.PropTypes.shape({
+      beliefId: React.PropTypes.string
+    }).isRequired,
+    userRef: React.PropTypes.instanceOf(firebase.database.Reference)
   },
   componentWillMount() {
     this._loadData(this.props.userRef, this.props.params.beliefId);
