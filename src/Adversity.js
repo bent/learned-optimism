@@ -13,7 +13,7 @@ module.exports = withRouter(React.createClass({
   propTypes: {
     userRef: React.PropTypes.instanceOf(firebase.database.Reference),
     params: React.PropTypes.shape({
-      adversityId: React.PropTypes.string
+      adversityId: React.PropTypes.string.isRequired
     }).isRequired,
   },
   getInitialState() {
