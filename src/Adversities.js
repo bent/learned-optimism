@@ -3,9 +3,13 @@ import ReactFireMixin from 'reactfire';
 import { Button, FormControl, Form, FormGroup, InputGroup } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router';
 import Spinner from 'react-spinner';
+import firebase from 'firebase';
 
 module.exports = withRouter(React.createClass({
   mixins: [ReactFireMixin],
+  propTypes: {
+    userRef: React.PropTypes.instanceOf(firebase.database.Reference)
+  },
   getInitialState() {
     return {
       description: ''
