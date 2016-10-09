@@ -3,12 +3,16 @@ import ReactFireMixin from 'reactfire';
 import { Button, ButtonToolbar, FormControl, Form, FormGroup, InputGroup, ControlLabel } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 import Spinner from 'react-spinner';
+import firebase from 'firebase';
 
 import AdversityPanel from './AdversityPanel';
 import List from './List';
 
 module.exports = withRouter(React.createClass({
   mixins: [ReactFireMixin],
+  propTypes: {
+    userRef: React.PropTypes.instanceOf(firebase.database.Reference)
+  },
   getInitialState() {
     return {
       beliefDescription: ''
