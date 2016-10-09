@@ -1,11 +1,16 @@
 import React from 'react';
 import ReactFireMixin from 'reactfire';
 import Spinner from 'react-spinner';
+import firebase from 'firebase';
 
 import AdversityPanel from './AdversityPanel';
 
 module.exports = React.createClass({
   mixins: [ReactFireMixin],
+  propTypes: {
+    userRef: React.PropTypes.instanceOf(firebase.database.Reference),
+    beliefId: React.PropTypes.string
+  },
   componentWillMount() {
     this._loadData(this.props.userRef, this.props.params.beliefId);
   },
