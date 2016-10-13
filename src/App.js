@@ -60,7 +60,7 @@ module.exports = React.createClass({
             <Match exactly pattern="/" render={() => <Adversities userRef={userRef}/>}/>
             <Match 
               pattern="/adversities/:adversityId" 
-              render={() => <Adversity userRef={userRef}/>}
+              render={props => <Adversity {...props} userRef={userRef}/>}
             />
             <Match 
               pattern="/beliefs/:beliefId" 

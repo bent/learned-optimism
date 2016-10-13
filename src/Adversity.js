@@ -4,6 +4,7 @@ import { Button, ButtonToolbar, FormControl, Form, FormGroup, InputGroup, Contro
 import Spinner from 'react-spinner';
 import firebase from 'firebase';
 
+import history from './history';
 import AdversityPanel from './AdversityPanel';
 import List from './List';
 
@@ -84,7 +85,7 @@ module.exports = React.createClass({
     });
   },
   startDisputation() {
-    this.props.router.push(`/beliefs/${this.state.beliefs[0]['.key']}/evidence`);
+    history.push(`/beliefs/${this.state.beliefs[0]['.key']}/evidence`);
   },
   _loadData(userRef) {
     const adversityId = this.props.params.adversityId;
