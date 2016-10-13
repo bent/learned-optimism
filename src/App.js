@@ -10,6 +10,7 @@ import Adversity from './Adversity';
 import Belief from './Belief';
 
 import firebase from './firebase';
+import history from './history';
 
 import logo from './logo.svg';
 

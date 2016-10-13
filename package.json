@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "firebase": "^3.4.0",
+    "history": "^4.3.0",
     "pushstate-server": "^2.0.0",
     "react": "^15.3.2",
     "react-bootstrap": "^0.30.1",

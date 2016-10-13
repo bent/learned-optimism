@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, FormControl, Form, FormGroup, Alert } from 'react-bootstrap';
 
 import firebase from './firebase';
+import history from './history';
 
 module.exports = React.createClass({
   getInitialState() {
@@ -51,7 +52,7 @@ module.exports = React.createClass({
       this.state.email, this.state.password
     ).then(user => {
       this.setState({isLoggingIn: false});
-      this.props.router.push('/');
+      history.push('/');
       this.props.setUser(user);
     }).catch(error => {
       this.setState({errorMessage: error.message, isLoggingIn: false});
