@@ -1,10 +1,10 @@
 import React from 'react';
-import { withRouter } from 'react-router';
+
 import { Button, FormControl, Form, FormGroup, Alert } from 'react-bootstrap';
 
 import firebase from './firebase';
 
-module.exports = withRouter(React.createClass({
+module.exports = React.createClass({
   getInitialState() {
     return {
       email: '',
@@ -48,4 +48,4 @@ module.exports = withRouter(React.createClass({
       this.setState({errorMessage: error.message});
     });
   }
-}));
+});

@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactFireMixin from 'reactfire';
 import { Button, FormControl, Form, FormGroup, InputGroup } from 'react-bootstrap';
-import { Link, withRouter } from 'react-router';
+import { Link } from 'react-router';
 import Spinner from 'react-spinner';
 import firebase from 'firebase';
 
-module.exports = withRouter(React.createClass({
+module.exports = React.createClass({
   mixins: [ReactFireMixin],
   propTypes: {
     userRef: React.PropTypes.instanceOf(firebase.database.Reference)
@@ -71,7 +71,7 @@ module.exports = withRouter(React.createClass({
     this.firebaseRefs.adversities.push({
       description: this.state.description
     }).then(adversity => {
-      this.props.router.push(`/adversities/${adversity.key}`);
+      history.push(`/adversities/${adversity.key}`);
     });
   },
   _loadData(userRef) {
@@ -81,4 +81,4 @@ module.exports = withRouter(React.createClass({
       this.firebaseRefs.adversities.once('value').then(() => this.setState({loaded: true}));
     }
   }
-}));
+});

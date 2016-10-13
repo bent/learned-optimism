@@ -3,6 +3,12 @@ import ReactFireMixin from 'reactfire';
 import Spinner from 'react-spinner';
 import firebase from 'firebase';
 
+import { Match } from 'react-router';
+
+import Evidence from './Evidence';
+import Alternatives from './Alternatives';
+import Implications from './Implications';
+
 import AdversityPanel from './AdversityPanel';
 
 module.exports = React.createClass({
@@ -31,6 +37,10 @@ module.exports = React.createClass({
   render() {
     return(this.state && this.state.belief && this.state.beliefs ?
       <AdversityPanel value={this.state.adversity}>
+        <Match path="evidence" component={Evidence}/>
+        <Match path="alternatives" component={Alternatives}/>
+        <Match path="implications" component={Implications}/>
+
         {React.cloneElement(this.props.children, {
           beliefRef: this.firebaseRefs.belief,
           belief:  this.state.belief,

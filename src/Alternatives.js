@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactFireMixin from 'reactfire';
 import { Button, FormControl, Form, FormGroup, InputGroup, ControlLabel, Pager } from 'react-bootstrap';
-import { withRouter } from 'react-router';
 
 import lowerCaseFirstLetter from './lowerCaseFirstLetter';
 import disputationPropTypes from './disputationPropTypes'
 import List from './List';
 
-module.exports = withRouter(React.createClass({
+module.exports = React.createClass({
   mixins: [ReactFireMixin],
   propTypes: disputationPropTypes,
   getInitialState() {
@@ -70,4 +69,4 @@ module.exports = withRouter(React.createClass({
       this.setState({alternativeDescription: '', isSaving: false});
     });
   }
-}));
+});

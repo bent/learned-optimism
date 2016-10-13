@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactFireMixin from 'reactfire';
 import { Button, FormControl, Form, FormGroup, InputGroup, ControlLabel, Pager } from 'react-bootstrap';
-import { withRouter } from 'react-router';
 
 import lowerCaseFirstLetter from './lowerCaseFirstLetter';
 import List from './List';
 import disputationPropTypes from './disputationPropTypes'
 
-module.exports = withRouter(React.createClass({
+module.exports = React.createClass({
   propTypes: disputationPropTypes,
   mixins: [ReactFireMixin],
   getInitialState() {
@@ -89,4 +88,4 @@ module.exports = withRouter(React.createClass({
     e.preventDefault();
     this.props.router.push(`/beliefs/${this.props.beliefRef.key}/implications`);
   }
-}));
+});
