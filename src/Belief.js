@@ -14,7 +14,6 @@ import AdversityPanel from './AdversityPanel';
 module.exports = React.createClass({
   mixins: [ReactFireMixin],
   propTypes: {
-    children: React.PropTypes.element.isRequired,
     params: React.PropTypes.shape({
       beliefId: React.PropTypes.string
     }).isRequired,
@@ -35,17 +34,31 @@ module.exports = React.createClass({
     }
   },
   render() {
+    const { pathname } = this.props;
+
     return(this.state && this.state.belief && this.state.beliefs ?
       <AdversityPanel value={this.state.adversity}>
-        <Match path="evidence" component={Evidence}/>
-        <Match path="alternatives" component={Alternatives}/>
-        <Match path="implications" component={Implications}/>
-
-        {React.cloneElement(this.props.children, {
-          beliefRef: this.firebaseRefs.belief,
-          belief:  this.state.belief,
-          beliefs: this.state.beliefs
-        })}
+        <Match pattern={`${pathname}/evidence`} render={() => 
+          <Evidence 
+            beliefRef={this.firebaseRefs.belief} 
+            belief={this.state.belief} 
+            beliefs={this.state.beliefs}
+          />
+        }/>
+        <Match pattern={`${pathname}/alternatives`} render={() => 
+          <Alternatives
+            beliefRef={this.firebaseRefs.belief} 
+            belief={this.state.belief} 
+            beliefs={this.state.beliefs}
+          />
+        }/>
+        <Match pattern={`${pathname}/implications`} render={() => 
+          <Implications
+            beliefRef={this.firebaseRefs.belief} 
+            belief={this.state.belief} 
+            beliefs={this.state.beliefs}
+          />
+        }/>
       </AdversityPanel>
       :
       <Spinner/>

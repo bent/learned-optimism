@@ -2,6 +2,7 @@ import React from 'react';
 import ReactFireMixin from 'reactfire';
 import { Button, ButtonToolbar, FormControl, Form, FormGroup, InputGroup, ControlLabel } from 'react-bootstrap';
 import Spinner from 'react-spinner';
+import { Link } from 'react-router';
 import firebase from 'firebase';
 
 import AdversityPanel from './AdversityPanel';
@@ -55,12 +56,15 @@ module.exports = React.createClass({
         </Form>
         <List value={beliefs}/>
         <ButtonToolbar>
-          <Button onClick={this.startDisputation} 
-                  bsStyle="primary" 
-                  disabled={beliefs.length < 1} 
-                  block>
-            Start Disputation
-          </Button>
+          <Link to={`/beliefs/${beliefs[0]['.key']}/evidence`}>{
+            ({onClick}) =>
+              <Button onClick={onClick} 
+                      bsStyle="primary" 
+                      disabled={beliefs.length < 1} 
+                      block>
+                Start Disputation
+              </Button>
+          }</Link>
         </ButtonToolbar>
       </AdversityPanel>:
       <Spinner/>
@@ -82,9 +86,6 @@ module.exports = React.createClass({
         beliefDescription: '', isSaving: false
       });
     });
-  },
-  startDisputation() {
-    history.push(`/beliefs/${this.state.beliefs[0]['.key']}/evidence`);
   },
   _loadData(userRef) {
     const adversityId = this.props.params.adversityId;
