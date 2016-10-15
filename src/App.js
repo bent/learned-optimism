@@ -68,7 +68,7 @@ module.exports = React.createClass({
           </Navbar>
 
           <div className='container'>
-            <Match pattern="/login" render={() => <Login setUser={this.setUser} userRef={userRef}/>}/>
+            <Match pattern="/login" render={() => <Login userRef={userRef}/>}/>
             <Match pattern="/register" component={Register}/>
 
             <MatchWhenAuthorized exactly userRef={userRef} pattern="/" component={Adversities}/>
@@ -88,10 +88,7 @@ module.exports = React.createClass({
     );
   },
   toggle() {
-    this.setState({navbarExpanded: !this.state.navbarExpanded});
-  },
-  setUser(user) {
-    this.setState({userRef: user && usersRef.child(user.uid)});
+    this.setState(state => ({navbarExpanded: !state.navbarExpanded}));
   },
   logout() {
     auth.signOut().then(() => {
