@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
-import { BrowserRouter, Match, Link } from 'react-router';
+import { BrowserRouter, Match, Link, Redirect } from 'react-router';
 
 import Login from './Login';
 import Register from './Register';
@@ -10,12 +10,24 @@ import Adversity from './Adversity';
 import Belief from './Belief';
 
 import firebase from './firebase';
-import history from './history';
 
 import logo from './logo.svg';
 
 const auth = firebase.auth();
 const usersRef = firebase.database().ref('users');
+
+const MatchWhenAuthorized = ({ component: Component, userRef, ...rest }) => (
+  <Match {...rest} render={props => (
+    userRef ? (
+      <Component userRef={userRef} {...props}/>
+    ) : (
+      <Redirect to={{
+        pathname: '/login',
+        state: { from: props.location }
+      }}/>
+    )
+  )}/>
+)
 
 module.exports = React.createClass({
   getInitialState() {
@@ -57,14 +69,17 @@ module.exports = React.createClass({
           <div className='container'>
             <Match pattern="/login" render={() => <Login setUser={this.setUser} userRef={userRef}/>}/>
             <Match pattern="/register" component={Register}/>
-            <Match exactly pattern="/" render={() => <Adversities userRef={userRef}/>}/>
-            <Match 
+
+            <MatchWhenAuthorized exactly userRef={userRef} pattern="/" component={Adversities}/>
+            <MatchWhenAuthorized 
+              userRef={userRef} 
               pattern="/adversities/:adversityId" 
-              render={props => <Adversity {...props} userRef={userRef}/>}
+              component={Adversity}
             />
-            <Match 
+            <MatchWhenAuthorized 
+              userRef={userRef} 
               pattern="/beliefs/:beliefId" 
-              render={props => <Belief {...props} userRef={userRef}/>}
+              component={Belief}
             />
           </div>
         </div>
@@ -79,7 +94,6 @@ module.exports = React.createClass({
   },
   logout() {
     auth.signOut().then(() => {
-      history.push('/login');
       this.setState({userRef: undefined, navbarExpanded: false});
     }).catch(error => {
       console.log(error);

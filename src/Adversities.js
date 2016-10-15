@@ -71,7 +71,7 @@ module.exports = React.createClass({
     this.firebaseRefs.adversities.push({
       description: this.state.description
     }).then(adversity => {
-      history.push(`/adversities/${adversity.key}`);
+      this.props.router.transitionTo(`/adversities/${adversity.key}`);
     });
   },
   _loadData(userRef) {
