@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactFireMixin from 'reactfire';
 import { Button, FormControl, Form, FormGroup, InputGroup, ControlLabel, Pager } from 'react-bootstrap';
-import { Link } from 'react-router';
 
 import lowerCaseFirstLetter from './lowerCaseFirstLetter';
 import List from './List';
@@ -54,16 +53,12 @@ module.exports = React.createClass({
         </Form>
         <List value={this.state.evidence}/>
         <Pager>
-          <Link to={previousPath}>{({onClick}) =>
-            <Pager.Item previous onClick={onClick}>
-              &larr; {previousText}
-            </Pager.Item>
-          }</Link>
-          <Link to={`/beliefs/${beliefId}/alternatives`}>{({onClick}) =>
-            <Pager.Item next onClick={onClick}>
-              Alternatives &rarr;
-            </Pager.Item>
-          }</Link>
+          <Pager.Item previous href={previousPath}>
+            &larr; {previousText}
+          </Pager.Item>
+          <Pager.Item next href={`/beliefs/${beliefId}/alternatives`}>
+            Alternatives &rarr;
+          </Pager.Item>
         </Pager>
       </div>
     );
