@@ -18,6 +18,7 @@ const usersRef = firebase.database().ref('users');
 
 const MatchWhenAuthorized = ({ component: Component, userRef, ...rest }) => (
   <Match {...rest} render={props => (
+    // If we have a logged-in user,
     userRef ? (
       <Component userRef={userRef} {...props}/>
     ) : (
@@ -94,7 +95,7 @@ module.exports = React.createClass({
   },
   logout() {
     auth.signOut().then(() => {
-      this.setState({userRef: undefined, navbarExpanded: false});
+      this.setState({navbarExpanded: false});
     }).catch(error => {
       console.log(error);
     });
