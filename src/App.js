@@ -55,7 +55,7 @@ module.exports = React.createClass({
           </Navbar>
 
           <div className='container'>
-            <Match pattern="/login" render={() => <Login setUser={this.setUser}/>}/>
+            <Match pattern="/login" render={() => <Login setUser={this.setUser} userRef={userRef}/>}/>
             <Match pattern="/register" component={Register}/>
             <Match exactly pattern="/" render={() => <Adversities userRef={userRef}/>}/>
             <Match 
