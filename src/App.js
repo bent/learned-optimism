@@ -48,7 +48,7 @@ module.exports = React.createClass({
     this.unsubscribeAuthStateChanged();
   },
   render() {
-    const userRef = this.state.userRef;
+    const { userRef } = this.state;
 
     return (
       <BrowserRouter>
