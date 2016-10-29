@@ -56,12 +56,12 @@ module.exports = React.createClass({
         <Pager>
           <Link to={previousPath}>{({onClick}) =>
             <li className="previous">
-              <a onClick={onClick}>&larr; {previousText}</a>
+              <a href onClick={onClick}>&larr; {previousText}</a>
             </li>
           }</Link>
           <Link to={`/beliefs/${beliefId}/alternatives`}>{({onClick}) =>
             <li className="next">
-              <a onClick={onClick}>Alternatives &rarr;</a>
+              <a href onClick={onClick}>Alternatives &rarr;</a>
             </li>
           }</Link>
         </Pager>
