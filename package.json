@@ -12,7 +12,7 @@
     "react": "^15.3.2",
     "react-bootstrap": "^0.30.1",
     "react-dom": "^15.3.1",
-    "react-router": "^4.0.0-alpha.4",
+    "react-router": "^4.0.0-alpha.5",
     "react-spinner": "^0.2.6",
     "reactfire": "^1.0.0"
   },
