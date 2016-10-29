@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactFireMixin from 'reactfire';
 import { Button, FormControl, Form, FormGroup, InputGroup, ControlLabel, Pager } from 'react-bootstrap';
+import { Link } from 'react-router';
 
 import lowerCaseFirstLetter from './lowerCaseFirstLetter';
 import List from './List';
@@ -23,7 +24,6 @@ module.exports = React.createClass({
     const beliefs = this.props.beliefs;
     const index = beliefs.findIndex(b => b['.key'] === beliefId);
     if (index < 0) throw new Error(`Belief with ID ${beliefId} not found`);
-    const createHref = this.props.router.createHref;
 
     let nextText = 'Finish';
     let nextPath = `/adversities/${belief.adversityId}`;
@@ -56,12 +56,16 @@ module.exports = React.createClass({
         </Form>
         <List value={this.state.implications}/>
         <Pager>
-          <Pager.Item previous href={createHref(`/beliefs/${beliefId}/alternatives`)}>
-            &larr; Alternatives
-          </Pager.Item>
-          <Pager.Item next href={createHref(nextPath)}>
-            {nextText} &rarr;
-          </Pager.Item>
+          <Link to={`/beliefs/${beliefId}/alternatives`}>{({onClick}) =>
+            <li className="previous">
+              <a href onClick={onClick}>&larr; Alternatives</a>
+            </li>
+          }</Link>
+          <Link to={nextPath}>{({onClick}) =>
+            <li className="next">
+              <a href onClick={onClick}>{nextText} &rarr;</a>
+            </li>
+          }</Link>
         </Pager>
       </div>
     );
