@@ -8,7 +8,7 @@ import firebase from 'firebase';
 module.exports = React.createClass({
   mixins: [ReactFireMixin],
   propTypes: {
-    userRef: React.PropTypes.instanceOf(firebase.database.Reference)
+    userRef: React.PropTypes.instanceOf(firebase.database.Reference).isRequired
   },
   getInitialState() {
     return {
@@ -16,9 +16,7 @@ module.exports = React.createClass({
     };
   },
   componentWillMount() {
-    if (this.props.userRef) {
-      this._loadData(this.props.userRef);
-    }
+    this._loadData(this.props.userRef);
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.userRef !== this.props.userRef) {
@@ -30,7 +28,7 @@ module.exports = React.createClass({
     const {adversities} = this.state;
 
     return (
-      this.props.userRef ? <div>
+      <div>
         <Form onSubmit={this.handleSubmit}>
           <FormGroup>
             <InputGroup>
@@ -57,8 +55,6 @@ module.exports = React.createClass({
           }) : <Spinner/> }
         </div>
       </div>
-      :
-      <div/>
     );
   },
   handleChange(e) {
@@ -75,10 +71,8 @@ module.exports = React.createClass({
     });
   },
   _loadData(userRef) {
-    if (userRef) {
-      this.bindAsArray(userRef.child('adversities'), 'adversities');    
-      // Once the data has loaded for the first time, stop displaying the spinner
-      this.firebaseRefs.adversities.once('value').then(() => this.setState({loaded: true}));
-    }
+    this.bindAsArray(userRef.child('adversities'), 'adversities');    
+    // Once the data has loaded for the first time, stop displaying the spinner
+    this.firebaseRefs.adversities.once('value').then(() => this.setState({loaded: true}));
   }
 });
