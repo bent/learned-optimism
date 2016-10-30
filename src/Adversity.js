@@ -55,17 +55,20 @@ module.exports = React.createClass({
           </FormGroup>
         </Form>
         <List value={beliefs}/>
-        <ButtonToolbar>
-          <Link to={`/beliefs/${beliefs[0]['.key']}/evidence`}>{
-            ({onClick}) =>
-              <Button onClick={onClick} 
-                      bsStyle="primary" 
-                      disabled={beliefs.length < 1} 
-                      block>
-                Start Disputation
-              </Button>
-          }</Link>
-        </ButtonToolbar>
+        { beliefs.length > 0 ? 
+          <ButtonToolbar>
+            <Link to={`/beliefs/${beliefs[0]['.key']}/evidence`}>{
+              ({onClick}) =>
+                <Button onClick={onClick}
+                        bsStyle="primary"
+                        block>
+                  Start Disputation
+                </Button>
+            }</Link>
+          </ButtonToolbar>
+          :
+          <div/>
+        }
       </AdversityPanel>:
       <Spinner/>
     );

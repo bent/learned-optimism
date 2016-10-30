@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactFireMixin from 'reactfire';
 import { Button, FormControl, Form, FormGroup, InputGroup } from 'react-bootstrap';
-import { Link } from 'react-router';
+import { Link, Redirect } from 'react-router';
 import Spinner from 'react-spinner';
 import firebase from 'firebase';
 
@@ -25,37 +25,43 @@ module.exports = React.createClass({
     }
   },
   render() {
-    const {adversities} = this.state;
+    const {adversities, newAdversityId} = this.state;
 
     return (
       this.state.loaded ? 
-        <div>
-          <Form onSubmit={this.handleSubmit}>
-            <FormGroup>
-              <InputGroup>
-                <FormControl type='text' 
-                       placeholder='Adversity' 
-                       value={this.state.description}
-                       onChange={this.handleChange}/>
-                <InputGroup.Button>
-                  <Button type="submit" disabled={this.state.isSaving}>Go</Button>
-                </InputGroup.Button>
-              </InputGroup>
-            </FormGroup>
-          </Form>
-          <div className="list-group">
-            {adversities.map(adversity => {
-              const id = adversity['.key']; 
-              return (
-                <Link key={id} 
-                    className="list-group-item" 
-                    to={`/adversities/${id}`}>
-                  {adversity.description}
-                </Link>
-              );
-            })}
+        // If we've just created a new adversity
+        newAdversityId ?
+          // Redirect to it
+          <Redirect to={`/adversities/${newAdversityId}`}/>
+          :
+          // Otherwise just display the regular form
+          <div>
+            <Form onSubmit={this.handleSubmit}>
+              <FormGroup>
+                <InputGroup>
+                  <FormControl type='text' 
+                         placeholder='Adversity' 
+                         value={this.state.description}
+                         onChange={this.handleChange}/>
+                  <InputGroup.Button>
+                    <Button type="submit" disabled={this.state.isSaving}>Go</Button>
+                  </InputGroup.Button>
+                </InputGroup>
+              </FormGroup>
+            </Form>
+            <div className="list-group">
+              {adversities.map(adversity => {
+                const id = adversity['.key']; 
+                return (
+                  <Link key={id} 
+                      className="list-group-item" 
+                      to={`/adversities/${id}`}>
+                    {adversity.description}
+                  </Link>
+                );
+              })}
+            </div>
           </div>
-        </div>
         : 
         <Spinner/>
     );
@@ -70,7 +76,7 @@ module.exports = React.createClass({
     this.firebaseRefs.adversities.push({
       description: this.state.description
     }).then(adversity => {
-      this.props.router.transitionTo(`/adversities/${adversity.key}`);
+      this.setState({newAdversityId: adversity.key});
     });
   },
   _loadData(userRef) {
