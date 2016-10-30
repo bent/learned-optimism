@@ -17,6 +17,7 @@ module.exports = ({ component: Component, userRef, ...rest }) => (
 )
 
 module.exports.propTypes = {
+  component: React.PropTypes.func.isRequired,
   userRef: (props, propName, componentName) => {
     const propValue = props[propName];
 
