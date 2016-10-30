@@ -1,13 +1,14 @@
 import React from 'react';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import Spinner from 'react-spinner';
-import { BrowserRouter, Match, Link, Redirect } from 'react-router';
+import { BrowserRouter, Match, Link } from 'react-router';
 
 import Login from './Login';
 import Register from './Register';
 import Adversities from './Adversities';
 import Adversity from './Adversity';
 import Belief from './Belief';
+import MatchWhenAuthorized from './MatchWhenAuthorized';
 
 import firebase from './firebase';
 
@@ -15,20 +16,6 @@ import logo from './logo.svg';
 
 const auth = firebase.auth();
 const usersRef = firebase.database().ref('users');
-
-const MatchWhenAuthorized = ({ component: Component, userRef, ...rest }) => (
-  <Match {...rest} render={props => (
-    // If we have a logged-in user,
-    userRef ? (
-      <Component userRef={userRef} {...props}/>
-    ) : (
-      <Redirect to={{
-        pathname: '/login',
-        state: { from: props.location }
-      }}/>
-    )
-  )}/>
-)
 
 module.exports = React.createClass({
   getInitialState() {
