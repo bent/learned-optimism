@@ -1,7 +1,8 @@
 import React from 'react';
 import { Match, Redirect } from 'react-router';
+import firebase from 'firebase';   
 
-const MatchWhenAuthorized = ({ component: Component, userRef, ...rest }) => (
+module.exports = ({ component: Component, userRef, ...rest }) => (
   <Match {...rest} render={props => (
     // If we have a logged-in user,
     userRef ? (
@@ -15,4 +16,14 @@ const MatchWhenAuthorized = ({ component: Component, userRef, ...rest }) => (
   )}/>
 )
 
-module.exports = MatchWhenAuthorized;
+module.exports.propTypes = {
+  userRef: (props, propName, componentName) => {
+    const propValue = props[propName];
+
+    if (propValue !== null && !(propValue instanceof firebase.database.Reference)) {
+      return new Error(
+        `Prop '${propName}' on component '${componentName} has invalid value '${propValue}'`
+      );
+    }
+  }
+};
