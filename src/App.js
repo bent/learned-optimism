@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
-
+import Spinner from 'react-spinner';
 import { BrowserRouter, Match, Link, Redirect } from 'react-router';
 
 import Login from './Login';
@@ -33,14 +33,14 @@ const MatchWhenAuthorized = ({ component: Component, userRef, ...rest }) => (
 module.exports = React.createClass({
   getInitialState() {
     return {
-      userRef: auth.currentUser && usersRef.child(auth.currentUser.uid),
+      userRef: undefined, // `undefined` signifies that we don't know yet if we are logged in or not
       navbarExpanded: false
     };
   },
   componentWillMount() {
     this.unsubscribeAuthStateChanged = auth.onAuthStateChanged(user => {
       this.setState({
-        userRef: user && usersRef.child(user.uid)
+        userRef: user ? usersRef.child(user.uid) : user
       });
     });
   },
@@ -67,22 +67,29 @@ module.exports = React.createClass({
             </Navbar.Collapse>}
           </Navbar>
 
-          <div className='container'>
-            <Match pattern="/login" render={() => <Login userRef={userRef}/>}/>
-            <Match pattern="/register" component={Register}/>
+          { 
+          // If we know for sure whether we are logged-in or not, try to match the route. Otherwise 
+          // just show a spinner.
+          userRef !== undefined ? 
+            <div className='container'>
+              <Match pattern="/login" render={() => <Login userRef={userRef}/>}/>
+              <Match pattern="/register" component={Register}/>
 
-            <MatchWhenAuthorized exactly userRef={userRef} pattern="/" component={Adversities}/>
-            <MatchWhenAuthorized 
-              userRef={userRef} 
-              pattern="/adversities/:adversityId" 
-              component={Adversity}
-            />
-            <MatchWhenAuthorized 
-              userRef={userRef} 
-              pattern="/beliefs/:beliefId" 
-              component={Belief}
-            />
-          </div>
+              <MatchWhenAuthorized exactly userRef={userRef} pattern="/" component={Adversities}/>
+              <MatchWhenAuthorized 
+                userRef={userRef} 
+                pattern="/adversities/:adversityId" 
+                component={Adversity}
+              />
+              <MatchWhenAuthorized 
+                userRef={userRef} 
+                pattern="/beliefs/:beliefId" 
+                component={Belief}
+              />
+            </div>
+            :
+            <Spinner/>
+          }
         </div>
       </BrowserRouter>
     );
