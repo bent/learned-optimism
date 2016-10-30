@@ -11,7 +11,7 @@ import List from './List';
 module.exports = React.createClass({
   mixins: [ReactFireMixin],
   propTypes: {
-    userRef: React.PropTypes.instanceOf(firebase.database.Reference),
+    userRef: React.PropTypes.instanceOf(firebase.database.Reference).isRequired,
     params: React.PropTypes.shape({
       adversityId: React.PropTypes.string.isRequired
     }).isRequired,
@@ -22,9 +22,7 @@ module.exports = React.createClass({
     };
   },
   componentWillMount() {
-    if (this.props.userRef) {
-      this._loadData(this.props.userRef);
-    }
+    this._loadData(this.props.userRef);
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.userRef !== this.props.userRef) {
@@ -36,7 +34,7 @@ module.exports = React.createClass({
   render() {
     const {beliefs} = this.state;
 
-    return (this.props.userRef && this.state.loaded ? 
+    return (this.state.loaded ? 
       <AdversityPanel value={this.state.adversity}>
         <Form onSubmit={this.handleSubmit}>
           <ControlLabel>What beliefs do I have about this adversity?</ControlLabel>
