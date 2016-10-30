@@ -28,33 +28,36 @@ module.exports = React.createClass({
     const {adversities} = this.state;
 
     return (
-      <div>
-        <Form onSubmit={this.handleSubmit}>
-          <FormGroup>
-            <InputGroup>
-              <FormControl type='text' 
-                     placeholder='Adversity' 
-                     value={this.state.description}
-                     onChange={this.handleChange}/>
-              <InputGroup.Button>
-                <Button type="submit" disabled={this.state.isSaving}>Go</Button>
-              </InputGroup.Button>
-            </InputGroup>
-          </FormGroup>
-        </Form>
-        <div className="list-group">
-          {this.state.loaded ? adversities.map(adversity => {
-            const id = adversity['.key']; 
-            return (
-              <Link key={id} 
-                  className="list-group-item" 
-                  to={`/adversities/${id}`}>
-                {adversity.description}
-              </Link>
-            );
-          }) : <Spinner/> }
+      this.state.loaded ? 
+        <div>
+          <Form onSubmit={this.handleSubmit}>
+            <FormGroup>
+              <InputGroup>
+                <FormControl type='text' 
+                       placeholder='Adversity' 
+                       value={this.state.description}
+                       onChange={this.handleChange}/>
+                <InputGroup.Button>
+                  <Button type="submit" disabled={this.state.isSaving}>Go</Button>
+                </InputGroup.Button>
+              </InputGroup>
+            </FormGroup>
+          </Form>
+          <div className="list-group">
+            {adversities.map(adversity => {
+              const id = adversity['.key']; 
+              return (
+                <Link key={id} 
+                    className="list-group-item" 
+                    to={`/adversities/${id}`}>
+                  {adversity.description}
+                </Link>
+              );
+            })}
+          </div>
         </div>
-      </div>
+        : 
+        <Spinner/>
     );
   },
   handleChange(e) {
