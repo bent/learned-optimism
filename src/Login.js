@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, FormControl, Form, FormGroup, Alert } from 'react-bootstrap';
-import { Redirect } from 'react-router';
+import { Button, ButtonToolbar, FormControl, Form, FormGroup, Alert } from 'react-bootstrap';
+import { Redirect, Link } from 'react-router';
 
 import firebase from './firebase';
 
@@ -31,12 +31,17 @@ export default React.createClass({
                    value={this.state.password}
                    onChange={this.handlePasswordChange}/>
           </FormGroup>
-          <Button 
-            type="submit"
-            disabled={isLoggingIn}
-          >
-            {isLoggingIn ? 'Logging in...' : 'Login'}
-          </Button>
+          <ButtonToolbar>
+            <Button 
+              type="submit"
+              disabled={isLoggingIn}
+            >
+              {isLoggingIn ? 'Logging in...' : 'Login'}
+            </Button>
+            <Link to={'/register'}>{({onClick}) =>
+              <Button bsStyle="link" onClick={onClick}>Register</Button>
+            }</Link>
+          </ButtonToolbar>
         </Form>
     );
   },  
