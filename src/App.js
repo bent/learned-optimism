@@ -60,7 +60,7 @@ export default React.createClass({
           userRef !== undefined ? 
             <div className='container'>
               <Match pattern="/login" render={() => <Login userRef={userRef}/>}/>
-              <Match pattern="/register" component={Register}/>
+              <Match pattern="/register" render={() => <Register userRef={userRef}/>}/>
 
               <MatchWhenAuthorized exactly userRef={userRef} pattern="/" component={Adversities}/>
               <MatchWhenAuthorized 

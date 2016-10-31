@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Redirect } from 'react-router';
 import { Button, FormControl, Form, FormGroup, Alert } from 'react-bootstrap';
 
 import firebase from './firebase';
@@ -15,22 +15,24 @@ export default React.createClass({
     const {errorMessage} = this.state;
 
     return (
-      <Form onSubmit={this.handleSubmit}>
-        {errorMessage && <Alert bsStyle="danger">{errorMessage}</Alert>}
-        <FormGroup>
-          <FormControl type='text' 
-                 placeholder='Email' 
-                 value={this.state.email}
-                 onChange={this.handleEmailChange}/>
-        </FormGroup>
-        <FormGroup>
-          <FormControl type='password' 
-                 placeholder='Password' 
-                 value={this.state.password}
-                 onChange={this.handlePasswordChange}/>
-        </FormGroup>
-        <Button type="submit">Register</Button>
-      </Form>
+      this.props.userRef ? 
+        <Redirect to="/"/> :
+        <Form onSubmit={this.handleSubmit}>
+          {errorMessage && <Alert bsStyle="danger">{errorMessage}</Alert>}
+          <FormGroup>
+            <FormControl type='text' 
+                   placeholder='Email' 
+                   value={this.state.email}
+                   onChange={this.handleEmailChange}/>
+          </FormGroup>
+          <FormGroup>
+            <FormControl type='password' 
+                   placeholder='Password' 
+                   value={this.state.password}
+                   onChange={this.handlePasswordChange}/>
+          </FormGroup>
+          <Button type="submit">Register</Button>
+        </Form>
     );
   },
   handleEmailChange(e) {
@@ -39,12 +41,11 @@ export default React.createClass({
   handlePasswordChange(e) {
     this.setState({password: e.target.value});
   },
-  handleSubmit() {
+  handleSubmit(e) {
+    e.preventDefault();
     firebase.auth().createUserWithEmailAndPassword(
       this.state.email, this.state.password
-    ).then(() => {
-      this.props.router.push('/');
-    }).catch(error => {
+    ).catch(error => {
       this.setState({errorMessage: error.message});
     });
   }
