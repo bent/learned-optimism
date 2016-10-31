@@ -31,7 +31,7 @@ export default React.createClass({
                    value={this.state.password}
                    onChange={this.handlePasswordChange}/>
           </FormGroup>
-          <Button type="submit">Register</Button>
+          <Button bsStyle="primary" type="submit">Register</Button>
         </Form>
     );
   },
