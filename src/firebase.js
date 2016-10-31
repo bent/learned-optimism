@@ -7,4 +7,4 @@ firebase.initializeApp({
   storageBucket: "",
 });
 
-module.exports = firebase;
+export default firebase;

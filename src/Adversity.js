@@ -8,7 +8,7 @@ import firebase from 'firebase';
 import AdversityPanel from './AdversityPanel';
 import List from './List';
 
-module.exports = React.createClass({
+export default React.createClass({
   mixins: [ReactFireMixin],
   propTypes: {
     userRef: React.PropTypes.instanceOf(firebase.database.Reference).isRequired,

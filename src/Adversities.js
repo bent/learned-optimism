@@ -5,7 +5,7 @@ import { Link, Redirect } from 'react-router';
 import Spinner from 'react-spinner';
 import firebase from 'firebase';
 
-module.exports = React.createClass({
+export default React.createClass({
   mixins: [ReactFireMixin],
   propTypes: {
     userRef: React.PropTypes.instanceOf(firebase.database.Reference).isRequired

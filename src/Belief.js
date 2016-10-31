@@ -11,7 +11,7 @@ import Implications from './Implications';
 
 import AdversityPanel from './AdversityPanel';
 
-module.exports = React.createClass({
+export default React.createClass({
   mixins: [ReactFireMixin],
   propTypes: {
     params: React.PropTypes.shape({

@@ -2,7 +2,7 @@ import React from 'react';
 import { Match, Redirect } from 'react-router';
 import firebase from 'firebase';   
 
-module.exports = ({ component: Component, userRef, ...rest }) => (
+const MatchWhenAuthorized = ({ component: Component, userRef, ...rest }) => (
   <Match {...rest} render={props => (
     // If we have a logged-in user,
     userRef ? (
@@ -16,7 +16,7 @@ module.exports = ({ component: Component, userRef, ...rest }) => (
   )}/>
 )
 
-module.exports.propTypes = {
+MatchWhenAuthorized.propTypes = {
   component: React.PropTypes.func.isRequired,
   userRef: (props, propName, componentName) => {
     const propValue = props[propName];
@@ -28,3 +28,5 @@ module.exports.propTypes = {
     }
   }
 };
+
+export default MatchWhenAuthorized;

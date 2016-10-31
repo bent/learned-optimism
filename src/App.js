@@ -17,7 +17,7 @@ import logo from './logo.svg';
 const auth = firebase.auth();
 const usersRef = firebase.database().ref('users');
 
-module.exports = React.createClass({
+export default React.createClass({
   getInitialState() {
     return {
       userRef: undefined, // `undefined` signifies that we don't know yet if we are logged in or not

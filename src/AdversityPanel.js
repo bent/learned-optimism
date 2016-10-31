@@ -19,4 +19,4 @@ Component.propTypes = {
   ]).isRequired
 };
 
-module.exports = Component;
+export default Component;

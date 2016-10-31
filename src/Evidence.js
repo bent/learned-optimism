@@ -7,7 +7,7 @@ import lowerCaseFirstLetter from './lowerCaseFirstLetter';
 import List from './List';
 import disputationPropTypes from './disputationPropTypes'
 
-module.exports = React.createClass({
+export default React.createClass({
   propTypes: disputationPropTypes,
   mixins: [ReactFireMixin],
   getInitialState() {

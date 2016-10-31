@@ -4,7 +4,7 @@ import { Button, FormControl, Form, FormGroup, Alert } from 'react-bootstrap';
 
 import firebase from './firebase';
 
-module.exports = React.createClass({
+export default React.createClass({
   getInitialState() {
     return {
       email: '',

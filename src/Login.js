@@ -4,7 +4,7 @@ import { Redirect } from 'react-router';
 
 import firebase from './firebase';
 
-module.exports = React.createClass({
+export default React.createClass({
   getInitialState() {
     return {
       email: '',
