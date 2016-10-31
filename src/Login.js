@@ -32,7 +32,7 @@ export default React.createClass({
                    onChange={this.handlePasswordChange}/>
           </FormGroup>
           <ButtonToolbar>
-            <Button type="submit" disabled={isLoggingIn}>
+            <Button type="submit" bsStyle="primary" disabled={isLoggingIn}>
               {isLoggingIn ? 'Logging in...' : 'Login'}
             </Button>
             <Link to={'/register'}>{({onClick}) =>
