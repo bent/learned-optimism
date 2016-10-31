@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-router';
 import { Button, FormControl, Form, FormGroup, Alert } from 'react-bootstrap';
 
 import firebase from './firebase';
@@ -15,24 +14,22 @@ export default React.createClass({
     const {errorMessage} = this.state;
 
     return (
-      this.props.userRef ? 
-        <Redirect to="/"/> :
-        <Form onSubmit={this.handleSubmit}>
-          {errorMessage && <Alert bsStyle="danger">{errorMessage}</Alert>}
-          <FormGroup>
-            <FormControl type='text' 
-                   placeholder='Email' 
-                   value={this.state.email}
-                   onChange={this.handleEmailChange}/>
-          </FormGroup>
-          <FormGroup>
-            <FormControl type='password' 
-                   placeholder='Password' 
-                   value={this.state.password}
-                   onChange={this.handlePasswordChange}/>
-          </FormGroup>
-          <Button bsStyle="primary" type="submit">Register</Button>
-        </Form>
+      <Form onSubmit={this.handleSubmit}>
+        {errorMessage && <Alert bsStyle="danger">{errorMessage}</Alert>}
+        <FormGroup>
+          <FormControl type='text' 
+                 placeholder='Email' 
+                 value={this.state.email}
+                 onChange={this.handleEmailChange}/>
+        </FormGroup>
+        <FormGroup>
+          <FormControl type='password' 
+                 placeholder='Password' 
+                 value={this.state.password}
+                 onChange={this.handlePasswordChange}/>
+        </FormGroup>
+        <Button bsStyle="primary" type="submit">Register</Button>
+      </Form>
     );
   },
   handleEmailChange(e) {
