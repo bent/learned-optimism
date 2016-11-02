@@ -12,7 +12,7 @@ export default React.createClass({
     };
   },
   render() {
-    const {errorMessage} = this.state;
+    const {errorMessage, isRegistering} = this.state;
 
     return (
       <Form onSubmit={this.handleSubmit}>
@@ -35,7 +35,9 @@ export default React.createClass({
                  value={this.state.confirmPassword}
                  onChange={this.handleConfirmPasswordChange}/>
         </FormGroup>
-        <Button bsStyle="primary" type="submit">Register</Button>
+        <Button bsStyle="primary" type="submit" disabled={isRegistering}>
+          {isRegistering ? 'Registering...' : 'Register'}
+        </Button>
       </Form>
     );
   },
@@ -50,11 +52,14 @@ export default React.createClass({
   },
   handleSubmit(e) {
     e.preventDefault();
+
     if (this.state.password === this.state.confirmPassword) {
+      this.setState({isRegistering: true});
+
       firebase.auth().createUserWithEmailAndPassword(
         this.state.email, this.state.password
       ).catch(error => {
-        this.setState({errorMessage: error.message});
+        this.setState({errorMessage: error.message, isRegistering: false});
       });      
     } else {
       this.setState({errorMessage: 'Passwords do not match'});
