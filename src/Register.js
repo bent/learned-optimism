@@ -7,7 +7,8 @@ export default React.createClass({
   getInitialState() {
     return {
       email: '',
-      password: ''
+      password: '',
+      confirmPassword: ''
     };
   },
   render() {
@@ -28,6 +29,12 @@ export default React.createClass({
                  value={this.state.password}
                  onChange={this.handlePasswordChange}/>
         </FormGroup>
+        <FormGroup>
+          <FormControl type='password' 
+                 placeholder='Confirm Password' 
+                 value={this.state.confirmPassword}
+                 onChange={this.handleConfirmPasswordChange}/>
+        </FormGroup>
         <Button bsStyle="primary" type="submit">Register</Button>
       </Form>
     );
@@ -38,12 +45,19 @@ export default React.createClass({
   handlePasswordChange(e) {
     this.setState({password: e.target.value});
   },
+  handleConfirmPasswordChange(e) {
+    this.setState({confirmPassword: e.target.value});
+  },
   handleSubmit(e) {
     e.preventDefault();
-    firebase.auth().createUserWithEmailAndPassword(
-      this.state.email, this.state.password
-    ).catch(error => {
-      this.setState({errorMessage: error.message});
-    });
+    if (this.state.password === this.state.confirmPassword) {
+      firebase.auth().createUserWithEmailAndPassword(
+        this.state.email, this.state.password
+      ).catch(error => {
+        this.setState({errorMessage: error.message});
+      });      
+    } else {
+      this.setState({errorMessage: 'Passwords do not match'});
+    }
   }
 });
