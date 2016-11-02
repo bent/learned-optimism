@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, FormControl, Form, FormGroup, Alert } from 'react-bootstrap';
+import { ButtonToolbar, Button, FormControl, Form, FormGroup, Alert } from 'react-bootstrap';
+import { Link } from 'react-router';
 
 import firebase from './firebase';
 
@@ -35,9 +36,16 @@ export default React.createClass({
                  value={this.state.confirmPassword}
                  onChange={this.handleConfirmPasswordChange}/>
         </FormGroup>
-        <Button bsStyle="primary" type="submit" disabled={isRegistering}>
-          {isRegistering ? 'Registering...' : 'Register'}
-        </Button>
+        <ButtonToolbar>
+          <Button bsStyle="primary" type="submit" disabled={isRegistering}>
+            {isRegistering ? 'Registering...' : 'Register'}
+          </Button>
+          <Link to="/login">{({onClick}) => (
+            <Button onClick={onClick}>
+              Cancel
+            </Button>
+          )}</Link>
+        </ButtonToolbar>
       </Form>
     );
   },
