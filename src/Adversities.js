@@ -53,10 +53,9 @@ export default React.createClass({
               {adversities.map(adversity => {
                 const id = adversity['.key']; 
                 return (
-                  <Link key={id} 
-                      className="list-group-item" 
-                      to={`/adversities/${id}`}>
-                    {adversity.description}
+                  <Link key={id} className="adversity list-group-item" to={`/adversities/${id}`}>
+                    <span>{adversity.description}</span>
+                    <span onClick={this.remove} className="remove glyphicon glyphicon-remove"/>
                   </Link>
                 );
               })}
@@ -83,5 +82,8 @@ export default React.createClass({
     this.bindAsArray(userRef.child('adversities'), 'adversities');    
     // Once the data has loaded for the first time, stop displaying the spinner
     this.firebaseRefs.adversities.once('value').then(() => this.setState({loaded: true}));
+  },
+  remove(adversityId) {
+
   }
 });
