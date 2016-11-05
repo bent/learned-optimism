@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactFireMixin from 'reactfire';
 import { Button, FormControl, Form, FormGroup, InputGroup, ControlLabel, Pager } from 'react-bootstrap';
-import { Link } from 'react-router';
 
 import lowerCaseFirstLetter from './lowerCaseFirstLetter';
 import List from './List';
 import disputationPropTypes from './disputationPropTypes'
+import PagerLink from './PagerLink';
 
 export default React.createClass({
   propTypes: disputationPropTypes,
@@ -54,16 +54,8 @@ export default React.createClass({
         </Form>
         <List value={this.state.evidence}/>
         <Pager>
-          <Link to={previousPath}>{({onClick}) =>
-            <li className="previous">
-              <a href onClick={onClick}>&larr; {previousText}</a>
-            </li>
-          }</Link>
-          <Link to={`/beliefs/${beliefId}/alternatives`}>{({onClick}) =>
-            <li className="next">
-              <a href onClick={onClick}>Alternatives &rarr;</a>
-            </li>
-          }</Link>
+          <PagerLink to={previousPath} previous text={previousText}/>
+          <PagerLink to={`/beliefs/${beliefId}/alternatives`} text="Alternatives"/>
         </Pager>
       </div>
     );
