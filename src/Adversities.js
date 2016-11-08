@@ -52,10 +52,15 @@ export default React.createClass({
             <div className="list-group">
               {adversities.map(adversity => {
                 const id = adversity['.key']; 
+
                 return (
                   <Link key={id} className="adversity list-group-item" to={`/adversities/${id}`}>
                     <span>{adversity.description}</span>
-                    <span onClick={this.remove} className="remove glyphicon glyphicon-remove"/>
+                    <span onClick={e => {
+                            e.preventDefault();
+                            this.remove(id);
+                          }}
+                          className="remove glyphicon glyphicon-remove"/>
                   </Link>
                 );
               })}
@@ -84,6 +89,6 @@ export default React.createClass({
     this.firebaseRefs.adversities.once('value').then(() => this.setState({loaded: true}));
   },
   remove(adversityId) {
-
+    this.firebaseRefs.adversities.child(adversityId).remove().catch(error => console.error(error));
   }
 });
