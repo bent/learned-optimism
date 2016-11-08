@@ -55,7 +55,7 @@ export default React.createClass({
 
                 return (
                   <Link key={id} className="adversity list-group-item" to={`/adversities/${id}`}>
-                    <span>{adversity.description}</span>
+                    {adversity.description}
                     <span onClick={e => {
                             e.preventDefault();
                             this.remove(id);
