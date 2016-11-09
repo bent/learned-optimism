@@ -88,7 +88,24 @@ export default React.createClass({
     // Once the data has loaded for the first time, stop displaying the spinner
     this.firebaseRefs.adversities.once('value').then(() => this.setState({loaded: true}));
   },
+  /**
+   * Remove an adversity and all of its associated beliefs
+   */
   remove(adversityId) {
-    this.firebaseRefs.adversities.child(adversityId).remove().catch(error => console.error(error));
+    // TODO See if there's a way to do this in a transaction
+    this.firebaseRefs.adversities.child(adversityId).remove().then(() => {
+      // Delete the beliefs for the adversity
+      // TODO See if there's a way to do this in one hit rather than iteratively
+      return this.props.userRef.child('beliefs').orderByChild('adversityId').equalTo(adversityId)
+              .once("value").then(snapshot => {
+        let promises = [];
+
+        snapshot.forEach(childSnapshot => {
+          promises = promises.concat(childSnapshot.ref.remove());
+        });
+
+        return Promise.all(promises);
+      });
+    }).catch(error => console.error(error));
   }
 });
