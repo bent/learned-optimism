@@ -73,9 +73,8 @@ export default React.createClass({
     // that we can set up links correctly
     beliefRef.once('value').then(snapshot => {
       const adversityId = snapshot.val().adversityId;
-      this.bindAsObject(
-        userRef.child('adversities').child(adversityId), 'adversity'
-      );
+      this.bindAsObject(userRef.child('adversities').child(adversityId), 'adversity');
+      
       beliefsRef.orderByChild('adversityId').equalTo(adversityId).once('value').then(snapshot => {
         let beliefs = [];
 
