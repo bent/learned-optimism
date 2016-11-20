@@ -5,7 +5,8 @@ import { BrowserRouter, Link, Match } from 'react-router';
 
 import Login from './Login';
 import Register from './Register';
-import AdversitiesRoute from './AdversitiesRoute';
+import Adversities from './Adversities';
+import Adversity from './Adversity';
 import Belief from './Belief';
 import MatchWhenAuthorized from './MatchWhenAuthorized';
 import MatchWhenUnauthorized from './MatchWhenUnauthorized';
@@ -62,7 +63,23 @@ export default React.createClass({
               <MatchWhenUnauthorized pattern="/login" component={Login} userRef={userRef}/>
               <MatchWhenUnauthorized pattern="/register" component={Register} userRef={userRef}/>
 
-              <Match pattern="/adversities" render={() => <AdversitiesRoute userRef={userRef}/>}/>
+              <Match pattern="/adversities" render={props => (
+                <div>
+                  <Match 
+                    exactly
+                    pattern="/adversities" 
+                    render={() => <Adversities userRef={userRef}/>}
+                  />
+                  <Match 
+                    pattern="/adversities/:adversityId" 
+                    render={adversityProps => {
+                      return (
+                        <Adversity userRef={userRef} adversityId={adversityProps.params.adversityId}/>
+                      )
+                    }}
+                  />
+                </div>
+              )}/>
               <MatchWhenAuthorized 
                 userRef={userRef} 
                 pattern="/beliefs/:beliefId" 
