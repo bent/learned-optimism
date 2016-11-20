@@ -67,11 +67,11 @@ export default React.createClass({
                 <div>
                   <Match 
                     exactly
-                    pattern="/adversities" 
+                    pattern={props.pathname}
                     render={() => <Adversities userRef={userRef}/>}
                   />
                   <Match 
-                    pattern="/adversities/:adversityId" 
+                    pattern={`${props.pathname}/:adversityId`}
                     render={adversityProps => {
                       return (
                         <Adversity userRef={userRef} adversityId={adversityProps.params.adversityId}/>
