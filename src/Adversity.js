@@ -12,9 +12,7 @@ export default React.createClass({
   mixins: [ReactFireMixin],
   propTypes: {
     userRef: React.PropTypes.instanceOf(firebase.database.Reference).isRequired,
-    params: React.PropTypes.shape({
-      adversityId: React.PropTypes.string.isRequired
-    }).isRequired,
+    adversityId: React.PropTypes.string.isRequired
   },
   getInitialState() {
     return {
@@ -89,7 +87,7 @@ export default React.createClass({
     });
   },
   _loadData(userRef) {
-    const adversityId = this.props.params.adversityId;
+    const adversityId = this.props.adversityId;
 
     this.bindAsObject(userRef.child('adversities').child(adversityId), 'adversity');
     this.bindAsArray(
