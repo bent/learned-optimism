@@ -20,17 +20,15 @@ export default React.createClass({
     userRef: React.PropTypes.instanceOf(firebase.database.Reference).isRequired
   },
   componentWillMount() {
-    this._loadData(this.props.userRef, this.props.params.beliefId);
+    this._loadData(this.props.params.beliefId);
   },
   componentWillReceiveProps(nextProps) {
-    const nextUserRef = nextProps.userRef;
-    const nextBeliefId = nextProps.params.beliefId;
+    const { beliefId } = nextProps.params;
 
-    if (nextUserRef !== this.props.userRef ||
-        nextBeliefId !== this.props.params.beliefId) {
+    if (beliefId !== this.props.params.beliefId) {
         if (this.firebaseRefs.belief) this.unbind('belief');
         if (this.firebaseRefs.adversity) this.unbind('adversity');
-        this._loadData(nextUserRef, nextBeliefId);
+        this._loadData(beliefId);
     }
   },
   render() {
@@ -64,7 +62,8 @@ export default React.createClass({
       <Spinner/>
     );
   },
-  _loadData(userRef, beliefId) {
+  _loadData(beliefId) {
+    const { userRef } = this.props;
     const beliefsRef = userRef.child('beliefs');
     const beliefRef = beliefsRef.child(beliefId);
     this.bindAsObject(beliefRef, 'belief');
