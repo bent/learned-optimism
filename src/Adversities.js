@@ -16,13 +16,9 @@ export default React.createClass({
     };
   },
   componentWillMount() {
-    this._loadData(this.props.userRef);
-  },
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.userRef !== this.props.userRef) {
-      if (this.firebaseRefs.adversities) this.unbind('adversities');
-      this._loadData(nextProps.userRef);
-    }
+    this.bindAsArray(this.props.userRef.child('adversities'), 'adversities');    
+    // Once the data has loaded for the first time, stop displaying the spinner
+    this.firebaseRefs.adversities.once('value').then(() => this.setState({loaded: true}));
   },
   render() {
     const {adversities, newAdversityId} = this.state;
@@ -82,11 +78,6 @@ export default React.createClass({
     }).then(adversity => {
       this.setState({newAdversityId: adversity.key});
     });
-  },
-  _loadData(userRef) {
-    this.bindAsArray(userRef.child('adversities'), 'adversities');    
-    // Once the data has loaded for the first time, stop displaying the spinner
-    this.firebaseRefs.adversities.once('value').then(() => this.setState({loaded: true}));
   },
   /**
    * Remove an adversity and all of its associated beliefs
