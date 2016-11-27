@@ -75,13 +75,5 @@ export default React.createClass({
     }).then(() => {
       this.setState({description: '', isSaving: false});
     });
-  },
-  handleBack(e) {
-    e.preventDefault();
-    this.props.router.push(`/beliefs/${this.props.beliefRef.key}/alternatives`);
-  },
-  handleNext(e) {
-    e.preventDefault();
-    this.props.router.push(`/beliefs/${this.props.beliefRef.key}/implications`);
   }
 });
