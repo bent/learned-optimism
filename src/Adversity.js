@@ -22,14 +22,19 @@ export default React.createClass({
     };
   },
   componentWillMount() {
-    this._loadData(this.props.userRef);
-  },
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.userRef !== this.props.userRef) {
-      if (this.firebaseRefs.adversity) this.unbind('adversity');
-      if (this.firebaseRefs.beliefs) this.unbind('beliefs');
-      this._loadData(nextProps.userRef);
-    }
+    const adversityId = this.props.params.adversityId;
+    const {userRef} = this.props;
+
+    this.bindAsObject(userRef.child('adversities').child(adversityId), 'adversity');
+    this.bindAsArray(
+      userRef.child('beliefs').orderByChild('adversityId').equalTo(adversityId), 'beliefs'
+    );
+
+    // Once the data has loaded for the first time, stop displaying the spinner
+    Promise.all([
+      this.firebaseRefs.adversity.once('value'),
+      this.firebaseRefs.beliefs.once('value')
+    ]).then(() => this.setState({loaded: true}));
   },
   render() {
     const {beliefs} = this.state;
@@ -87,19 +92,5 @@ export default React.createClass({
         beliefDescription: '', isSaving: false
       });
     });
-  },
-  _loadData(userRef) {
-    const adversityId = this.props.params.adversityId;
-
-    this.bindAsObject(userRef.child('adversities').child(adversityId), 'adversity');
-    this.bindAsArray(
-      userRef.child('beliefs').orderByChild('adversityId').equalTo(adversityId), 'beliefs'
-    );
-
-    // Once the data has loaded for the first time, stop displaying the spinner
-    Promise.all([
-      this.firebaseRefs.adversity.once('value'),
-      this.firebaseRefs.beliefs.once('value')
-    ]).then(() => this.setState({loaded: true}));
   }
 });
