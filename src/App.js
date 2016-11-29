@@ -18,6 +18,50 @@ import logo from './logo.svg';
 const auth = firebase.auth();
 const usersRef = firebase.database().ref('users');
 
+const App = ({userRef, ...rest}) => (
+  <BrowserRouter>
+    <div>
+      <Navbar expanded={rest.navbarExpanded} onToggle={rest.toggle}>
+        <Navbar.Header>
+          <Navbar.Brand>
+            <Link to="/"><img src={logo} role="presentation"/><span>Learned Optimism</span></Link>
+          </Navbar.Brand>
+          {userRef && <Navbar.Toggle/>}
+        </Navbar.Header>
+        {userRef && <Navbar.Collapse>
+          <Nav pullRight>
+            <NavItem onClick={rest.logout}>Logout</NavItem>
+          </Nav>
+        </Navbar.Collapse>}
+      </Navbar>
+
+      { 
+      // If we know for sure whether we are logged-in or not, try to match the route. Otherwise 
+      // just show a spinner.
+      userRef !== undefined ? 
+        <div className='container'>
+          <MatchWhenUnauthorized pattern="/login" component={Login} userRef={userRef}/>
+          <MatchWhenUnauthorized pattern="/register" component={Register} userRef={userRef}/>
+
+          <MatchWhenAuthorized exactly userRef={userRef} pattern="/" component={Adversities}/>
+          <MatchWhenAuthorized 
+            userRef={userRef} 
+            pattern="/adversities/:adversityId" 
+            component={Adversity}
+          />
+          <MatchWhenAuthorized 
+            userRef={userRef} 
+            pattern="/beliefs/:beliefId" 
+            component={Belief}
+          />
+        </div>
+        :
+        <Spinner/>
+      }
+    </div>
+  </BrowserRouter>
+)
+
 export default React.createClass({
   getInitialState() {
     return {
@@ -36,51 +80,7 @@ export default React.createClass({
     this.unsubscribeAuthStateChanged();
   },
   render() {
-    const { userRef } = this.state;
-
-    return (
-      <BrowserRouter>
-        <div>
-          <Navbar expanded={this.state.navbarExpanded} onToggle={this.toggle}>
-            <Navbar.Header>
-              <Navbar.Brand>
-                <Link to="/"><img src={logo} role="presentation"/><span>Learned Optimism</span></Link>
-              </Navbar.Brand>
-              {userRef && <Navbar.Toggle/>}
-            </Navbar.Header>
-            {userRef && <Navbar.Collapse>
-              <Nav pullRight>
-                <NavItem onClick={this.logout}>Logout</NavItem>
-              </Nav>
-            </Navbar.Collapse>}
-          </Navbar>
-
-          { 
-          // If we know for sure whether we are logged-in or not, try to match the route. Otherwise 
-          // just show a spinner.
-          userRef !== undefined ? 
-            <div className='container'>
-              <MatchWhenUnauthorized pattern="/login" component={Login} userRef={userRef}/>
-              <MatchWhenUnauthorized pattern="/register" component={Register} userRef={userRef}/>
-
-              <MatchWhenAuthorized exactly userRef={userRef} pattern="/" component={Adversities}/>
-              <MatchWhenAuthorized 
-                userRef={userRef} 
-                pattern="/adversities/:adversityId" 
-                component={Adversity}
-              />
-              <MatchWhenAuthorized 
-                userRef={userRef} 
-                pattern="/beliefs/:beliefId" 
-                component={Belief}
-              />
-            </div>
-            :
-            <Spinner/>
-          }
-        </div>
-      </BrowserRouter>
-    );
+    return <App {...{...this.state, toggle: this.toggle, logout: this.logout}}/>;
   },
   toggle() {
     this.setState(state => ({navbarExpanded: !state.navbarExpanded}));
