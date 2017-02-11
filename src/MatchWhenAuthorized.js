@@ -1,12 +1,12 @@
 import React from 'react';
-import { Match, Redirect } from 'react-router';
+import { Route, Redirect } from 'react-router-dom';
 import matchPropTypes from './matchPropTypes';
 
 /**
  * If we have a logged-in user, display the component, otherwise redirect to login page.
  */
 const MatchWhenAuthorized = ({ component: Component, userRef, ...rest }) => (
-  <Match {...rest} render={props => (
+  <Route {...rest} render={props => (
     userRef ? <Component userRef={userRef} {...props}/> : <Redirect to={{pathname: '/login'}}/>
   )}/>
 )

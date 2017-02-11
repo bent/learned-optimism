@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import Spinner from 'react-spinner';
-import { BrowserRouter, Link } from 'react-router';
+import { BrowserRouter, Link } from 'react-router-dom';
 
 import Login from './Login';
 import Register from './Register';

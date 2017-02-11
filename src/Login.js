@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, ButtonToolbar, FormControl, Form, FormGroup, Alert } from 'react-bootstrap';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import firebase from './firebase';
 

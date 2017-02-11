@@ -3,7 +3,7 @@ import ReactFireMixin from 'reactfire';
 import Spinner from 'react-spinner';
 import firebase from 'firebase';
 
-import { Match } from 'react-router';
+import { Route } from 'react-router-dom';
 
 import Evidence from './Evidence';
 import Alternatives from './Alternatives';
@@ -36,21 +36,21 @@ export default React.createClass({
 
     return(this.state && this.state.belief && this.state.beliefs ?
       <AdversityPanel value={this.state.adversity}>
-        <Match pattern={`${pathname}/evidence`} render={() => 
+        <Route path={`${pathname}/evidence`} render={() => 
           <Evidence 
             beliefRef={this.firebaseRefs.belief} 
             belief={this.state.belief} 
             beliefs={this.state.beliefs}
           />
         }/>
-        <Match pattern={`${pathname}/alternatives`} render={() => 
+        <Route path={`${pathname}/alternatives`} render={() => 
           <Alternatives
             beliefRef={this.firebaseRefs.belief} 
             belief={this.state.belief} 
             beliefs={this.state.beliefs}
           />
         }/>
-        <Match pattern={`${pathname}/implications`} render={() => 
+        <Route path={`${pathname}/implications`} render={() => 
           <Implications
             beliefRef={this.firebaseRefs.belief} 
             belief={this.state.belief} 

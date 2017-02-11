@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactFireMixin from 'reactfire';
 import { Button, FormControl, Form, FormGroup, InputGroup } from 'react-bootstrap';
-import { Link, Redirect } from 'react-router';
+import { Link, Redirect } from 'react-router-dom';
 import Spinner from 'react-spinner';
 import firebase from 'firebase';
 

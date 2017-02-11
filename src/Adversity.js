@@ -2,7 +2,7 @@ import React from 'react';
 import ReactFireMixin from 'reactfire';
 import { Button, ButtonToolbar, FormControl, Form, FormGroup, InputGroup, ControlLabel } from 'react-bootstrap';
 import Spinner from 'react-spinner';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import firebase from 'firebase';
 
 import AdversityPanel from './AdversityPanel';
