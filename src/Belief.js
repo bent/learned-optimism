@@ -20,12 +20,12 @@ export default React.createClass({
     userRef: React.PropTypes.instanceOf(firebase.database.Reference).isRequired
   },
   componentWillMount() {
-    this._loadData(this.props.params.beliefId);
+    this._loadData(this.props.match.params.beliefId);
   },
   componentWillReceiveProps(nextProps) {
-    const { beliefId } = nextProps.params;
+    const { beliefId } = nextProps.match.params;
 
-    if (beliefId !== this.props.params.beliefId) {
+    if (beliefId !== this.props.match.params.beliefId) {
         if (this.firebaseRefs.belief) this.unbind('belief');
         if (this.firebaseRefs.adversity) this.unbind('adversity');
         this._loadData(beliefId);

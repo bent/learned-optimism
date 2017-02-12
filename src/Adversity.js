@@ -24,7 +24,7 @@ export default React.createClass({
     };
   },
   componentWillMount() {
-    const {adversityId} = this.props.params;
+    const {adversityId} = this.props.match.params;
     const {userRef} = this.props;
 
     this.bindAsObject(userRef.child('adversities').child(adversityId), 'adversity');
