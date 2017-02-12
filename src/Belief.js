@@ -14,8 +14,10 @@ import AdversityPanel from './AdversityPanel';
 export default React.createClass({
   mixins: [ReactFireMixin],
   propTypes: {
-    params: React.PropTypes.shape({
-      beliefId: React.PropTypes.string.isRequired
+    match: React.PropTypes.shape({    
+      params: React.PropTypes.shape({
+        beliefId: React.PropTypes.string.isRequired
+      }).isRequired
     }).isRequired,
     userRef: React.PropTypes.instanceOf(firebase.database.Reference).isRequired
   },
@@ -32,25 +34,25 @@ export default React.createClass({
     }
   },
   render() {
-    const { pathname } = this.props;
+    const { url } = this.props.match;
 
     return(this.state && this.state.belief && this.state.beliefs ?
       <AdversityPanel value={this.state.adversity}>
-        <Route path={`${pathname}/evidence`} render={() => 
+        <Route path={`${url}/evidence`} render={() => 
           <Evidence 
             beliefRef={this.firebaseRefs.belief} 
             belief={this.state.belief} 
             beliefs={this.state.beliefs}
           />
         }/>
-        <Route path={`${pathname}/alternatives`} render={() => 
+        <Route path={`${url}/alternatives`} render={() => 
           <Alternatives
             beliefRef={this.firebaseRefs.belief} 
             belief={this.state.belief} 
             beliefs={this.state.beliefs}
           />
         }/>
-        <Route path={`${pathname}/implications`} render={() => 
+        <Route path={`${url}/implications`} render={() => 
           <Implications
             beliefRef={this.firebaseRefs.belief} 
             belief={this.state.belief} 
