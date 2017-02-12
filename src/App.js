@@ -40,10 +40,10 @@ const App = ({userRef, ...rest}) => (
       // just show a spinner.
       userRef !== undefined ? 
         <div className='container'>
-          <MatchWhenUnauthorized path="/login" component={Login} userRef={userRef}/>
-          <MatchWhenUnauthorized path="/register" component={Register} userRef={userRef}/>
-
           <Switch>
+            <MatchWhenUnauthorized path="/login" component={Login} userRef={userRef}/>
+            <MatchWhenUnauthorized path="/register" component={Register} userRef={userRef}/>
+
             <MatchWhenAuthorized 
               userRef={userRef} 
               path="/adversities/:adversityId" 

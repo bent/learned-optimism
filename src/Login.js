@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, ButtonToolbar, FormControl, Form, FormGroup, Alert } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 
 import firebase from './firebase';
 
@@ -33,9 +32,7 @@ export default React.createClass({
           <Button type="submit" bsStyle="primary" disabled={isLoggingIn}>
             {isLoggingIn ? 'Logging in...' : 'Login'}
           </Button>
-          <Link to={'/register'}>{({onClick}) =>
-            <Button bsStyle="link" onClick={onClick}>Register</Button>
-          }</Link>
+          <Button bsStyle="link" href="/register">Register</Button>
         </ButtonToolbar>
       </Form>
     );
