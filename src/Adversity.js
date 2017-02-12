@@ -2,7 +2,6 @@ import React from 'react';
 import ReactFireMixin from 'reactfire';
 import { Button, ButtonToolbar, FormControl, Form, FormGroup, InputGroup, ControlLabel } from 'react-bootstrap';
 import Spinner from 'react-spinner';
-import { Link } from 'react-router-dom';
 import firebase from 'firebase';
 
 import AdversityPanel from './AdversityPanel';
@@ -62,14 +61,11 @@ export default React.createClass({
         <List value={beliefs}/>
         { beliefs.length > 0 ? 
           <ButtonToolbar>
-            <Link to={`/beliefs/${beliefs[0]['.key']}/evidence`}>{
-              ({onClick}) =>
-                <Button onClick={onClick}
-                        bsStyle="primary"
-                        block>
-                  Start Disputation
-                </Button>
-            }</Link>
+            <Button href={`/beliefs/${beliefs[0]['.key']}/evidence`}
+                    bsStyle="primary"
+                    block>
+              Start Disputation
+            </Button>
           </ButtonToolbar>
           :
           <div/>
