@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import Spinner from 'react-spinner';
-import { BrowserRouter, Link } from 'react-router-dom';
+import { BrowserRouter, Link, Switch } from 'react-router-dom';
 
 import Login from './Login';
 import Register from './Register';
@@ -43,17 +43,19 @@ const App = ({userRef, ...rest}) => (
           <MatchWhenUnauthorized path="/login" component={Login} userRef={userRef}/>
           <MatchWhenUnauthorized path="/register" component={Register} userRef={userRef}/>
 
-          <MatchWhenAuthorized exactly userRef={userRef} path="/" component={Adversities}/>
-          <MatchWhenAuthorized 
-            userRef={userRef} 
-            path="/adversities/:adversityId" 
-            component={Adversity}
-          />
-          <MatchWhenAuthorized 
-            userRef={userRef} 
-            path="/beliefs/:beliefId" 
-            component={Belief}
-          />
+          <Switch>
+            <MatchWhenAuthorized 
+              userRef={userRef} 
+              path="/adversities/:adversityId" 
+              component={Adversity}
+            />
+            <MatchWhenAuthorized 
+              userRef={userRef} 
+              path="/beliefs/:beliefId" 
+              component={Belief}
+            />
+            <MatchWhenAuthorized exactly userRef={userRef} path="/" component={Adversities}/>
+          </Switch>
         </div>
         :
         <Spinner/>
