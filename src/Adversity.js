@@ -12,9 +12,11 @@ export default React.createClass({
   mixins: [ReactFireMixin],
   propTypes: {
     userRef: React.PropTypes.instanceOf(firebase.database.Reference).isRequired,
-    params: React.PropTypes.shape({
-      adversityId: React.PropTypes.string.isRequired
-    }).isRequired,
+    match: React.PropTypes.shape({
+      params: React.PropTypes.shape({
+        adversityId: React.PropTypes.string.isRequired
+      }).isRequired,
+    })
   },
   getInitialState() {
     return {
