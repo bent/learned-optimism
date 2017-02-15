@@ -8,8 +8,8 @@ import Register from './Register';
 import Adversities from './Adversities';
 import Adversity from './Adversity';
 import Belief from './Belief';
-import MatchWhenAuthorized from './MatchWhenAuthorized';
-import MatchWhenUnauthorized from './MatchWhenUnauthorized';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 
 import firebase from './firebase';
 
@@ -41,20 +41,20 @@ const App = ({userRef, ...rest}) => (
       userRef !== undefined ? 
         <div className='container'>
           <Switch>
-            <MatchWhenUnauthorized path="/login" component={Login} userRef={userRef}/>
-            <MatchWhenUnauthorized path="/register" component={Register} userRef={userRef}/>
+            <PublicRoute path="/login" component={Login} userRef={userRef}/>
+            <PublicRoute path="/register" component={Register} userRef={userRef}/>
 
-            <MatchWhenAuthorized 
+            <PrivateRoute 
               userRef={userRef} 
               path="/adversities/:adversityId" 
               component={Adversity}
             />
-            <MatchWhenAuthorized 
+            <PrivateRoute 
               userRef={userRef} 
               path="/beliefs/:beliefId" 
               component={Belief}
             />
-            <MatchWhenAuthorized exactly userRef={userRef} path="/" component={Adversities}/>
+            <PrivateRoute exactly userRef={userRef} path="/" component={Adversities}/>
           </Switch>
         </div>
         :
