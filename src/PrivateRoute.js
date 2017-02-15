@@ -5,9 +5,9 @@ import matchPropTypes from './matchPropTypes';
 /**
  * If we have a logged-in user, display the component, otherwise redirect to login page.
  */
-const PrivateRoute = ({ component: Component, userRef, ...rest }) => (
+const PrivateRoute = ({ component: Component, user, ...rest }) => (
   <Route {...rest} render={props => (
-    userRef ? <Component userRef={userRef} {...props}/> : <Redirect to={{pathname: '/login'}}/>
+    user ? <Component user={user} {...props}/> : <Redirect to={{pathname: '/login'}}/>
   )}/>
 )
 

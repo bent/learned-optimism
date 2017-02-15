@@ -4,13 +4,14 @@ import { Button, ButtonToolbar, FormControl, Form, FormGroup, InputGroup, Contro
 import Spinner from 'react-spinner';
 import firebase from 'firebase';
 
+import userRefFor from './userRef'
 import AdversityPanel from './AdversityPanel';
 import List from './List';
 
 export default React.createClass({
   mixins: [ReactFireMixin],
   propTypes: {
-    userRef: React.PropTypes.instanceOf(firebase.database.Reference).isRequired,
+    user: React.PropTypes.instanceOf(firebase.User).isRequired,
     match: React.PropTypes.shape({
       params: React.PropTypes.shape({
         adversityId: React.PropTypes.string.isRequired
@@ -24,7 +25,7 @@ export default React.createClass({
   },
   componentWillMount() {
     const {adversityId} = this.props.match.params;
-    const {userRef} = this.props;
+    const userRef = userRefFor(this.props.user);
 
     this.bindAsObject(userRef.child('adversities').child(adversityId), 'adversity');
     this.bindAsArray(

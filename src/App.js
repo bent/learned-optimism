@@ -16,9 +16,8 @@ import firebase from './firebase';
 import logo from './logo.svg';
 
 const auth = firebase.auth();
-const usersRef = firebase.database().ref('users');
 
-const App = ({userRef, ...rest}) => (
+const App = ({user, ...rest}) => (
   <BrowserRouter>
     <div>
       <Navbar expanded={rest.navbarExpanded} onToggle={rest.toggle}>
@@ -26,9 +25,9 @@ const App = ({userRef, ...rest}) => (
           <Navbar.Brand>
             <Link to="/"><img src={logo} role="presentation"/><span>Learned Optimism</span></Link>
           </Navbar.Brand>
-          {userRef && <Navbar.Toggle/>}
+          {user && <Navbar.Toggle/>}
         </Navbar.Header>
-        {userRef && <Navbar.Collapse>
+        {user && <Navbar.Collapse>
           <Nav pullRight>
             <NavItem onClick={rest.logout}>Logout</NavItem>
           </Nav>
@@ -38,23 +37,23 @@ const App = ({userRef, ...rest}) => (
       { 
       // If we know for sure whether we are logged-in or not, try to match the route. Otherwise 
       // just show a spinner.
-      userRef !== undefined ? 
+      user !== undefined ? 
         <div className='container'>
           <Switch>
-            <PublicRoute path="/login" component={Login} userRef={userRef}/>
-            <PublicRoute path="/register" component={Register} userRef={userRef}/>
+            <PublicRoute path="/login" component={Login} user={user}/>
+            <PublicRoute path="/register" component={Register} user={user}/>
 
             <PrivateRoute 
-              userRef={userRef} 
+              user={user} 
               path="/adversities/:adversityId" 
               component={Adversity}
             />
             <PrivateRoute 
-              userRef={userRef} 
+              user={user} 
               path="/beliefs/:beliefId" 
               component={Belief}
             />
-            <PrivateRoute exactly userRef={userRef} path="/" component={Adversities}/>
+            <PrivateRoute exactly user={user} path="/" component={Adversities}/>
           </Switch>
         </div>
         :
@@ -67,16 +66,12 @@ const App = ({userRef, ...rest}) => (
 export default React.createClass({
   getInitialState() {
     return {
-      userRef: undefined, // `undefined` signifies that we don't know yet if we are logged in or not
+      user: undefined, // `undefined` signifies that we don't know yet if we are logged in or not
       navbarExpanded: false
     };
   },
   componentWillMount() {
-    this.unsubscribeAuthStateChanged = auth.onAuthStateChanged(user => {
-      this.setState({
-        userRef: user ? usersRef.child(user.uid) : user
-      });
-    });
+    this.unsubscribeAuthStateChanged = auth.onAuthStateChanged(user => this.setState({user}));
   },
   componentWillUnmount() {
     this.unsubscribeAuthStateChanged();
