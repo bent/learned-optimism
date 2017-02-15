@@ -8,8 +8,8 @@ import { Route } from 'react-router-dom';
 import Evidence from './Evidence';
 import Alternatives from './Alternatives';
 import Implications from './Implications';
-
 import AdversityPanel from './AdversityPanel';
+import userRefFor from './userRef';
 
 export default React.createClass({
   mixins: [ReactFireMixin],
@@ -19,7 +19,7 @@ export default React.createClass({
         beliefId: React.PropTypes.string.isRequired
       }).isRequired
     }).isRequired,
-    userRef: React.PropTypes.instanceOf(firebase.database.Reference).isRequired
+    user: React.PropTypes.instanceOf(firebase.User).isRequired
   },
   componentWillMount() {
     this._loadData(this.props.match.params.beliefId);
@@ -65,7 +65,7 @@ export default React.createClass({
     );
   },
   _loadData(beliefId) {
-    const { userRef } = this.props;
+    const userRef = userRefFor(this.props.user);
     const beliefsRef = userRef.child('beliefs');
     const beliefRef = beliefsRef.child(beliefId);
     this.bindAsObject(beliefRef, 'belief');

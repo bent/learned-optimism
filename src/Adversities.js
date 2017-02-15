@@ -5,10 +5,12 @@ import { Link, Redirect } from 'react-router-dom';
 import Spinner from 'react-spinner';
 import firebase from 'firebase';
 
+import userRefFor from './userRef'
+
 export default React.createClass({
   mixins: [ReactFireMixin],
   propTypes: {
-    userRef: React.PropTypes.instanceOf(firebase.database.Reference).isRequired
+    user: React.PropTypes.instanceOf(firebase.User).isRequired
   },
   getInitialState() {
     return {
@@ -16,7 +18,7 @@ export default React.createClass({
     };
   },
   componentWillMount() {
-    this.bindAsArray(this.props.userRef.child('adversities'), 'adversities');    
+    this.bindAsArray(userRefFor(this.props.user).child('adversities'), 'adversities');    
     // Once the data has loaded for the first time, stop displaying the spinner
     this.firebaseRefs.adversities.once('value').then(() => this.setState({loaded: true}));
   },
@@ -87,7 +89,7 @@ export default React.createClass({
     this.firebaseRefs.adversities.child(adversityId).remove().then(() => {
       // Delete the beliefs for the adversity
       // TODO See if there's a way to do this in one hit rather than iteratively
-      return this.props.userRef.child('beliefs').orderByChild('adversityId').equalTo(adversityId)
+      return userRefFor(this.props.user).child('beliefs').orderByChild('adversityId').equalTo(adversityId)
               .once("value").then(snapshot => {
         let promises = [];
 

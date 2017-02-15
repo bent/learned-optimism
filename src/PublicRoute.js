@@ -5,9 +5,9 @@ import matchPropTypes from './matchPropTypes';
 /**
  * If we have a logged-in user, redirect to the home page. Otherwise, display the component.
  */
-const PublicRoute = ({ component: Component, userRef, ...rest }) => (
+const PublicRoute = ({ component: Component, user, ...rest }) => (
   <Route {...rest} render={props => (
-    userRef ? <Redirect to={{pathname: '/'}}/> : <Component userRef={userRef} {...props}/>
+    user ? <Redirect to={{pathname: '/'}}/> : <Component user={user} {...props}/>
   )}/>
 )
 

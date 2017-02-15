@@ -6,10 +6,10 @@ import firebase from 'firebase';
  */
 export default {
   component: React.PropTypes.func.isRequired,
-  userRef: (props, propName, componentName) => {
+  user: (props, propName, componentName) => {
     const propValue = props[propName];
 
-    if (propValue !== null && !(propValue instanceof firebase.database.Reference)) {
+    if (propValue !== null && !(propValue instanceof firebase.User)) {
       return new Error(
         `Prop '${propName}' on component '${componentName} has invalid value '${propValue}'`
       );
