@@ -34,35 +34,24 @@ export default React.createClass({
     }
   },
   render() {
-    const { path } = this.props.match;
+    if (this.state && this.state.belief && this.state.beliefs) {
+      const { path } = this.props.match;
+      const disputationProps = { 
+        beliefRef:  this.firebaseRefs.belief, 
+        belief: this.state.belief, 
+        beliefs: this.state.beliefs
+      }
 
-    return(this.state && this.state.belief && this.state.beliefs ?
-      <AdversityPanel value={this.state.adversity}>
-        <Route path={`${path}/evidence`} render={() => 
-          <Evidence 
-            beliefRef={this.firebaseRefs.belief} 
-            belief={this.state.belief} 
-            beliefs={this.state.beliefs}
-          />
-        }/>
-        <Route path={`${path}/alternatives`} render={() => 
-          <Alternatives
-            beliefRef={this.firebaseRefs.belief} 
-            belief={this.state.belief} 
-            beliefs={this.state.beliefs}
-          />
-        }/>
-        <Route path={`${path}/implications`} render={() => 
-          <Implications
-            beliefRef={this.firebaseRefs.belief} 
-            belief={this.state.belief} 
-            beliefs={this.state.beliefs}
-          />
-        }/>
-      </AdversityPanel>
-      :
-      <Spinner/>
-    );
+      return (
+        <AdversityPanel value={this.state.adversity}>
+          <Route path={`${path}/evidence`} render={() => <Evidence {...disputationProps}/>}/>
+          <Route path={`${path}/alternatives`} render={() =>  <Alternatives {...disputationProps}/>}/>
+          <Route path={`${path}/implications`} render={() => <Implications {...disputationProps}/>}/>
+        </AdversityPanel>
+      )
+    } else {
+      return <Spinner/>
+    }
   },
   _loadData(beliefId) {
     const userRef = userRefFor(this.props.user);
