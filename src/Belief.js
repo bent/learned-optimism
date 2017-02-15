@@ -34,25 +34,25 @@ export default React.createClass({
     }
   },
   render() {
-    const { url } = this.props.match;
+    const { path } = this.props.match;
 
     return(this.state && this.state.belief && this.state.beliefs ?
       <AdversityPanel value={this.state.adversity}>
-        <Route path={`${url}/evidence`} render={() => 
+        <Route path={`${path}/evidence`} render={() => 
           <Evidence 
             beliefRef={this.firebaseRefs.belief} 
             belief={this.state.belief} 
             beliefs={this.state.beliefs}
           />
         }/>
-        <Route path={`${url}/alternatives`} render={() => 
+        <Route path={`${path}/alternatives`} render={() => 
           <Alternatives
             beliefRef={this.firebaseRefs.belief} 
             belief={this.state.belief} 
             beliefs={this.state.beliefs}
           />
         }/>
-        <Route path={`${url}/implications`} render={() => 
+        <Route path={`${path}/implications`} render={() => 
           <Implications
             beliefRef={this.firebaseRefs.belief} 
             belief={this.state.belief} 
