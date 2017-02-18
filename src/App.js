@@ -45,7 +45,7 @@ const App = ({user, ...rest}) => (
 
             <PrivateRoute path="/adversities/:adversityId" component={Adversity} user={user}/>
             <PrivateRoute path="/beliefs/:beliefId" component={Belief} user={user}/>
-            <PrivateRoute exactly user={user} path="/" component={Adversities}/>
+            <PrivateRoute path="/" exactly component={Adversities} user={user} />
           </Switch>
         </div>
         :
