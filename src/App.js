@@ -23,7 +23,7 @@ const App = ({user, ...rest}) => (
       <Navbar expanded={rest.navbarExpanded} onToggle={rest.toggle}>
         <Navbar.Header>
           <Navbar.Brand>
-            <Link to="/"><img src={logo} role="presentation"/><span>Learned Optimism</span></Link>
+            <Link to="/adversities"><img src={logo} role="presentation"/><span>Learned Optimism</span></Link>
           </Navbar.Brand>
           {user && <Navbar.Toggle/>}
         </Navbar.Header>
@@ -45,7 +45,7 @@ const App = ({user, ...rest}) => (
 
             <PrivateRoute path="/adversities/:adversityId" component={Adversity} user={user}/>
             <PrivateRoute path="/beliefs/:beliefId" component={Belief} user={user}/>
-            <PrivateRoute path="/" exactly component={Adversities} user={user} />
+            <PrivateRoute path="/adversities" component={Adversities} user={user} />
           </Switch>
         </div>
         :
