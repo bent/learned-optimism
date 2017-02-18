@@ -7,7 +7,7 @@ import matchPropTypes from './matchPropTypes';
  */
 const PublicRoute = ({ component: Component, user, ...rest }) => (
   <Route {...rest} render={props => (
-    user ? <Redirect to={{pathname: '/'}}/> : <Component user={user} {...props}/>
+    user ? <Redirect to={{pathname: '/todos'}}/> : <Component user={user} {...props}/>
   )}/>
 )
 

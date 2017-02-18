@@ -44,11 +44,11 @@ export default React.createClass({
     return (this.state.loaded ? 
       <AdversityPanel value={this.state.adversity}>
         <Form onSubmit={this.handleSubmit}>
-          <ControlLabel>What beliefs do I have about this adversity?</ControlLabel>
+          <ControlLabel>Subtasks</ControlLabel>
           <FormGroup>
             <InputGroup>
               <FormControl type='text' 
-                           placeholder='Belief' 
+                           placeholder='Enter a subtask' 
                            value={this.state.beliefDescription}
                            onChange={this.handleChange}/>
               <InputGroup.Button>
@@ -60,17 +60,6 @@ export default React.createClass({
           </FormGroup>
         </Form>
         <List value={beliefs}/>
-        { beliefs.length > 0 ? 
-          <ButtonToolbar>
-            <Button href={`/beliefs/${beliefs[0]['.key']}/evidence`}
-                    bsStyle="primary"
-                    block>
-              Start Disputation
-            </Button>
-          </ButtonToolbar>
-          :
-          <div/>
-        }
       </AdversityPanel>:
       <Spinner/>
     );

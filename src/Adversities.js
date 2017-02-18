@@ -38,11 +38,11 @@ export default React.createClass({
               <FormGroup>
                 <InputGroup>
                   <FormControl type='text' 
-                         placeholder='Adversity' 
+                         placeholder='Enter todo here' 
                          value={this.state.description}
                          onChange={this.handleChange}/>
                   <InputGroup.Button>
-                    <Button type="submit" disabled={this.state.isSaving}>Go</Button>
+                    <Button type="submit" disabled={this.state.isSaving}>Add</Button>
                   </InputGroup.Button>
                 </InputGroup>
               </FormGroup>
@@ -52,7 +52,7 @@ export default React.createClass({
                 const id = adversity['.key']; 
 
                 return (
-                  <Link key={id} className="adversity list-group-item" to={`/adversities/${id}`}>
+                  <Link key={id} className="adversity list-group-item" to={`/todos/${id}`}>
                     {adversity.description}
                     <span onClick={e => {
                             e.preventDefault();
