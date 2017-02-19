@@ -14,8 +14,9 @@ h2 {
 .navbar-brand > img {
   width: 30px;
   display: inline;
-  margin-right: 5px;
-  margin-top: -8px;
+  margin-right: 8px;
+  margin-top: -5px;
+  margin-left: 5px;
 }
 
 .navbar-default .navbar-toggle {

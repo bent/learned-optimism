@@ -13,8 +13,6 @@ import PublicRoute from './PublicRoute';
 
 import firebase from './firebase';
 
-import logo from './logo.svg';
-
 const auth = firebase.auth();
 
 const App = ({user, ...rest}) => (
@@ -23,7 +21,7 @@ const App = ({user, ...rest}) => (
       <Navbar expanded={rest.navbarExpanded} onToggle={rest.toggle}>
         <Navbar.Header>
           <Navbar.Brand>
-            <Link to="/todos"><img src={logo} role="presentation"/><span>Yet Another Todo List</span></Link>
+            <Link to="/todos"><img src={"/logo.png"} role="presentation"/><span>Yet Another Todo List</span></Link>
           </Navbar.Brand>
           {user && <Navbar.Toggle/>}
         </Navbar.Header>
