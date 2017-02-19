@@ -78,7 +78,7 @@ export default React.createClass({
     this.firebaseRefs.adversities.push({
       description: this.state.description
     }).then(adversity => {
-      this.setState({newAdversityId: adversity.key});
+      this.setState({description: ""});
     });
   },
   /**

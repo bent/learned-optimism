@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactFireMixin from 'reactfire';
-import { Button, ButtonToolbar, FormControl, Form, FormGroup, InputGroup, ControlLabel } from 'react-bootstrap';
+import { Button, FormControl, Form, FormGroup, InputGroup, ControlLabel } from 'react-bootstrap';
 import Spinner from 'react-spinner';
 import firebase from 'firebase';
 
