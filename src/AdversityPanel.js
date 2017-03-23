@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const Component = props => {
-  return(
+  return (
     <div>
       <h2>{props.value.description}</h2>
       {props.children}

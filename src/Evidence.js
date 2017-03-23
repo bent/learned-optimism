@@ -1,39 +1,47 @@
-import React from 'react';
-import ReactFireMixin from 'reactfire';
-import { Button, FormControl, Form, FormGroup, InputGroup, ControlLabel, Pager } from 'react-bootstrap';
+import React from "react";
+import ReactFireMixin from "reactfire";
+import {
+  Button,
+  FormControl,
+  Form,
+  FormGroup,
+  InputGroup,
+  ControlLabel,
+  Pager
+} from "react-bootstrap";
 
-import lowerCaseFirstLetter from './lowerCaseFirstLetter';
-import List from './List';
-import disputationPropTypes from './disputationPropTypes'
-import PagerLink from './PagerLink';
+import lowerCaseFirstLetter from "./lowerCaseFirstLetter";
+import List from "./List";
+import disputationPropTypes from "./disputationPropTypes";
+import PagerLink from "./PagerLink";
 
 export default React.createClass({
   propTypes: disputationPropTypes,
   mixins: [ReactFireMixin],
   getInitialState() {
     return {
-      description: ''
+      description: ""
     };
   },
   componentWillMount() {
-    this.bindAsArray(this.props.beliefRef.child('evidence'), 'evidence');
+    this.bindAsArray(this.props.beliefRef.child("evidence"), "evidence");
   },
   render() {
     const belief = this.props.belief;
     const beliefs = this.props.beliefs;
-    const beliefId = belief['.key'];
-    const index = beliefs.findIndex(b => b['.key'] === beliefId);
+    const beliefId = belief[".key"];
+    const index = beliefs.findIndex(b => b[".key"] === beliefId);
     if (index < 0) throw new Error(`Belief with ID ${beliefId} not found`);
 
-    let previousText = 'Beliefs';
+    let previousText = "Beliefs";
     let previousPath = `/adversities/${belief.adversityId}`;
 
     if (index > 0) {
-      previousText = 'Prev. Belief';
-      previousPath = `/beliefs/${beliefs[index - 1]['.key']}/alternatives`;
+      previousText = "Prev. Belief";
+      previousPath = `/beliefs/${beliefs[index - 1][".key"]}/alternatives`;
     }
 
-    return(
+    return (
       <div>
         <Form onSubmit={this.handleSubmit}>
           <ControlLabel>
@@ -42,36 +50,45 @@ export default React.createClass({
           </ControlLabel>
           <FormGroup>
             <InputGroup>
-              <FormControl type='text' 
-                           placeholder='Evidence' 
-                           value={this.state.description}
-                           onChange={this.handleChange}/>
+              <FormControl
+                type="text"
+                placeholder="Evidence"
+                value={this.state.description}
+                onChange={this.handleChange}
+              />
               <InputGroup.Button>
-                <Button type="submit" disabled={this.state.isSaving}>Add</Button>
+                <Button type="submit" disabled={this.state.isSaving}>
+                  Add
+                </Button>
               </InputGroup.Button>
             </InputGroup>
           </FormGroup>
         </Form>
-        <List value={this.state.evidence}/>
+        <List value={this.state.evidence} />
         <Pager>
-          <PagerLink to={previousPath} previous text={previousText}/>
-          <PagerLink to={`/beliefs/${beliefId}/alternatives`} text="Alternatives"/>
+          <PagerLink to={previousPath} previous text={previousText} />
+          <PagerLink
+            to={`/beliefs/${beliefId}/alternatives`}
+            text="Alternatives"
+          />
         </Pager>
       </div>
     );
   },
   handleChange(e) {
     e.preventDefault();
-    this.setState({description: e.target.value});
+    this.setState({ description: e.target.value });
   },
   handleSubmit(e) {
     e.preventDefault();
-    this.setState({isSaving: true});
+    this.setState({ isSaving: true });
 
-    this.firebaseRefs.evidence.push({
-      description: this.state.description
-    }).then(() => {
-      this.setState({description: '', isSaving: false});
-    });
+    this.firebaseRefs.evidence
+      .push({
+        description: this.state.description
+      })
+      .then(() => {
+        this.setState({ description: "", isSaving: false });
+      });
   }
 });

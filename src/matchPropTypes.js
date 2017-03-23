@@ -1,5 +1,5 @@
-import React from 'react';
-import firebase from 'firebase';
+import React from "react";
+import firebase from "firebase";
 
 /**
  * PropTypes shared by components that check authorization status

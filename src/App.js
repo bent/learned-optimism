@@ -1,59 +1,73 @@
-import React from 'react';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
-import Spinner from 'react-spinner';
-import { BrowserRouter, Link, Switch } from 'react-router-dom';
+import React from "react";
+import { Navbar, Nav, NavItem } from "react-bootstrap";
+import Spinner from "react-spinner";
+import { BrowserRouter, Link, Switch } from "react-router-dom";
 
-import Login from './Login';
-import Register from './Register';
-import Adversities from './Adversities';
-import Adversity from './Adversity';
-import Belief from './Belief';
-import PrivateRoute from './PrivateRoute';
-import PublicRoute from './PublicRoute';
+import Login from "./Login";
+import Register from "./Register";
+import Adversities from "./Adversities";
+import Adversity from "./Adversity";
+import Belief from "./Belief";
+import PrivateRoute from "./PrivateRoute";
+import PublicRoute from "./PublicRoute";
 
-import firebase from './firebase';
+import firebase from "./firebase";
 
-import logo from './logo.svg';
+import logo from "./logo.svg";
 
 const auth = firebase.auth();
 
-const App = ({user, ...rest}) => (
+const App = ({ user, ...rest }) => (
   <BrowserRouter>
     <div>
       <Navbar expanded={rest.navbarExpanded} onToggle={rest.toggle}>
         <Navbar.Header>
           <Navbar.Brand>
-            <Link to="/"><img src={logo} role="presentation"/><span>Learned Optimism</span></Link>
+            <Link to="/">
+              <img src={logo} role="presentation" />
+              <span>Learned Optimism</span>
+            </Link>
           </Navbar.Brand>
-          {user && <Navbar.Toggle/>}
+          {user && <Navbar.Toggle />}
         </Navbar.Header>
-        {user && <Navbar.Collapse>
-          <Nav pullRight>
-            <NavItem onClick={rest.logout}>Logout</NavItem>
-          </Nav>
-        </Navbar.Collapse>}
+        {user &&
+          <Navbar.Collapse>
+            <Nav pullRight>
+              <NavItem onClick={rest.logout}>Logout</NavItem>
+            </Nav>
+          </Navbar.Collapse>}
       </Navbar>
 
-      { 
-      // If we know for sure whether we are logged-in or not, try to match the route. Otherwise 
+      {// If we know for sure whether we are logged-in or not, try to match the route. Otherwise
       // just show a spinner.
-      user !== undefined ? 
-        <div className='container'>
-          <Switch>
-            <PublicRoute path="/login" component={Login} user={user}/>
-            <PublicRoute path="/register" component={Register} user={user}/>
+      user !== undefined
+        ? <div className="container">
+            <Switch>
+              <PublicRoute path="/login" component={Login} user={user} />
+              <PublicRoute path="/register" component={Register} user={user} />
 
-            <PrivateRoute path="/adversities/:adversityId" component={Adversity} user={user}/>
-            <PrivateRoute path="/beliefs/:beliefId" component={Belief} user={user}/>
-            <PrivateRoute exactly user={user} path="/" component={Adversities}/>
-          </Switch>
-        </div>
-        :
-        <Spinner/>
-      }
+              <PrivateRoute
+                path="/adversities/:adversityId"
+                component={Adversity}
+                user={user}
+              />
+              <PrivateRoute
+                path="/beliefs/:beliefId"
+                component={Belief}
+                user={user}
+              />
+              <PrivateRoute
+                exactly
+                user={user}
+                path="/"
+                component={Adversities}
+              />
+            </Switch>
+          </div>
+        : <Spinner />}
     </div>
   </BrowserRouter>
-)
+);
 
 export default React.createClass({
   getInitialState() {
@@ -63,22 +77,28 @@ export default React.createClass({
     };
   },
   componentWillMount() {
-    this.unsubscribeAuthStateChanged = auth.onAuthStateChanged(user => this.setState({user}));
+    this.unsubscribeAuthStateChanged = auth.onAuthStateChanged(user =>
+      this.setState({ user }));
   },
   componentWillUnmount() {
     this.unsubscribeAuthStateChanged();
   },
   render() {
-    return <App {...{...this.state, toggle: this.toggle, logout: this.logout}}/>;
+    return (
+      <App {...{ ...this.state, toggle: this.toggle, logout: this.logout }} />
+    );
   },
   toggle() {
-    this.setState(state => ({navbarExpanded: !state.navbarExpanded}));
+    this.setState(state => ({ navbarExpanded: !state.navbarExpanded }));
   },
   logout() {
-    auth.signOut().then(() => {
-      this.setState({navbarExpanded: false});
-    }).catch(error => {
-      console.log(error);
-    });
+    auth
+      .signOut()
+      .then(() => {
+        this.setState({ navbarExpanded: false });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 });

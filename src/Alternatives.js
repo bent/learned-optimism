@@ -1,28 +1,39 @@
-import React from 'react';
-import ReactFireMixin from 'reactfire';
-import { Button, FormControl, Form, FormGroup, InputGroup, ControlLabel, Pager } from 'react-bootstrap';
+import React from "react";
+import ReactFireMixin from "reactfire";
+import {
+  Button,
+  FormControl,
+  Form,
+  FormGroup,
+  InputGroup,
+  ControlLabel,
+  Pager
+} from "react-bootstrap";
 
-import lowerCaseFirstLetter from './lowerCaseFirstLetter';
-import disputationPropTypes from './disputationPropTypes'
-import List from './List';
-import PagerLink from './PagerLink';
+import lowerCaseFirstLetter from "./lowerCaseFirstLetter";
+import disputationPropTypes from "./disputationPropTypes";
+import List from "./List";
+import PagerLink from "./PagerLink";
 
 export default React.createClass({
   mixins: [ReactFireMixin],
   propTypes: disputationPropTypes,
   getInitialState() {
     return {
-      alternativeDescription: ''
+      alternativeDescription: ""
     };
   },
   componentWillMount() {
-    this.bindAsArray(this.props.beliefRef.child('alternatives'), 'alternatives');
+    this.bindAsArray(
+      this.props.beliefRef.child("alternatives"),
+      "alternatives"
+    );
   },
   render() {
-    const {belief} = this.props;
-    const beliefId = belief['.key'];
+    const { belief } = this.props;
+    const beliefId = belief[".key"];
 
-    return(
+    return (
       <div>
         <Form onSubmit={this.handleSubmit}>
           <ControlLabel>
@@ -31,10 +42,12 @@ export default React.createClass({
           </ControlLabel>
           <FormGroup>
             <InputGroup>
-              <FormControl type='text' 
-                           placeholder='Alternative' 
-                           value={this.state.alternativeDescription}
-                           onChange={this.handleChange}/>
+              <FormControl
+                type="text"
+                placeholder="Alternative"
+                value={this.state.alternativeDescription}
+                onChange={this.handleChange}
+              />
               <InputGroup.Button>
                 <Button type="submit" disabled={this.state.isSaving}>
                   Add
@@ -43,26 +56,35 @@ export default React.createClass({
             </InputGroup>
           </FormGroup>
         </Form>
-        <List value={this.state.alternatives}/>
+        <List value={this.state.alternatives} />
         <Pager>
-          <PagerLink to={`/beliefs/${beliefId}/evidence`} previous text='Evidence'/>
-          <PagerLink to={`/beliefs/${beliefId}/implications`} text='Implications'/>
+          <PagerLink
+            to={`/beliefs/${beliefId}/evidence`}
+            previous
+            text="Evidence"
+          />
+          <PagerLink
+            to={`/beliefs/${beliefId}/implications`}
+            text="Implications"
+          />
         </Pager>
       </div>
     );
   },
   handleChange(e) {
     e.preventDefault();
-    this.setState({alternativeDescription: e.target.value});
+    this.setState({ alternativeDescription: e.target.value });
   },
   handleSubmit(e) {
     e.preventDefault();
-    this.setState({isSaving: true});
+    this.setState({ isSaving: true });
 
-    this.firebaseRefs.alternatives.push({
-      description: this.state.alternativeDescription
-    }).then(() => {
-      this.setState({alternativeDescription: '', isSaving: false});
-    });
+    this.firebaseRefs.alternatives
+      .push({
+        description: this.state.alternativeDescription
+      })
+      .then(() => {
+        this.setState({ alternativeDescription: "", isSaving: false });
+      });
   }
 });
