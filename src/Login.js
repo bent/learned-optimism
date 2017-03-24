@@ -10,6 +10,38 @@ import {
 
 import firebase from "./firebase";
 
+function Presentation(props) {
+  const { errorMessage, isLoggingIn } = props;
+
+  return (
+    <Form onSubmit={props.handleSubmit}>
+      {errorMessage && <Alert bsStyle="danger">{errorMessage}</Alert>}
+      <FormGroup>
+        <FormControl
+          type="text"
+          placeholder="Email"
+          value={props.email}
+          onChange={props.handleEmailChange}
+        />
+      </FormGroup>
+      <FormGroup>
+        <FormControl
+          type="password"
+          placeholder="Password"
+          value={props.password}
+          onChange={props.handlePasswordChange}
+        />
+      </FormGroup>
+      <ButtonToolbar>
+        <Button type="submit" bsStyle="primary" disabled={isLoggingIn}>
+          {isLoggingIn ? "Logging in..." : "Login"}
+        </Button>
+        <Button bsStyle="link" href="/register">Register</Button>
+      </ButtonToolbar>
+    </Form>
+  );
+}
+
 export default React.createClass({
   getInitialState() {
     return {
@@ -18,34 +50,18 @@ export default React.createClass({
     };
   },
   render() {
-    const { errorMessage, isLoggingIn } = this.state;
+    const { state } = this;
 
     return (
-      <Form onSubmit={this.handleSubmit}>
-        {errorMessage && <Alert bsStyle="danger">{errorMessage}</Alert>}
-        <FormGroup>
-          <FormControl
-            type="text"
-            placeholder="Email"
-            value={this.state.email}
-            onChange={this.handleEmailChange}
-          />
-        </FormGroup>
-        <FormGroup>
-          <FormControl
-            type="password"
-            placeholder="Password"
-            value={this.state.password}
-            onChange={this.handlePasswordChange}
-          />
-        </FormGroup>
-        <ButtonToolbar>
-          <Button type="submit" bsStyle="primary" disabled={isLoggingIn}>
-            {isLoggingIn ? "Logging in..." : "Login"}
-          </Button>
-          <Button bsStyle="link" href="/register">Register</Button>
-        </ButtonToolbar>
-      </Form>
+      <Presentation
+        errorMessage={state.errorMessage}
+        isLoggingIn={state.isLoggingIn}
+        handleSubmit={this.handleSubmit}
+        email={state.email}
+        handleEmailChange={this.handleEmailChange}
+        password={state.password}
+        handlePasswordChange={this.handlePasswordChange}
+      />
     );
   },
   handleEmailChange(e) {
