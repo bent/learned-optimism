@@ -11,6 +11,36 @@ import Implications from "./Implications";
 import AdversityPanel from "./AdversityPanel";
 import userRefFor from "./userRef";
 
+function Presentation(props) {
+  const { belief, beliefs, path } = props;
+  if (belief && beliefs) {
+    const disputationProps = {
+      beliefRef: props.beliefRef,
+      belief,
+      beliefs
+    };
+
+    return (
+      <AdversityPanel value={props.adversity}>
+        <Route
+          path={`${path}/evidence`}
+          render={() => <Evidence {...disputationProps} />}
+        />
+        <Route
+          path={`${path}/alternatives`}
+          render={() => <Alternatives {...disputationProps} />}
+        />
+        <Route
+          path={`${path}/implications`}
+          render={() => <Implications {...disputationProps} />}
+        />
+      </AdversityPanel>
+    );
+  } else {
+    return <Spinner />;
+  }
+}
+
 export default React.createClass({
   mixins: [ReactFireMixin],
   propTypes: {
@@ -34,33 +64,17 @@ export default React.createClass({
     }
   },
   render() {
-    if (this.state && this.state.belief && this.state.beliefs) {
-      const { path } = this.props.match;
-      const disputationProps = {
-        beliefRef: this.firebaseRefs.belief,
-        belief: this.state.belief,
-        beliefs: this.state.beliefs
-      };
+    const { state } = this;
 
-      return (
-        <AdversityPanel value={this.state.adversity}>
-          <Route
-            path={`${path}/evidence`}
-            render={() => <Evidence {...disputationProps} />}
-          />
-          <Route
-            path={`${path}/alternatives`}
-            render={() => <Alternatives {...disputationProps} />}
-          />
-          <Route
-            path={`${path}/implications`}
-            render={() => <Implications {...disputationProps} />}
-          />
-        </AdversityPanel>
-      );
-    } else {
-      return <Spinner />;
-    }
+    return (
+      <Presentation
+        beliefRef={this.firebaseRefs.belief}
+        belief={state && state.belief}
+        beliefs={state && state.beliefs}
+        path={this.props.match.path}
+        adversity={state && state.adversity}
+      />
+    );
   },
   _loadData(beliefId) {
     const userRef = userRefFor(this.props.user);
