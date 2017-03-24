@@ -15,6 +15,49 @@ import disputationPropTypes from "./disputationPropTypes";
 import List from "./List";
 import PagerLink from "./PagerLink";
 
+function Presentation(props) {
+  const { belief } = props;
+  const beliefId = belief[".key"];
+
+  return (
+    <div>
+      <Form onSubmit={props.handleSubmit}>
+        <ControlLabel>
+          What alternatives are there to&nbsp;
+          {lowerCaseFirstLetter(belief.description)}?
+        </ControlLabel>
+        <FormGroup>
+          <InputGroup>
+            <FormControl
+              type="text"
+              placeholder="Alternative"
+              value={props.alternativeDescription}
+              onChange={props.handleChange}
+            />
+            <InputGroup.Button>
+              <Button type="submit" disabled={props.isSaving}>
+                Add
+              </Button>
+            </InputGroup.Button>
+          </InputGroup>
+        </FormGroup>
+      </Form>
+      <List value={props.alternatives} />
+      <Pager>
+        <PagerLink
+          to={`/beliefs/${beliefId}/evidence`}
+          previous
+          text="Evidence"
+        />
+        <PagerLink
+          to={`/beliefs/${beliefId}/implications`}
+          text="Implications"
+        />
+      </Pager>
+    </div>
+  );
+}
+
 export default React.createClass({
   mixins: [ReactFireMixin],
   propTypes: disputationPropTypes,
@@ -30,45 +73,17 @@ export default React.createClass({
     );
   },
   render() {
-    const { belief } = this.props;
-    const beliefId = belief[".key"];
+    const { state } = this;
 
     return (
-      <div>
-        <Form onSubmit={this.handleSubmit}>
-          <ControlLabel>
-            What alternatives are there to&nbsp;
-            {lowerCaseFirstLetter(belief.description)}?
-          </ControlLabel>
-          <FormGroup>
-            <InputGroup>
-              <FormControl
-                type="text"
-                placeholder="Alternative"
-                value={this.state.alternativeDescription}
-                onChange={this.handleChange}
-              />
-              <InputGroup.Button>
-                <Button type="submit" disabled={this.state.isSaving}>
-                  Add
-                </Button>
-              </InputGroup.Button>
-            </InputGroup>
-          </FormGroup>
-        </Form>
-        <List value={this.state.alternatives} />
-        <Pager>
-          <PagerLink
-            to={`/beliefs/${beliefId}/evidence`}
-            previous
-            text="Evidence"
-          />
-          <PagerLink
-            to={`/beliefs/${beliefId}/implications`}
-            text="Implications"
-          />
-        </Pager>
-      </div>
+      <Presentation
+        belief={this.props.belief}
+        handleSubmit={this.handleSubmit}
+        alternativeDescription={state.alternativeDescription}
+        handleChange={this.handleChange}
+        isSaving={state.isSaving}
+        alternatives={state.alternatives}
+      />
     );
   },
   handleChange(e) {
