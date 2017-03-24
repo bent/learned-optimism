@@ -13,6 +13,57 @@ import firebase from "firebase";
 
 import userRefFor from "./userRef";
 
+function Presentation(props) {
+  return props.loaded
+    ? // If we've just created a new adversity
+      props.newAdversityId
+        ? // Redirect to it
+          <Redirect to={`/adversities/${props.newAdversityId}`} />
+        : // Otherwise just display the regular form
+          <div>
+            <Form onSubmit={props.handleSubmit}>
+              <FormGroup>
+                <InputGroup>
+                  <FormControl
+                    type="text"
+                    placeholder="Adversity"
+                    value={props.description}
+                    onChange={props.handleChange}
+                  />
+                  <InputGroup.Button>
+                    <Button type="submit" disabled={props.isSaving}>
+                      Go
+                    </Button>
+                  </InputGroup.Button>
+                </InputGroup>
+              </FormGroup>
+            </Form>
+            <div className="list-group">
+              {props.adversities.map(adversity => {
+                const id = adversity[".key"];
+
+                return (
+                  <Link
+                    key={id}
+                    className="adversity list-group-item"
+                    to={`/adversities/${id}`}
+                  >
+                    {adversity.description}
+                    <span
+                      onClick={e => {
+                        e.preventDefault();
+                        props.remove(id);
+                      }}
+                      className="remove glyphicon glyphicon-remove"
+                    />
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+    : <Spinner />;
+}
+
 export default React.createClass({
   mixins: [ReactFireMixin],
   propTypes: {
@@ -34,56 +85,20 @@ export default React.createClass({
       .then(() => this.setState({ loaded: true }));
   },
   render() {
-    const { adversities, newAdversityId } = this.state;
+    const { state } = this;
 
-    return this.state.loaded
-      ? // If we've just created a new adversity
-        newAdversityId
-          ? // Redirect to it
-            <Redirect to={`/adversities/${newAdversityId}`} />
-          : // Otherwise just display the regular form
-            <div>
-              <Form onSubmit={this.handleSubmit}>
-                <FormGroup>
-                  <InputGroup>
-                    <FormControl
-                      type="text"
-                      placeholder="Adversity"
-                      value={this.state.description}
-                      onChange={this.handleChange}
-                    />
-                    <InputGroup.Button>
-                      <Button type="submit" disabled={this.state.isSaving}>
-                        Go
-                      </Button>
-                    </InputGroup.Button>
-                  </InputGroup>
-                </FormGroup>
-              </Form>
-              <div className="list-group">
-                {adversities.map(adversity => {
-                  const id = adversity[".key"];
-
-                  return (
-                    <Link
-                      key={id}
-                      className="adversity list-group-item"
-                      to={`/adversities/${id}`}
-                    >
-                      {adversity.description}
-                      <span
-                        onClick={e => {
-                          e.preventDefault();
-                          this.remove(id);
-                        }}
-                        className="remove glyphicon glyphicon-remove"
-                      />
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-      : <Spinner />;
+    return (
+      <Presentation
+        loaded={state.loaded}
+        adversities={state.adversities}
+        newAdversityId={state.newAdversityId}
+        handleSubmit={this.handleSubmit}
+        description={state.description}
+        handleChange={this.handleChange}
+        isSaving={state.isSaving}
+        remove={this.remove}
+      />
+    );
   },
   handleChange(e) {
     e.preventDefault();
