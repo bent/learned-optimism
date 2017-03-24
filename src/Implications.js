@@ -15,6 +15,56 @@ import List from "./List";
 import disputationPropTypes from "./disputationPropTypes";
 import PagerLink from "./PagerLink";
 
+function Presentation(props) {
+  const { belief, beliefs } = props;
+  const beliefId = belief[".key"];
+  const index = beliefs.findIndex(b => b[".key"] === beliefId);
+  if (index < 0) throw new Error(`Belief with ID ${beliefId} not found`);
+
+  let nextText = "Finish";
+  let nextPath = `/adversities/${belief.adversityId}`;
+
+  if (index < beliefs.length - 1) {
+    nextText = "Next Belief";
+    nextPath = `/beliefs/${beliefs[index + 1][".key"]}/evidence`;
+  }
+
+  return (
+    <div>
+      <Form onSubmit={props.handleSubmit}>
+        <ControlLabel>
+          What are the implications if&nbsp;
+          {lowerCaseFirstLetter(belief.description)}?
+        </ControlLabel>
+        <FormGroup>
+          <InputGroup>
+            <FormControl
+              type="text"
+              placeholder="Implication"
+              value={props.description}
+              onChange={props.handleChange}
+            />
+            <InputGroup.Button>
+              <Button type="submit" disabled={props.isSaving}>
+                Add
+              </Button>
+            </InputGroup.Button>
+          </InputGroup>
+        </FormGroup>
+      </Form>
+      <List value={props.implications} />
+      <Pager>
+        <PagerLink
+          to={`/beliefs/${beliefId}/alternatives`}
+          previous
+          text="Alternatives"
+        />
+        <PagerLink to={nextPath} text={nextText} />
+      </Pager>
+    </div>
+  );
+}
+
 export default React.createClass({
   propTypes: disputationPropTypes,
   mixins: [ReactFireMixin],
@@ -30,53 +80,17 @@ export default React.createClass({
     );
   },
   render() {
-    const belief = this.props.belief;
-    const beliefId = belief[".key"];
-    const beliefs = this.props.beliefs;
-    const index = beliefs.findIndex(b => b[".key"] === beliefId);
-    if (index < 0) throw new Error(`Belief with ID ${beliefId} not found`);
-
-    let nextText = "Finish";
-    let nextPath = `/adversities/${belief.adversityId}`;
-
-    if (index < beliefs.length - 1) {
-      nextText = "Next Belief";
-      nextPath = `/beliefs/${beliefs[index + 1][".key"]}/evidence`;
-    }
-
+    const { props, state } = this;
     return (
-      <div>
-        <Form onSubmit={this.handleSubmit}>
-          <ControlLabel>
-            What are the implications if&nbsp;
-            {lowerCaseFirstLetter(belief.description)}?
-          </ControlLabel>
-          <FormGroup>
-            <InputGroup>
-              <FormControl
-                type="text"
-                placeholder="Implication"
-                value={this.state.description}
-                onChange={this.handleChange}
-              />
-              <InputGroup.Button>
-                <Button type="submit" disabled={this.state.isSaving}>
-                  Add
-                </Button>
-              </InputGroup.Button>
-            </InputGroup>
-          </FormGroup>
-        </Form>
-        <List value={this.state.implications} />
-        <Pager>
-          <PagerLink
-            to={`/beliefs/${beliefId}/alternatives`}
-            previous
-            text="Alternatives"
-          />
-          <PagerLink to={nextPath} text={nextText} />
-        </Pager>
-      </div>
+      <Presentation
+        belief={props.belief}
+        beliefs={props.beliefs}
+        handleSubmit={this.handleSubmit}
+        description={state.description}
+        handleChange={this.handleChange}
+        isSaving={state.isSaving}
+        implications={state.implications}
+      />
     );
   },
   handleChange(e) {
