@@ -16,6 +16,46 @@ import userRefFor from "./userRef";
 import AdversityPanel from "./AdversityPanel";
 import List from "./List";
 
+function Presentation(props) {
+  const { beliefs } = props;
+  return props.loaded
+    ? <AdversityPanel value={props.adversity}>
+        <Form onSubmit={props.handleSubmit}>
+          <ControlLabel>
+            What beliefs do I have about this adversity?
+          </ControlLabel>
+          <FormGroup>
+            <InputGroup>
+              <FormControl
+                type="text"
+                placeholder="Belief"
+                value={props.beliefDescription}
+                onChange={props.handleChange}
+              />
+              <InputGroup.Button>
+                <Button type="submit" disabled={props.isSaving}>
+                  Add
+                </Button>
+              </InputGroup.Button>
+            </InputGroup>
+          </FormGroup>
+        </Form>
+        <List value={beliefs} />
+        {beliefs.length > 0
+          ? <ButtonToolbar>
+              <Button
+                href={`/beliefs/${beliefs[0][".key"]}/evidence`}
+                bsStyle="primary"
+                block
+              >
+                Start Disputation
+              </Button>
+            </ButtonToolbar>
+          : <div />}
+      </AdversityPanel>
+    : <Spinner />;
+}
+
 export default React.createClass({
   mixins: [ReactFireMixin],
   propTypes: {
@@ -51,44 +91,19 @@ export default React.createClass({
     ]).then(() => this.setState({ loaded: true }));
   },
   render() {
-    const { beliefs } = this.state;
+    const { state } = this;
 
-    return this.state.loaded
-      ? <AdversityPanel value={this.state.adversity}>
-          <Form onSubmit={this.handleSubmit}>
-            <ControlLabel>
-              What beliefs do I have about this adversity?
-            </ControlLabel>
-            <FormGroup>
-              <InputGroup>
-                <FormControl
-                  type="text"
-                  placeholder="Belief"
-                  value={this.state.beliefDescription}
-                  onChange={this.handleChange}
-                />
-                <InputGroup.Button>
-                  <Button type="submit" disabled={this.state.isSaving}>
-                    Add
-                  </Button>
-                </InputGroup.Button>
-              </InputGroup>
-            </FormGroup>
-          </Form>
-          <List value={beliefs} />
-          {beliefs.length > 0
-            ? <ButtonToolbar>
-                <Button
-                  href={`/beliefs/${beliefs[0][".key"]}/evidence`}
-                  bsStyle="primary"
-                  block
-                >
-                  Start Disputation
-                </Button>
-              </ButtonToolbar>
-            : <div />}
-        </AdversityPanel>
-      : <Spinner />;
+    return (
+      <Presentation
+        loaded={state.loaded}
+        adversity={state.adversity}
+        handleSubmit={this.handleSubmit}
+        beliefDescription={state.beliefDescription}
+        handleChange={this.handleChange}
+        isSaving={state.isSaving}
+        beliefs={state.beliefs}
+      />
+    );
   },
   handleChange(e) {
     e.preventDefault();
