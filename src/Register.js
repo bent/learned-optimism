@@ -11,6 +11,52 @@ import { Link } from "react-router-dom";
 
 import firebase from "./firebase";
 
+function Presentation(props) {
+  const { errorMessage, isRegistering } = props;
+
+  return (
+    <Form onSubmit={props.handleSubmit}>
+      {errorMessage && <Alert bsStyle="danger">{errorMessage}</Alert>}
+      <FormGroup>
+        <FormControl
+          type="text"
+          placeholder="Email"
+          value={props.email}
+          onChange={props.handleEmailChange}
+        />
+      </FormGroup>
+      <FormGroup>
+        <FormControl
+          type="password"
+          placeholder="Password"
+          value={props.password}
+          onChange={props.handlePasswordChange}
+        />
+      </FormGroup>
+      <FormGroup>
+        <FormControl
+          type="password"
+          placeholder="Confirm Password"
+          value={props.confirmPassword}
+          onChange={props.handleConfirmPasswordChange}
+        />
+      </FormGroup>
+      <ButtonToolbar>
+        <Button bsStyle="primary" type="submit" disabled={isRegistering}>
+          {isRegistering ? "Registering..." : "Register"}
+        </Button>
+        <Link to="/login">
+          {({ onClick }) => (
+            <Button onClick={onClick}>
+              Cancel
+            </Button>
+          )}
+        </Link>
+      </ButtonToolbar>
+    </Form>
+  );
+}
+
 export default React.createClass({
   getInitialState() {
     return {
@@ -20,48 +66,20 @@ export default React.createClass({
     };
   },
   render() {
-    const { errorMessage, isRegistering } = this.state;
+    const { state } = this;
 
     return (
-      <Form onSubmit={this.handleSubmit}>
-        {errorMessage && <Alert bsStyle="danger">{errorMessage}</Alert>}
-        <FormGroup>
-          <FormControl
-            type="text"
-            placeholder="Email"
-            value={this.state.email}
-            onChange={this.handleEmailChange}
-          />
-        </FormGroup>
-        <FormGroup>
-          <FormControl
-            type="password"
-            placeholder="Password"
-            value={this.state.password}
-            onChange={this.handlePasswordChange}
-          />
-        </FormGroup>
-        <FormGroup>
-          <FormControl
-            type="password"
-            placeholder="Confirm Password"
-            value={this.state.confirmPassword}
-            onChange={this.handleConfirmPasswordChange}
-          />
-        </FormGroup>
-        <ButtonToolbar>
-          <Button bsStyle="primary" type="submit" disabled={isRegistering}>
-            {isRegistering ? "Registering..." : "Register"}
-          </Button>
-          <Link to="/login">
-            {({ onClick }) => (
-              <Button onClick={onClick}>
-                Cancel
-              </Button>
-            )}
-          </Link>
-        </ButtonToolbar>
-      </Form>
+      <Presentation
+        errorMessage={state.errorMessage}
+        handleSubmit={this.handleSubmit}
+        email={state.email}
+        handleEmailChange={this.handleEmailChange}
+        password={state.password}
+        handlePasswordChange={this.handlePasswordChange}
+        confirmPassword={state.confirmPassword}
+        handleConfirmPasswordChange={this.handleConfirmPasswordChange}
+        isRegistering={state.isRegistering}
+      />
     );
   },
   handleEmailChange(e) {
