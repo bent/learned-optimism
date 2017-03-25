@@ -9,6 +9,7 @@ import {
   InputGroup,
   ControlLabel
 } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import Spinner from "react-spinner";
 import firebase from "firebase";
 
@@ -43,13 +44,12 @@ function Presentation(props) {
         <List value={beliefs} />
         {beliefs.length > 0
           ? <ButtonToolbar>
-              <Button
-                href={`/beliefs/${beliefs[0][".key"]}/evidence`}
-                bsStyle="primary"
-                block
+              <Link
+                to={`/beliefs/${beliefs[0][".key"]}/evidence`}
+                className="btn btn-primary btn-block"
               >
                 Start Disputation
-              </Button>
+              </Link>
             </ButtonToolbar>
           : <div />}
       </AdversityPanel>
