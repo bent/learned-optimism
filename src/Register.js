@@ -11,9 +11,7 @@ import { Link } from "react-router-dom";
 
 import firebase from "./firebase";
 
-function Presentation(props) {
-  const { errorMessage, isRegistering } = props;
-
+function Presentation({ errorMessage, isRegistering, ...props }) {
   return (
     <Form onSubmit={props.handleSubmit}>
       {errorMessage && <Alert bsStyle="danger">{errorMessage}</Alert>}
