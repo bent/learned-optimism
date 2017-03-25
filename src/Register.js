@@ -43,12 +43,10 @@ function Presentation({ errorMessage, isRegistering, ...props }) {
         <Button bsStyle="primary" type="submit" disabled={isRegistering}>
           {isRegistering ? "Registering..." : "Register"}
         </Button>
-        <Link to="/login">
-          {({ onClick }) => (
-            <Button onClick={onClick}>
-              Cancel
-            </Button>
-          )}
+        {/* Can't use Button here because it needs to be a Link and you can't
+        nest one within the other, so just apply classes manually */}
+        <Link to="/login" className="btn btn-default">
+          Cancel
         </Link>
       </ButtonToolbar>
     </Form>
