@@ -15,8 +15,7 @@ import List from "./List";
 import disputationPropTypes from "./disputationPropTypes";
 import PagerLink from "./PagerLink";
 
-function Presentation(props) {
-  const { belief, beliefs } = props;
+const Presentation = ({ belief, beliefs, ...props }) => {
   const beliefId = belief[".key"];
   const index = beliefs.findIndex(b => b[".key"] === beliefId);
   if (index < 0) throw new Error(`Belief with ID ${beliefId} not found`);
@@ -63,7 +62,7 @@ function Presentation(props) {
       </Pager>
     </div>
   );
-}
+};
 
 export default React.createClass({
   propTypes: disputationPropTypes,
