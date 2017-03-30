@@ -11,47 +11,45 @@ import { Link } from "react-router-dom";
 
 import firebase from "./firebase";
 
-function Presentation({ errorMessage, isRegistering, ...props }) {
-  return (
-    <Form onSubmit={props.handleSubmit}>
-      {errorMessage && <Alert bsStyle="danger">{errorMessage}</Alert>}
-      <FormGroup>
-        <FormControl
-          type="text"
-          placeholder="Email"
-          value={props.email}
-          onChange={props.handleEmailChange}
-        />
-      </FormGroup>
-      <FormGroup>
-        <FormControl
-          type="password"
-          placeholder="Password"
-          value={props.password}
-          onChange={props.handlePasswordChange}
-        />
-      </FormGroup>
-      <FormGroup>
-        <FormControl
-          type="password"
-          placeholder="Confirm Password"
-          value={props.confirmPassword}
-          onChange={props.handleConfirmPasswordChange}
-        />
-      </FormGroup>
-      <ButtonToolbar>
-        <Button bsStyle="primary" type="submit" disabled={isRegistering}>
-          {isRegistering ? "Registering..." : "Register"}
-        </Button>
-        {/* Can't use Button here because it needs to be a Link and you can't
+const Presentation = ({ errorMessage, isRegistering, ...props }) => (
+  <Form onSubmit={props.handleSubmit}>
+    {errorMessage && <Alert bsStyle="danger">{errorMessage}</Alert>}
+    <FormGroup>
+      <FormControl
+        type="text"
+        placeholder="Email"
+        value={props.email}
+        onChange={props.handleEmailChange}
+      />
+    </FormGroup>
+    <FormGroup>
+      <FormControl
+        type="password"
+        placeholder="Password"
+        value={props.password}
+        onChange={props.handlePasswordChange}
+      />
+    </FormGroup>
+    <FormGroup>
+      <FormControl
+        type="password"
+        placeholder="Confirm Password"
+        value={props.confirmPassword}
+        onChange={props.handleConfirmPasswordChange}
+      />
+    </FormGroup>
+    <ButtonToolbar>
+      <Button bsStyle="primary" type="submit" disabled={isRegistering}>
+        {isRegistering ? "Registering..." : "Register"}
+      </Button>
+      {/* Can't use Button here because it needs to be a Link and you can't
         nest one within the other, so just apply classes manually */}
-        <Link to="/login" className="btn btn-default">
-          Cancel
-        </Link>
-      </ButtonToolbar>
-    </Form>
-  );
-}
+      <Link to="/login" className="btn btn-default">
+        Cancel
+      </Link>
+    </ButtonToolbar>
+  </Form>
+);
 
 export default React.createClass({
   getInitialState() {
