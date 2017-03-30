@@ -10,37 +10,33 @@ import {
 
 import firebase from "./firebase";
 
-function Presentation(props) {
-  const { errorMessage, isLoggingIn } = props;
-
-  return (
-    <Form onSubmit={props.handleSubmit}>
-      {errorMessage && <Alert bsStyle="danger">{errorMessage}</Alert>}
-      <FormGroup>
-        <FormControl
-          type="text"
-          placeholder="Email"
-          value={props.email}
-          onChange={props.handleEmailChange}
-        />
-      </FormGroup>
-      <FormGroup>
-        <FormControl
-          type="password"
-          placeholder="Password"
-          value={props.password}
-          onChange={props.handlePasswordChange}
-        />
-      </FormGroup>
-      <ButtonToolbar>
-        <Button type="submit" bsStyle="primary" disabled={isLoggingIn}>
-          {isLoggingIn ? "Logging in..." : "Login"}
-        </Button>
-        <Button bsStyle="link" href="/register">Register</Button>
-      </ButtonToolbar>
-    </Form>
-  );
-}
+const Presentation = ({ errorMessage, isLoggingIn, ...props }) => (
+  <Form onSubmit={props.handleSubmit}>
+    {errorMessage && <Alert bsStyle="danger">{errorMessage}</Alert>}
+    <FormGroup>
+      <FormControl
+        type="text"
+        placeholder="Email"
+        value={props.email}
+        onChange={props.handleEmailChange}
+      />
+    </FormGroup>
+    <FormGroup>
+      <FormControl
+        type="password"
+        placeholder="Password"
+        value={props.password}
+        onChange={props.handlePasswordChange}
+      />
+    </FormGroup>
+    <ButtonToolbar>
+      <Button type="submit" bsStyle="primary" disabled={isLoggingIn}>
+        {isLoggingIn ? "Logging in..." : "Login"}
+      </Button>
+      <Button bsStyle="link" href="/register">Register</Button>
+    </ButtonToolbar>
+  </Form>
+);
 
 export default React.createClass({
   getInitialState() {
