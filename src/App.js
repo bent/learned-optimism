@@ -17,10 +17,10 @@ import logo from "./logo.svg";
 
 const auth = firebase.auth();
 
-const App = ({ user, ...rest }) => (
+const Presentation = ({ user, ...props }) => (
   <BrowserRouter>
     <div>
-      <Navbar expanded={rest.navbarExpanded} onToggle={rest.toggle}>
+      <Navbar expanded={props.navbarExpanded} onToggle={props.toggle}>
         <Navbar.Header>
           <Navbar.Brand>
             <Link to="/">
@@ -33,7 +33,7 @@ const App = ({ user, ...rest }) => (
         {user &&
           <Navbar.Collapse>
             <Nav pullRight>
-              <NavItem onClick={rest.logout}>Logout</NavItem>
+              <NavItem onClick={props.logout}>Logout</NavItem>
             </Nav>
           </Navbar.Collapse>}
       </Navbar>
@@ -85,7 +85,9 @@ export default React.createClass({
   },
   render() {
     return (
-      <App {...{ ...this.state, toggle: this.toggle, logout: this.logout }} />
+      <Presentation
+        {...{ ...this.state, toggle: this.toggle, logout: this.logout }}
+      />
     );
   },
   toggle() {
