@@ -76,7 +76,7 @@ export default React.createClass({
       navbarExpanded: false
     };
   },
-  componentWillMount() {
+  componentDidMount() {
     this.unsubscribeAuthStateChanged = auth.onAuthStateChanged(user =>
       this.setState({ user }));
   },
