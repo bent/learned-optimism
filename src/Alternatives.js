@@ -15,8 +15,7 @@ import disputationPropTypes from "./disputationPropTypes";
 import List from "./List";
 import PagerLink from "./PagerLink";
 
-function Presentation(props) {
-  const { belief } = props;
+const Presentation = ({ belief, ...props }) => {
   const beliefId = belief[".key"];
 
   return (
@@ -56,7 +55,7 @@ function Presentation(props) {
       </Pager>
     </div>
   );
-}
+};
 
 export default React.createClass({
   mixins: [ReactFireMixin],
