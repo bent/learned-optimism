@@ -1,19 +1,16 @@
 import React from "react";
 
-const Component = props => {
-  const list = props.value;
-
-  return list &&
-    <div className="list-group">
-      {list.map(item => {
-        return (
-          <div className="list-group-item" key={item[".key"]}>
-            {item.description}
-          </div>
-        );
-      })}
-    </div>;
-};
+const Component = ({ value }) =>
+  value &&
+  <div className="list-group">
+    {value.map(item => {
+      return (
+        <div className="list-group-item" key={item[".key"]}>
+          {item.description}
+        </div>
+      );
+    })}
+  </div>;
 
 Component.propTypes = {
   value: React.PropTypes.arrayOf(
