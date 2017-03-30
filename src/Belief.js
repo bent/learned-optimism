@@ -11,8 +11,7 @@ import Implications from "./Implications";
 import AdversityPanel from "./AdversityPanel";
 import userRefFor from "./userRef";
 
-function Presentation(props) {
-  const { belief, beliefs, path } = props;
+const Presentation = ({ belief, beliefs, path, ...props }) => {
   if (belief && beliefs) {
     const disputationProps = {
       beliefRef: props.beliefRef,
@@ -39,7 +38,7 @@ function Presentation(props) {
   } else {
     return <Spinner />;
   }
-}
+};
 
 export default React.createClass({
   mixins: [ReactFireMixin],
