@@ -17,9 +17,8 @@ import userRefFor from "./userRef";
 import AdversityPanel from "./AdversityPanel";
 import List from "./List";
 
-function Presentation(props) {
-  const { beliefs } = props;
-  return props.loaded
+const Presentation = ({ beliefs, ...props }) =>
+  props.loaded
     ? <AdversityPanel value={props.adversity}>
         <Form onSubmit={props.handleSubmit}>
           <ControlLabel>
@@ -54,7 +53,6 @@ function Presentation(props) {
           : <div />}
       </AdversityPanel>
     : <Spinner />;
-}
 
 export default React.createClass({
   mixins: [ReactFireMixin],
