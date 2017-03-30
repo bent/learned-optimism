@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Button,
   ButtonToolbar,
@@ -33,7 +34,7 @@ const Presentation = ({ errorMessage, isLoggingIn, ...props }) => (
       <Button type="submit" bsStyle="primary" disabled={isLoggingIn}>
         {isLoggingIn ? "Logging in..." : "Login"}
       </Button>
-      <Button bsStyle="link" href="/register">Register</Button>
+      <Link className="btn btn-link" to="/register">Register</Link>
     </ButtonToolbar>
   </Form>
 );
