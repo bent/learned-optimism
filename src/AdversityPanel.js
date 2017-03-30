@@ -1,13 +1,11 @@
 import React from "react";
 
-const Component = props => {
-  return (
-    <div>
-      <h2>{props.value.description}</h2>
-      {props.children}
-    </div>
-  );
-};
+const Component = props => (
+  <div>
+    <h2>{props.value.description}</h2>
+    {props.children}
+  </div>
+);
 
 Component.propTypes = {
   value: React.PropTypes.shape({
