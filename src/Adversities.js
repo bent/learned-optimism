@@ -13,8 +13,8 @@ import firebase from "firebase";
 
 import userRefFor from "./userRef";
 
-function Presentation(props) {
-  return props.loaded
+const Presentation = props =>
+  props.loaded
     ? // If we've just created a new adversity
       props.newAdversityId
         ? // Redirect to it
@@ -62,7 +62,6 @@ function Presentation(props) {
             </div>
           </div>
     : <Spinner />;
-}
 
 export default React.createClass({
   mixins: [ReactFireMixin],
