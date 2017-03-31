@@ -32,3 +32,21 @@ h2 {
 .remove {
   color: #aea79f;
 }
+
+.list-group-item-enter {
+  opacity: 0.01;
+}
+
+.list-group-item-enter.list-group-item-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.list-group-item-leave {
+  opacity: 1;
+}
+
+.list-group-item-leave.list-group-item-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}

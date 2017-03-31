@@ -10,6 +10,7 @@ import {
 import { Link, Redirect } from "react-router-dom";
 import Spinner from "react-spinner";
 import firebase from "firebase";
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 import userRefFor from "./userRef";
 
@@ -39,26 +40,31 @@ const Presentation = props =>
               </FormGroup>
             </Form>
             <div className="list-group">
-              {props.adversities.map(adversity => {
-                const id = adversity[".key"];
+              <ReactCSSTransitionGroup
+                transitionName="list-group-item"
+                transitionEnterTimeout={500}
+                transitionLeaveTimeout={300}>
+                {props.adversities.map(adversity => {
+                  const id = adversity[".key"];
 
-                return (
-                  <Link
-                    key={id}
-                    className="adversity list-group-item"
-                    to={`/adversities/${id}`}
-                  >
-                    {adversity.description}
-                    <span
-                      onClick={e => {
-                        e.preventDefault();
-                        props.remove(id);
-                      }}
-                      className="remove glyphicon glyphicon-remove"
-                    />
-                  </Link>
-                );
-              })}
+                  return (
+                    <Link
+                      key={id}
+                      className="adversity list-group-item"
+                      to={`/adversities/${id}`}
+                    >
+                      {adversity.description}
+                      <span
+                        onClick={e => {
+                          e.preventDefault();
+                          props.remove(id);
+                        }}
+                        className="remove glyphicon glyphicon-remove"
+                      />
+                    </Link>
+                  );
+                })}
+              </ReactCSSTransitionGroup>
             </div>
           </div>
     : <Spinner />;
