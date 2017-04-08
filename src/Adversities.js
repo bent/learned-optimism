@@ -10,7 +10,7 @@ import {
 import { Link, Redirect } from "react-router-dom";
 import Spinner from "react-spinner";
 import firebase from "firebase";
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 import userRefFor from "./userRef";
 
@@ -43,7 +43,8 @@ const Presentation = props =>
               <ReactCSSTransitionGroup
                 transitionName="list-group-item"
                 transitionEnterTimeout={500}
-                transitionLeaveTimeout={300}>
+                transitionLeaveTimeout={300}
+              >
                 {props.adversities.map(adversity => {
                   const id = adversity[".key"];
 
@@ -79,7 +80,7 @@ export default React.createClass({
       description: ""
     };
   },
-  componentWillMount() {
+  componentDidMount() {
     this.bindAsArray(
       userRefFor(this.props.user).child("adversities"),
       "adversities"
