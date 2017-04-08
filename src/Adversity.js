@@ -69,7 +69,7 @@ export default React.createClass({
       beliefDescription: ""
     };
   },
-  componentWillMount() {
+  componentDidMount() {
     const { adversityId } = this.props.match.params;
     const userRef = userRefFor(this.props.user);
 
