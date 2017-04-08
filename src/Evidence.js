@@ -71,7 +71,7 @@ export default React.createClass({
       description: ""
     };
   },
-  componentWillMount() {
+  componentDidMount() {
     this.bindAsArray(this.props.beliefRef.child("evidence"), "evidence");
   },
   render() {
