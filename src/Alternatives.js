@@ -65,7 +65,7 @@ export default React.createClass({
       alternativeDescription: ""
     };
   },
-  componentWillMount() {
+  componentDidMount() {
     this.bindAsArray(
       this.props.beliefRef.child("alternatives"),
       "alternatives"
