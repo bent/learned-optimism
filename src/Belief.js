@@ -50,7 +50,7 @@ export default React.createClass({
     }).isRequired,
     user: React.PropTypes.instanceOf(firebase.User).isRequired
   },
-  componentWillMount() {
+  componentDidMount() {
     this._loadData(this.props.match.params.beliefId);
   },
   componentWillReceiveProps(nextProps) {
