@@ -12,6 +12,7 @@ import Spinner from "react-spinner";
 import firebase from "firebase";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
+import Remove from "./Remove";
 import userRefFor from "./userRef";
 
 const Presentation = props =>
@@ -55,13 +56,7 @@ const Presentation = props =>
                       to={`/adversities/${id}`}
                     >
                       {adversity.description}
-                      <span
-                        onClick={e => {
-                          e.preventDefault();
-                          props.remove(id);
-                        }}
-                        className="remove glyphicon glyphicon-remove"
-                      />
+                      <Remove remove={() => props.remove(id)} />
                     </Link>
                   );
                 })}

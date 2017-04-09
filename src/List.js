@@ -2,6 +2,8 @@ import React from "react";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import Spinner from "react-spinner";
 
+import Remove from "./Remove";
+
 const Component = ({ value, ...props }) =>
   value
     ? <div className="list-group">
@@ -14,13 +16,7 @@ const Component = ({ value, ...props }) =>
             return (
               <div className="list-group-item" key={item[".key"]}>
                 {item.description}
-                <span
-                  onClick={e => {
-                    e.preventDefault();
-                    props.remove(item[".key"]);
-                  }}
-                  className="remove glyphicon glyphicon-remove"
-                />
+                <Remove remove={() => props.remove(item[".key"])} />
               </div>
             );
           })}
@@ -34,6 +30,8 @@ Component.propTypes = {
       description: React.PropTypes.string.isRequired
     })
   ),
+  // Callback to be invoked if an item with a particular ID is to be remove from
+  // the list
   remove: React.PropTypes.func.isRequired
 };
 
