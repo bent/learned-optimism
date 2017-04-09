@@ -41,7 +41,7 @@ const Presentation = ({ belief, ...props }) => {
           </InputGroup>
         </FormGroup>
       </Form>
-      <List value={props.alternatives} />
+      <List value={props.alternatives} remove={props.remove} />
       <Pager>
         <PagerLink
           to={`/beliefs/${beliefId}/evidence`}
@@ -82,6 +82,7 @@ export default React.createClass({
         handleChange={this.handleChange}
         isSaving={state.isSaving}
         alternatives={state.alternatives}
+        remove={this.remove}
       />
     );
   },
@@ -100,5 +101,8 @@ export default React.createClass({
       .then(() => {
         this.setState({ alternativeDescription: "", isSaving: false });
       });
+  },
+  remove(id) {
+    this.firebaseRefs.alternatives.child(id).remove();
   }
 });
