@@ -33,7 +33,8 @@ Component.propTypes = {
     React.PropTypes.shape({
       description: React.PropTypes.string.isRequired
     })
-  )
+  ),
+  remove: React.PropTypes.func.isRequired
 };
 
 export default Component;
