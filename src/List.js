@@ -13,10 +13,11 @@ const Component = ({ value, ...props }) =>
           transitionLeaveTimeout={300}
         >
           {value.map(item => {
+            const id = item[".key"];
             return (
-              <div className="list-group-item" key={item[".key"]}>
+              <div className="list-group-item" key={id}>
                 {item.description}
-                <Remove remove={() => props.remove(item[".key"])} />
+                <Remove remove={() => props.remove(id)} />
               </div>
             );
           })}
