@@ -40,7 +40,7 @@ const Presentation = ({ beliefs, ...props }) =>
             </InputGroup>
           </FormGroup>
         </Form>
-        <List value={beliefs} />
+        <List value={beliefs} remove={props.remove}/>
         {beliefs.length > 0
           ? <ButtonToolbar>
               <Link
@@ -100,6 +100,7 @@ export default React.createClass({
         handleChange={this.handleChange}
         isSaving={state.isSaving}
         beliefs={state.beliefs}
+        remove={this.remove}
       />
     );
   },
@@ -122,5 +123,8 @@ export default React.createClass({
           isSaving: false
         });
       });
+  },
+  remove(beliefId) {
+    userRefFor(this.props.user).child("beliefs").child(beliefId).remove()
   }
 });

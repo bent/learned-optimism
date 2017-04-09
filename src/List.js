@@ -2,7 +2,7 @@ import React from "react";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import Spinner from "react-spinner";
 
-const Component = ({ value }) =>
+const Component = ({ value, ...props }) =>
   value
     ? <div className="list-group">
         <ReactCSSTransitionGroup
@@ -14,6 +14,13 @@ const Component = ({ value }) =>
             return (
               <div className="list-group-item" key={item[".key"]}>
                 {item.description}
+                <span
+                  onClick={e => {
+                    e.preventDefault();
+                    props.remove(item[".key"]);
+                  }}
+                  className="remove glyphicon glyphicon-remove"
+                />
               </div>
             );
           })}
