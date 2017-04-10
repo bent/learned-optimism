@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import { ButtonGroup, Button } from "react-bootstrap";
 
 const Component = React.createClass({
   getInitialState() {
@@ -11,13 +11,22 @@ const Component = React.createClass({
           className="remove glyphicon glyphicon-remove"
           onClick={this._showConfirmation}
         />
-      : <Button bsStyle="danger" onClick={this._delete}>
-          Delete
-        </Button>;
+      : <ButtonGroup>
+          <Button bsStyle="danger" onClick={this._delete}>
+            Delete
+          </Button>
+          <Button onClick={this._cancel}>
+            Cancel
+          </Button>
+        </ButtonGroup>;
   },
   _showConfirmation(e) {
     e.preventDefault();
     this.setState({ showConfirmation: true });
+  },
+  _cancel(e) {
+    e.preventDefault();
+    this.setState({ showConfirmation: false });
   },
   _delete(e) {
     e.preventDefault();
