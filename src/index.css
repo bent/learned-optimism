@@ -64,3 +64,21 @@ h2 {
   opacity: 0.01;
   transition: opacity 300ms ease-in;
 }
+
+.confirmation-enter {
+  opacity: 0.01;
+}
+
+.confirmation-enter.confirmation-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.confirmation-leave {
+  opacity: 1;
+}
+
+.confirmation-leave.confirmation-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}

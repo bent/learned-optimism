@@ -1,24 +1,36 @@
 import React from "react";
 import { ButtonGroup, Button } from "react-bootstrap";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 const Component = React.createClass({
   getInitialState() {
     return { showConfirmation: false };
   },
   render() {
-    return !this.state.showConfirmation
-      ? <span
+    return (
+      <div>
+        <span
           className="remove glyphicon glyphicon-remove"
           onClick={this._showConfirmation}
         />
-      : <ButtonGroup>
-          <Button bsStyle="danger" onClick={this._delete}>
-            Delete
-          </Button>
-          <Button onClick={this._cancel}>
-            Cancel
-          </Button>
-        </ButtonGroup>;
+
+        <ReactCSSTransitionGroup
+          transitionName="confirmation"
+          transitionEnterTimeout={300}
+          transitionLeaveTimeout={300}
+        >
+          {this.state.showConfirmation &&
+            <ButtonGroup key="confirmation">
+              <Button bsStyle="danger" onClick={this._delete}>
+                Delete
+              </Button>
+              <Button onClick={this._cancel}>
+                Cancel
+              </Button>
+            </ButtonGroup>}
+        </ReactCSSTransitionGroup>
+      </div>
+    );
   },
   _showConfirmation(e) {
     e.preventDefault();
