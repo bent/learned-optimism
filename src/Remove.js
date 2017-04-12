@@ -8,7 +8,7 @@ const Component = React.createClass({
   },
   render() {
     return (
-      <div>
+      <span>
         <span
           className="remove glyphicon glyphicon-remove"
           onClick={this._showConfirmation}
@@ -29,7 +29,7 @@ const Component = React.createClass({
               </Button>
             </ButtonGroup>}
         </ReactCSSTransitionGroup>
-      </div>
+      </span>
     );
   },
   _showConfirmation(e) {
