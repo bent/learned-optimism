@@ -75,7 +75,7 @@ h2 {
 
 .confirmation-enter.confirmation-enter-active {
   transform: translateX(0);
-  transition: transform 300ms linear;
+  transition: transform 1000ms linear;
 }
 
 .confirmation-leave {
@@ -84,5 +84,5 @@ h2 {
 
 .confirmation-leave.confirmation-leave-active {
   transform: translateX(200px);
-  transition: transform 300ms linear;
+  transition: transform 500ms linear;
 }

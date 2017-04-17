@@ -16,8 +16,8 @@ const Component = React.createClass({
 
         <ReactCSSTransitionGroup
           transitionName="confirmation"
-          transitionEnterTimeout={300}
-          transitionLeaveTimeout={300}
+          transitionEnterTimeout={1000}
+          transitionLeaveTimeout={500}
         >
           {this.state.showConfirmation &&
             <ButtonGroup key="confirmation">
