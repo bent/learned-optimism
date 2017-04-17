@@ -70,19 +70,19 @@ h2 {
 }
 
 .confirmation-enter {
-  opacity: 0.01;
+  transform: translateX(200px);
 }
 
 .confirmation-enter.confirmation-enter-active {
-  opacity: 1;
-  transition: opacity 500ms ease-in;
+  transform: translateX(0);
+  transition: transform 300ms linear;
 }
 
 .confirmation-leave {
-  opacity: 1;
+  transform: translateX(0);
 }
 
 .confirmation-leave.confirmation-leave-active {
-  opacity: 0.01;
-  transition: opacity 300ms ease-in;
+  transform: translateX(200px);
+  transition: transform 300ms linear;
 }
