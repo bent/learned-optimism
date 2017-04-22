@@ -4,7 +4,8 @@
   "private": true,
   "devDependencies": {
     "firebase-tools": "^3.0.7",
-    "react-scripts": "^0.9.5"
+    "react-scripts": "^0.9.5",
+    "react-test-renderer": "^15.5.4"
   },
   "dependencies": {
     "firebase": "^3.4.0",

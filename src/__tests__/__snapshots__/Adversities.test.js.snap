@@ -1,0 +1,125 @@
+exports[`test renders correctly 1`] = `
+<div
+  className=" react-spinner">
+  <div
+    className="react-spinner_bar"
+    style={
+      Object {
+        "WebkitAnimationDelay": "-1.2s",
+        "WebkitTransform": "rotate(0deg) translate(146%)",
+        "animationDelay": "-1.2s",
+        "transform": "rotate(0deg) translate(146%)",
+      }
+    } />
+  <div
+    className="react-spinner_bar"
+    style={
+      Object {
+        "WebkitAnimationDelay": "-1.1s",
+        "WebkitTransform": "rotate(30deg) translate(146%)",
+        "animationDelay": "-1.1s",
+        "transform": "rotate(30deg) translate(146%)",
+      }
+    } />
+  <div
+    className="react-spinner_bar"
+    style={
+      Object {
+        "WebkitAnimationDelay": "-1s",
+        "WebkitTransform": "rotate(60deg) translate(146%)",
+        "animationDelay": "-1s",
+        "transform": "rotate(60deg) translate(146%)",
+      }
+    } />
+  <div
+    className="react-spinner_bar"
+    style={
+      Object {
+        "WebkitAnimationDelay": "-0.9s",
+        "WebkitTransform": "rotate(90deg) translate(146%)",
+        "animationDelay": "-0.9s",
+        "transform": "rotate(90deg) translate(146%)",
+      }
+    } />
+  <div
+    className="react-spinner_bar"
+    style={
+      Object {
+        "WebkitAnimationDelay": "-0.8s",
+        "WebkitTransform": "rotate(120deg) translate(146%)",
+        "animationDelay": "-0.8s",
+        "transform": "rotate(120deg) translate(146%)",
+      }
+    } />
+  <div
+    className="react-spinner_bar"
+    style={
+      Object {
+        "WebkitAnimationDelay": "-0.7s",
+        "WebkitTransform": "rotate(150deg) translate(146%)",
+        "animationDelay": "-0.7s",
+        "transform": "rotate(150deg) translate(146%)",
+      }
+    } />
+  <div
+    className="react-spinner_bar"
+    style={
+      Object {
+        "WebkitAnimationDelay": "-0.6s",
+        "WebkitTransform": "rotate(180deg) translate(146%)",
+        "animationDelay": "-0.6s",
+        "transform": "rotate(180deg) translate(146%)",
+      }
+    } />
+  <div
+    className="react-spinner_bar"
+    style={
+      Object {
+        "WebkitAnimationDelay": "-0.5s",
+        "WebkitTransform": "rotate(210deg) translate(146%)",
+        "animationDelay": "-0.5s",
+        "transform": "rotate(210deg) translate(146%)",
+      }
+    } />
+  <div
+    className="react-spinner_bar"
+    style={
+      Object {
+        "WebkitAnimationDelay": "-0.4s",
+        "WebkitTransform": "rotate(240deg) translate(146%)",
+        "animationDelay": "-0.4s",
+        "transform": "rotate(240deg) translate(146%)",
+      }
+    } />
+  <div
+    className="react-spinner_bar"
+    style={
+      Object {
+        "WebkitAnimationDelay": "-0.3s",
+        "WebkitTransform": "rotate(270deg) translate(146%)",
+        "animationDelay": "-0.3s",
+        "transform": "rotate(270deg) translate(146%)",
+      }
+    } />
+  <div
+    className="react-spinner_bar"
+    style={
+      Object {
+        "WebkitAnimationDelay": "-0.2s",
+        "WebkitTransform": "rotate(300deg) translate(146%)",
+        "animationDelay": "-0.2s",
+        "transform": "rotate(300deg) translate(146%)",
+      }
+    } />
+  <div
+    className="react-spinner_bar"
+    style={
+      Object {
+        "WebkitAnimationDelay": "-0.1s",
+        "WebkitTransform": "rotate(330deg) translate(146%)",
+        "animationDelay": "-0.1s",
+        "transform": "rotate(330deg) translate(146%)",
+      }
+    } />
+</div>
+`;

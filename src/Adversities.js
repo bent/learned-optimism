@@ -15,7 +15,7 @@ import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import Remove from "./Remove";
 import userRefFor from "./userRef";
 
-const Presentation = props =>
+export const Presentation = props =>
   props.loaded
     ? // If we've just created a new adversity
       props.newAdversityId
