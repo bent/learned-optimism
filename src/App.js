@@ -24,7 +24,7 @@ const Presentation = ({ user, ...props }) => (
         <Navbar.Header>
           <Navbar.Brand>
             <Link to="/">
-              <img src={logo} role="presentation" />
+              <img src={logo} alt="Learned Optimism" />
               <span>Learned Optimism</span>
             </Link>
           </Navbar.Brand>
