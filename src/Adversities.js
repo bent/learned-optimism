@@ -11,7 +11,7 @@ import { Link, Redirect } from "react-router-dom";
 import Spinner from "react-spinner";
 import firebase from "firebase";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
-import { graphql } from 'react-apollo'
+import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
 
 import Remove from "./Remove";
@@ -107,13 +107,7 @@ const Container = React.createClass({
   handleSubmit(e) {
     e.preventDefault();
     this.setState({ isSaving: true });
-    this.firebaseRefs.adversities
-      .push({
-        description: this.state.description
-      })
-      .then(adversity => {
-        this.setState({ newAdversityId: adversity.key });
-      });
+    this.props.createAdversityMutation({variables: { description: this.state.description}})
   },
   /**
    * Remove an adversity and all of its associated beliefs
@@ -153,10 +147,23 @@ const ALL_ADVERSITIES_QUERY = gql`
     }
   }
 `
+const CREATE_ADVERSITY_MUTATION = gql`
+  mutation CreateAdversityMutation($description: String!) {
+    createAdversity(description: $description) {
+      id
+      description
+    }
+  }
+`
 
-export default graphql(ALL_ADVERSITIES_QUERY, {
-  name: 'allAdversitiesQuery',
-  options: {
-    fetchPolicy: 'network-only',
-  },
-})(Container)
+export default compose(
+  graphql(ALL_ADVERSITIES_QUERY, {
+    name: 'allAdversitiesQuery',
+    options: {
+      fetchPolicy: 'network-only',
+    },
+  }),
+  graphql(CREATE_ADVERSITY_MUTATION, {
+    name: 'createAdversityMutation'
+  })
+)(Container)
