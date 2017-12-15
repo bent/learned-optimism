@@ -11,6 +11,8 @@ import { Link, Redirect } from "react-router-dom";
 import Spinner from "react-spinner";
 import firebase from "firebase";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
 
 import Remove from "./Remove";
 import userRefFor from "./userRef";
@@ -47,7 +49,7 @@ export const Presentation = props =>
                 transitionLeaveTimeout={300}
               >
                 {props.adversities.map(adversity => {
-                  const id = adversity[".key"];
+                  const { id } = adversity;
 
                   return (
                     <Link
@@ -65,7 +67,7 @@ export const Presentation = props =>
           </div>
     : <Spinner />;
 
-export default React.createClass({
+const Container = React.createClass({
   mixins: [ReactFireMixin],
   propTypes: {
     user: React.PropTypes.instanceOf(firebase.User).isRequired
@@ -75,23 +77,20 @@ export default React.createClass({
       description: ""
     };
   },
-  componentDidMount() {
-    this.bindAsArray(
-      userRefFor(this.props.user).child("adversities"),
-      "adversities"
-    );
-    // Once the data has loaded for the first time, stop displaying the spinner
-    this.firebaseRefs.adversities
-      .once("value")
-      .then(() => this.setState({ loaded: true }));
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.location.key !== nextProps.location.key) {
+      this.props.allAdversitiesQuery.refetch()
+    }
   },
+
   render() {
     const { state } = this;
 
     return (
       <Presentation
-        loaded={state.loaded}
-        adversities={state.adversities}
+        loaded={!this.props.allAdversitiesQuery.loading}
+        adversities={this.props.allAdversitiesQuery.allAdversities}
         newAdversityId={state.newAdversityId}
         handleSubmit={this.handleSubmit}
         description={state.description}
@@ -145,3 +144,19 @@ export default React.createClass({
       .catch(error => console.error(error));
   }
 });
+
+const ALL_ADVERSITIES_QUERY = gql`
+  query AllAdversitiesQuery {
+    allAdversities(orderBy: createdAt_DESC) {
+      id
+      description
+    }
+  }
+`
+
+export default graphql(ALL_ADVERSITIES_QUERY, {
+  name: 'allAdversitiesQuery',
+  options: {
+    fetchPolicy: 'network-only',
+  },
+})(Container)
