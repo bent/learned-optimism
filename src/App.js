@@ -15,7 +15,19 @@ import firebase from "./firebase";
 
 import logo from "./logo.svg";
 
+import { ApolloProvider } from 'react-apollo'
+import { ApolloClient } from 'apollo-client'
+import { HttpLink } from 'apollo-link-http'
+import { InMemoryCache } from 'apollo-cache-inmemory'
+
 const auth = firebase.auth();
+
+const httpLink = new HttpLink({ uri: 'https://api.graph.cool/simple/v1/cjb7bm38422bb0159cb08b9fr' })
+
+const client = new ApolloClient({
+  link: httpLink,
+  cache: new InMemoryCache()
+})
 
 const Presentation = ({ user, ...props }) => (
   <BrowserRouter>
@@ -85,9 +97,11 @@ export default React.createClass({
   },
   render() {
     return (
-      <Presentation
-        {...{ ...this.state, toggle: this.toggle, logout: this.logout }}
-      />
+      <ApolloProvider client={client}>
+        <Presentation
+          {...{ ...this.state, toggle: this.toggle, logout: this.logout }}
+        />
+      </ApolloProvider>
     );
   },
   toggle() {
