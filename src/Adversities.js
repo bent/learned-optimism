@@ -107,7 +107,9 @@ const Container = React.createClass({
   handleSubmit(e) {
     e.preventDefault();
     this.setState({ isSaving: true });
-    this.props.createAdversityMutation({variables: { description: this.state.description}})
+    this.props.createAdversityMutation({variables: { description: this.state.description}}).then(({data}) => {
+      this.setState({ newAdversityId: data.createAdversity.id });
+    })
   },
   /**
    * Remove an adversity and all of its associated beliefs
