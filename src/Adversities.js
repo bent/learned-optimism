@@ -15,7 +15,6 @@ import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
 
 import Remove from "./Remove";
-import userRefFor from "./userRef";
 
 export const Presentation = props =>
   props.loaded
@@ -115,29 +114,7 @@ const Container = React.createClass({
    * Remove an adversity and all of its associated beliefs
    */
   remove(adversityId) {
-    // TODO See if there's a way to do this in a transaction
-    this.firebaseRefs.adversities
-      .child(adversityId)
-      .remove()
-      .then(() => {
-        // Delete the beliefs for the adversity
-        // TODO See if there's a way to do this in one hit rather than iteratively
-        return userRefFor(this.props.user)
-          .child("beliefs")
-          .orderByChild("adversityId")
-          .equalTo(adversityId)
-          .once("value")
-          .then(snapshot => {
-            let promises = [];
-
-            snapshot.forEach(childSnapshot => {
-              promises = promises.concat(childSnapshot.ref.remove());
-            });
-
-            return Promise.all(promises);
-          });
-      })
-      .catch(error => console.error(error));
+    this.props.deleteAdversityMutation({variables: { id: adversityId }}).catch(error => console.error(error));
   }
 });
 
@@ -158,6 +135,14 @@ const CREATE_ADVERSITY_MUTATION = gql`
   }
 `
 
+const DELETE_ADVERSITY_MUTATION = gql`
+  mutation DeleteAdversityMutation($id: ID!) {
+    deleteAdversity(id: $id) {
+      id
+    }
+  }
+`
+
 export default compose(
   graphql(ALL_ADVERSITIES_QUERY, {
     name: 'allAdversitiesQuery',
@@ -167,5 +152,8 @@ export default compose(
   }),
   graphql(CREATE_ADVERSITY_MUTATION, {
     name: 'createAdversityMutation'
+  }),
+  graphql(DELETE_ADVERSITY_MUTATION, {
+    name: 'deleteAdversityMutation'
   })
 )(Container)
