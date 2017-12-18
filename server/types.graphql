@@ -4,4 +4,14 @@ type Adversity @model {
   updatedAt: DateTime! # read-only (managed by Graphcool)
 
   description: String!
+  beliefs: [Belief!]! @relation(name: "AdversityOnBelief")
+}
+
+type Belief @model {
+  id: ID! @isUnique
+  createdAt: DateTime! # read-only (managed by Graphcool)
+  updatedAt: DateTime! # read-only (managed by Graphcool)
+
+  description: String!
+  adversity: Adversity! @relation(name: "AdversityOnBelief")
 }
