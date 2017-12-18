@@ -114,7 +114,9 @@ const Container = React.createClass({
    * Remove an adversity and all of its associated beliefs
    */
   remove(adversityId) {
-    this.props.deleteAdversityMutation({variables: { id: adversityId }}).catch(error => console.error(error));
+    this.props.deleteAdversityMutation({
+      variables: { id: adversityId }
+    }).catch(error => console.error(error));
   }
 });
 
@@ -154,6 +156,12 @@ export default compose(
     name: 'createAdversityMutation'
   }),
   graphql(DELETE_ADVERSITY_MUTATION, {
-    name: 'deleteAdversityMutation'
+    name: 'deleteAdversityMutation',
+    options: {
+      // TODO Something more efficient like a cache update or optimistic update
+      refetchQueries: [
+        'AllAdversitiesQuery'
+      ],
+    }
   })
 )(Container)
