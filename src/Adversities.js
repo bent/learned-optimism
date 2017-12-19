@@ -77,12 +77,6 @@ const Container = React.createClass({
     };
   },
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.location.key !== nextProps.location.key) {
-      this.props.allAdversitiesQuery.refetch()
-    }
-  },
-
   render() {
     const { state } = this;
 

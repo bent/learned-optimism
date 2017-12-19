@@ -71,6 +71,13 @@ const Container = React.createClass({
       beliefDescription: ""
     };
   },
+  componentWillReceiveProps(nextProps) {
+    const { adversityId } = nextProps.match.params
+
+    if (this.props.match.params.adversityId !== adversityId) {
+      this.props.adversityQuery.refetch({ id: adversityId })
+    }
+  },
   render() {
     const { state } = this;
     const { Adversity } = this.props.adversityQuery
