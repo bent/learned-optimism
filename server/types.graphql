@@ -15,4 +15,35 @@ type Belief @model {
 
   description: String!
   adversity: Adversity! @relation(name: "AdversityOnBelief")
+
+  evidence: [Evidence!]! @relation(name: "BeliefOnEvidence")
+  alternatives: [Alternative!]! @relation(name: "BeliefOnAlternative")
+  implications: [Implication!]! @relation(name: "BeliefOnImplication")
+}
+
+type Evidence @model {
+  id: ID! @isUnique
+  createdAt: DateTime! # read-only (managed by Graphcool)
+  updatedAt: DateTime! # read-only (managed by Graphcool)
+
+  description: String!
+  belief: Belief! @relation(name: "BeliefOnEvidence")
+}
+
+type Alternative @model {
+  id: ID! @isUnique
+  createdAt: DateTime! # read-only (managed by Graphcool)
+  updatedAt: DateTime! # read-only (managed by Graphcool)
+
+  description: String!
+  belief: Belief! @relation(name: "BeliefOnAlternative")
+}
+
+type Implication @model {
+  id: ID! @isUnique
+  createdAt: DateTime! # read-only (managed by Graphcool)
+  updatedAt: DateTime! # read-only (managed by Graphcool)
+
+  description: String!
+  belief: Belief! @relation(name: "BeliefOnImplication")
 }

@@ -9,6 +9,8 @@ import {
   ControlLabel,
   Pager
 } from "react-bootstrap";
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
 
 import lowerCaseFirstLetter from "./lowerCaseFirstLetter";
 import List from "./List";
@@ -16,8 +18,8 @@ import disputationPropTypes from "./disputationPropTypes";
 import PagerLink from "./PagerLink";
 
 const Presentation = ({ belief, beliefs, ...props }) => {
-  const beliefId = belief[".key"];
-  const index = beliefs.findIndex(b => b[".key"] === beliefId);
+  const beliefId = belief.id;
+  const index = beliefs.findIndex(b => b.id === beliefId);
   if (index < 0) throw new Error(`Belief with ID ${beliefId} not found`);
 
   let previousText = "Beliefs";
@@ -25,7 +27,7 @@ const Presentation = ({ belief, beliefs, ...props }) => {
 
   if (index > 0) {
     previousText = "Prev. Belief";
-    previousPath = `/beliefs/${beliefs[index - 1][".key"]}/alternatives`;
+    previousPath = `/beliefs/${beliefs[index - 1].id}/alternatives`;
   }
 
   return (
@@ -63,16 +65,13 @@ const Presentation = ({ belief, beliefs, ...props }) => {
   );
 };
 
-export default React.createClass({
+const Container = React.createClass({
   propTypes: disputationPropTypes,
   mixins: [ReactFireMixin],
   getInitialState() {
     return {
       description: ""
     };
-  },
-  componentDidMount() {
-    this.bindAsArray(this.props.beliefRef.child("evidence"), "evidence");
   },
   render() {
     const { state, props } = this;
@@ -84,7 +83,7 @@ export default React.createClass({
         description={state.description}
         handleChange={this.handleChange}
         isSaving={state.isSaving}
-        evidence={state.evidence}
+        evidence={this.props.evidenceQuery.allEvidences}
         remove={this.remove}
       />
     );
@@ -109,3 +108,17 @@ export default React.createClass({
     this.firebaseRefs.evidence.child(id).remove();
   }
 });
+
+// TODO Investigate how to merge into query done by Belief.js
+const EVIDENCE_QUERY = gql`
+  query EvidenceQuery($beliefId: ID!) {
+    allEvidences(filter: {belief: {id: $beliefId}}) {
+      description
+    }
+  }
+`
+
+export default graphql(EVIDENCE_QUERY, {
+  name: 'evidenceQuery',
+  options: props => ({ variables: { beliefId: props.belief.id } })
+})(Container)
