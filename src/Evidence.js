@@ -106,7 +106,9 @@ const Container = React.createClass({
     });
   },
   remove(id) {
-    this.firebaseRefs.evidence.child(id).remove();
+    this.props.deleteEvidenceMutation({
+      variables: { id }
+    })
   }
 });
 
@@ -128,6 +130,14 @@ const CREATE_EVIDENCE_MUTATION = gql`
   }
 `
 
+const DELETE_EVIDENCE_MUTATION = gql`
+  mutation DeleteEvidenceMutation($id: ID!) {
+    deleteEvidence(id: $id) {
+      id
+    }
+  }
+`
+
 export default compose(
   graphql(EVIDENCE_QUERY, {
     name: 'evidenceQuery',
@@ -135,6 +145,15 @@ export default compose(
   }),
   graphql(CREATE_EVIDENCE_MUTATION, {
     name: 'createEvidenceMutation',
+    options: {
+      // TODO Something more efficient like a cache update or optimistic update
+      refetchQueries: [
+        'EvidenceQuery'
+      ],
+    }
+  }),
+  graphql(DELETE_EVIDENCE_MUTATION, {
+    name: 'deleteEvidenceMutation',
     options: {
       // TODO Something more efficient like a cache update or optimistic update
       refetchQueries: [
