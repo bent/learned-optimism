@@ -9,7 +9,7 @@ import {
   ControlLabel,
   Pager
 } from "react-bootstrap";
-import { graphql } from 'react-apollo'
+import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
 
 import lowerCaseFirstLetter from "./lowerCaseFirstLetter";
@@ -96,13 +96,14 @@ const Container = React.createClass({
     e.preventDefault();
     this.setState({ isSaving: true });
 
-    this.firebaseRefs.evidence
-      .push({
-        description: this.state.description
-      })
-      .then(() => {
-        this.setState({ description: "", isSaving: false });
-      });
+    this.props.createEvidenceMutation({
+      variables: {
+        description: this.state.description,
+        beliefId: this.props.belief.id
+      }
+    }).then(() => {
+      this.setState({ description: "", isSaving: false });
+    });
   },
   remove(id) {
     this.firebaseRefs.evidence.child(id).remove();
@@ -113,12 +114,32 @@ const Container = React.createClass({
 const EVIDENCE_QUERY = gql`
   query EvidenceQuery($beliefId: ID!) {
     allEvidences(filter: {belief: {id: $beliefId}}) {
+      id
       description
     }
   }
 `
 
-export default graphql(EVIDENCE_QUERY, {
-  name: 'evidenceQuery',
-  options: props => ({ variables: { beliefId: props.belief.id } })
-})(Container)
+const CREATE_EVIDENCE_MUTATION = gql`
+  mutation CreateEvidenceMutation($beliefId: ID!, $description: String!) {
+    createEvidence(beliefId: $beliefId, description: $description) {
+      id
+    }
+  }
+`
+
+export default compose(
+  graphql(EVIDENCE_QUERY, {
+    name: 'evidenceQuery',
+    options: props => ({ variables: { beliefId: props.belief.id } })
+  }),
+  graphql(CREATE_EVIDENCE_MUTATION, {
+    name: 'createEvidenceMutation',
+    options: {
+      // TODO Something more efficient like a cache update or optimistic update
+      refetchQueries: [
+        'EvidenceQuery'
+      ],
+    }
+  })
+)(Container)
