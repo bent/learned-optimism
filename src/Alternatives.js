@@ -10,13 +10,16 @@ import {
   Pager
 } from "react-bootstrap";
 
+import { graphql, compose } from 'react-apollo'
+import gql from 'graphql-tag'
+
 import lowerCaseFirstLetter from "./lowerCaseFirstLetter";
 import disputationPropTypes from "./disputationPropTypes";
 import List from "./List";
 import PagerLink from "./PagerLink";
 
 const Presentation = ({ belief, ...props }) => {
-  const beliefId = belief[".key"];
+  const beliefId = belief.id;
 
   return (
     <div>
@@ -57,19 +60,13 @@ const Presentation = ({ belief, ...props }) => {
   );
 };
 
-export default React.createClass({
+const Container = React.createClass({
   mixins: [ReactFireMixin],
   propTypes: disputationPropTypes,
   getInitialState() {
     return {
       alternativeDescription: ""
     };
-  },
-  componentDidMount() {
-    this.bindAsArray(
-      this.props.beliefRef.child("alternatives"),
-      "alternatives"
-    );
   },
   render() {
     const { state } = this;
@@ -81,7 +78,7 @@ export default React.createClass({
         alternativeDescription={state.alternativeDescription}
         handleChange={this.handleChange}
         isSaving={state.isSaving}
-        alternatives={state.alternatives}
+        alternatives={this.props.alternativesQuery.allAlternatives}
         remove={this.remove}
       />
     );
@@ -94,15 +91,69 @@ export default React.createClass({
     e.preventDefault();
     this.setState({ isSaving: true });
 
-    this.firebaseRefs.alternatives
-      .push({
-        description: this.state.alternativeDescription
-      })
-      .then(() => {
-        this.setState({ alternativeDescription: "", isSaving: false });
-      });
+    this.props.createAlternativeMutation({
+      variables: {
+        description: this.state.alternativeDescription,
+        beliefId: this.props.belief.id
+      }
+    }).then(() => {
+      this.setState({ alternativeDescription: "", isSaving: false });
+    });
   },
   remove(id) {
-    this.firebaseRefs.alternatives.child(id).remove();
+    this.props.deleteAlternativeMutation({
+      variables: { id }
+    })
   }
 });
+
+// TODO Investigate how to merge into query done by Belief.js
+const ALTERNATIVES_QUERY = gql`
+  query AlternativeQuery($beliefId: ID!) {
+    allAlternatives(filter: {belief: {id: $beliefId}}) {
+      id
+      description
+    }
+  }
+`
+
+const CREATE_ALTERNATIVE_MUTATION = gql`
+  mutation CreateAlternativeMutation($beliefId: ID!, $description: String!) {
+    createAlternative(beliefId: $beliefId, description: $description) {
+      id
+    }
+  }
+`
+
+const DELETE_ALTERNATIVE_MUTATION = gql`
+  mutation DeleteAlternativeMutation($id: ID!) {
+    deleteAlternative(id: $id) {
+      id
+    }
+  }
+`
+
+export default compose(
+  graphql(ALTERNATIVES_QUERY, {
+    name: 'alternativesQuery',
+    options: props => ({ variables: { beliefId: props.belief.id } })
+  }),
+  graphql(CREATE_ALTERNATIVE_MUTATION, {
+    name: 'createAlternativeMutation',
+    options: {
+      // TODO Something more efficient like a cache update or optimistic update
+      refetchQueries: [
+        'AlternativeQuery'
+      ],
+    }
+  }),
+  graphql(DELETE_ALTERNATIVE_MUTATION, {
+    name: 'deleteAlternativeMutation',
+    options: {
+      // TODO Something more efficient like a cache update or optimistic update
+      refetchQueries: [
+        'AlternativeQuery'
+      ],
+    }
+  })
+)(Container)
