@@ -46,7 +46,7 @@ const Presentation = ({ beliefs, ...props }) =>
         {beliefs.length > 0
           ? <ButtonToolbar>
               <Link
-                to={`/beliefs/${beliefs[0][".key"]}/evidence`}
+                to={`/beliefs/${beliefs[0].id}/evidence`}
                 className="btn btn-primary btn-block"
               >
                 Start Disputation
@@ -102,18 +102,17 @@ const Container = React.createClass({
   handleSubmit(e) {
     e.preventDefault();
     this.setState({ isSaving: true });
-
-    this.firebaseRefs.beliefs
-      .push({
-        adversityId: this.state.adversity[".key"],
-        description: this.state.beliefDescription
-      })
-      .then(() => {
-        this.setState({
-          beliefDescription: "",
-          isSaving: false
-        });
+    this.props.createBeliefMutation({
+      variables: { 
+        description: this.state.beliefDescription,
+        adversityId: this.props.match.params.adversityId
+      }
+    }).then(() => {
+      this.setState({
+        beliefDescription: "",
+        isSaving: false
       });
+    });
   },
   remove(beliefId) {
     userRefFor(this.props.user).child("beliefs").child(beliefId).remove()
@@ -132,9 +131,26 @@ const ADVERSITY_QUERY = gql`
   }
 `
 
+const CREATE_BELIEF_MUTATION = gql`
+  mutation CreateBeliefMutation($adversityId: ID!, $description: String!) {
+    createBelief(adversityId: $adversityId, description: $description) {
+      id
+    }
+  }
+`
+
 export default compose(
   graphql(ADVERSITY_QUERY, { 
     name: 'adversityQuery',
     options: props => ({ variables: { id: props.match.params.adversityId } })
+  }),
+  graphql(CREATE_BELIEF_MUTATION, { 
+    name: 'createBeliefMutation',
+    options: {
+      // TODO Something more efficient like a cache update or optimistic update
+      refetchQueries: [
+        'AdversityQuery'
+      ],
+    }
   })
 )(Container)

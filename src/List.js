@@ -13,7 +13,7 @@ const Component = ({ value, ...props }) =>
           transitionLeaveTimeout={300}
         >
           {value.map(item => {
-            const id = item[".key"];
+            const { id } = item;
             return (
               <div className="list-group-item" key={id}>
                 {item.description}
