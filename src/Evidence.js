@@ -83,7 +83,7 @@ const Container = React.createClass({
         description={state.description}
         handleChange={this.handleChange}
         isSaving={state.isSaving}
-        evidence={this.props.evidenceQuery.allEvidences}
+        evidence={props.evidenceQuery.allEvidences}
         remove={this.remove}
       />
     );
