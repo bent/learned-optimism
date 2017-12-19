@@ -23,7 +23,7 @@ const Presentation = ({ belief, beliefs, ...props }) => {
   if (index < 0) throw new Error(`Belief with ID ${beliefId} not found`);
 
   let previousText = "Beliefs";
-  let previousPath = `/adversities/${belief.adversityId}`;
+  let previousPath = `/adversities/${belief.adversity.id}`;
 
   if (index > 0) {
     previousText = "Prev. Belief";

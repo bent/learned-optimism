@@ -80,6 +80,7 @@ const BELIEF_QUERY = gql`
       id
       description
       adversity {
+        id
         description
         beliefs {
           id
