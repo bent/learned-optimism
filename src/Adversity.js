@@ -12,6 +12,8 @@ import {
 import { Link } from "react-router-dom";
 import Spinner from "react-spinner";
 import firebase from "firebase";
+import { graphql, compose } from 'react-apollo'
+import gql from 'graphql-tag'
 
 import userRefFor from "./userRef";
 import AdversityPanel from "./AdversityPanel";
@@ -54,7 +56,7 @@ const Presentation = ({ beliefs, ...props }) =>
       </AdversityPanel>
     : <Spinner />;
 
-export default React.createClass({
+const Container = React.createClass({
   mixins: [ReactFireMixin],
   propTypes: {
     user: React.PropTypes.instanceOf(firebase.User).isRequired,
@@ -69,37 +71,19 @@ export default React.createClass({
       beliefDescription: ""
     };
   },
-  componentDidMount() {
-    const { adversityId } = this.props.match.params;
-    const userRef = userRefFor(this.props.user);
-
-    this.bindAsObject(
-      userRef.child("adversities").child(adversityId),
-      "adversity"
-    );
-    this.bindAsArray(
-      userRef.child("beliefs").orderByChild("adversityId").equalTo(adversityId),
-      "beliefs"
-    );
-
-    // Once the data has loaded for the first time, stop displaying the spinner
-    Promise.all([
-      this.firebaseRefs.adversity.once("value"),
-      this.firebaseRefs.beliefs.once("value")
-    ]).then(() => this.setState({ loaded: true }));
-  },
   render() {
     const { state } = this;
+    const { Adversity } = this.props.adversityQuery
 
     return (
       <Presentation
-        loaded={state.loaded}
-        adversity={state.adversity}
+        loaded={!this.props.adversityQuery.loading}
+        adversity={Adversity}
         handleSubmit={this.handleSubmit}
         beliefDescription={state.beliefDescription}
         handleChange={this.handleChange}
         isSaving={state.isSaving}
-        beliefs={state.beliefs}
+        beliefs={Adversity && Adversity.beliefs}
         remove={this.remove}
       />
     );
@@ -128,3 +112,22 @@ export default React.createClass({
     userRefFor(this.props.user).child("beliefs").child(beliefId).remove()
   }
 });
+
+const ADVERSITY_QUERY = gql`
+  query AdversityQuery($id: ID!) {
+    Adversity(id: $id) {
+      description
+      beliefs {
+        id
+        description
+      }
+    }
+  }
+`
+
+export default compose(
+  graphql(ADVERSITY_QUERY, { 
+    name: 'adversityQuery',
+    options: props => ({ variables: { id: props.match.params.adversityId } })
+  })
+)(Container)
