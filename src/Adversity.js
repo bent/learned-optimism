@@ -15,7 +15,6 @@ import firebase from "firebase";
 import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
 
-import userRefFor from "./userRef";
 import AdversityPanel from "./AdversityPanel";
 import List from "./List";
 
@@ -115,7 +114,9 @@ const Container = React.createClass({
     });
   },
   remove(beliefId) {
-    userRefFor(this.props.user).child("beliefs").child(beliefId).remove()
+    this.props.deleteBeliefMutation({
+      variables: { id: beliefId }
+    })
   }
 });
 
@@ -139,6 +140,14 @@ const CREATE_BELIEF_MUTATION = gql`
   }
 `
 
+const DELETE_BELIEF_MUTATION = gql`
+  mutation DeleteBeliefMutation($id: ID!) {
+    deleteBelief(id: $id) {
+      id
+    }
+  }
+`
+
 export default compose(
   graphql(ADVERSITY_QUERY, { 
     name: 'adversityQuery',
@@ -146,6 +155,15 @@ export default compose(
   }),
   graphql(CREATE_BELIEF_MUTATION, { 
     name: 'createBeliefMutation',
+    options: {
+      // TODO Something more efficient like a cache update or optimistic update
+      refetchQueries: [
+        'AdversityQuery'
+      ],
+    }
+  }),
+  graphql(DELETE_BELIEF_MUTATION, {
+    name: 'deleteBeliefMutation',
     options: {
       // TODO Something more efficient like a cache update or optimistic update
       refetchQueries: [
