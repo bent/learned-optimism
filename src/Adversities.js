@@ -116,7 +116,7 @@ const Container = React.createClass({
 
 const ALL_ADVERSITIES_QUERY = gql`
   query AllAdversitiesQuery {
-    allAdversities(orderBy: createdAt_DESC) {
+    allAdversities {
       id
       description
     }
