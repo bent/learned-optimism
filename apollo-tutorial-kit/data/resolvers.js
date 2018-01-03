@@ -6,14 +6,14 @@ const resolvers = {
       return Adversity.findAll();
     },
     Adversity(_, args) {
-      return Adversity.findById(args.id)
+      return Adversity.findById(args.id, { include: [ Belief ]})
     }
   },
-  Adversity: {
-    beliefs(author) {
-      return author.getBeliefs();
-    }
-  },
+  // Adversity: {
+  //   beliefs(author) {
+  //     return author.getBeliefs();
+  //   }
+  // },
   Mutation: {
     createAdversity(_, {description}) {
       return Adversity.create({description})
