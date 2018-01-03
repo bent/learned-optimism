@@ -4,6 +4,9 @@ const resolvers = {
   Query: {
     allAdversities(_, args) {
       return Adversity.findAll();
+    },
+    Adversity(_, args) {
+      return Adversity.findById(args.id)
     }
   },
   Adversity: {
