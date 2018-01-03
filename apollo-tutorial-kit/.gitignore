@@ -34,3 +34,5 @@ node_modules
 
 .idea/
 blog.sqlite
+
+learned-optimism.sqlite
