@@ -14,6 +14,9 @@ const resolvers = {
   Mutation: {
     createAdversity(_, {description}) {
       return Adversity.create({description})
+    },
+    deleteAdversity(_, {id}) {
+      return Adversity.destroy({where: {id}}).then(() => {id})
     }
   }
   // Author: {

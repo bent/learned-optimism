@@ -49,6 +49,7 @@ type Query {
 
 type Mutation {
   createAdversity(description: String!): Adversity
+  deleteAdversity(id: ID!): Adversity
 }
 `;
 
