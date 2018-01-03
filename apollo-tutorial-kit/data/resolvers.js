@@ -1,12 +1,14 @@
+ import { Adversity, Belief } from './connectors'
+
 const resolvers = {
   Query: {
-    allAdversities() {
-      return [{ id: 1, description: 'Adversity1'}];
+    allAdversities(_, args) {
+      return Adversity.findAll();
     }
   },
   Adversity: {
-    beliefs(adversity) {
-      return [{ id: 1, description: 'Belief1'}];
+    beliefs(author) {
+      return author.getBeliefs();
     }
   }
   // Author: {
