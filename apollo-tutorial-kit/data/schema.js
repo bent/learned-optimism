@@ -46,6 +46,10 @@ type Implication @model {
 type Query {
   allAdversities: [Adversity!]!
 }
+
+type Mutation {
+  createAdversity(description: String!): Adversity
+}
 `;
 
 const schema = makeExecutableSchema({ typeDefs, resolvers });

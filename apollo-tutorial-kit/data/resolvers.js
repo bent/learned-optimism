@@ -10,6 +10,11 @@ const resolvers = {
     beliefs(author) {
       return author.getBeliefs();
     }
+  },
+  Mutation: {
+    createAdversity(_, {description}) {
+      return Adversity.create({description})
+    }
   }
   // Author: {
   //   posts(author) {
