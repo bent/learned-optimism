@@ -22,7 +22,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 
 const auth = firebase.auth();
 
-const httpLink = new HttpLink({ uri: 'https://api.graph.cool/simple/v1/cjb7bm38422bb0159cb08b9fr' })
+const httpLink = new HttpLink({ uri: 'http://localhost:4000/graphql' })
 
 const client = new ApolloClient({
   link: httpLink,
