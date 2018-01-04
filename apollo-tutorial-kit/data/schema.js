@@ -53,6 +53,7 @@ type Query {
 type Mutation {
   createAdversity(description: String!): Adversity
   deleteAdversity(id: ID!): Adversity
+  createBelief(adversityId: ID!, description: String!): Belief
   createEvidence(beliefId: ID!, description: String): Evidence
 }
 `;

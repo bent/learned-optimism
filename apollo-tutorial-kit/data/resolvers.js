@@ -31,7 +31,10 @@ const resolvers = {
     },
     deleteAdversity(_, {id}) {
       return Adversity.destroy({where: {id}}).then(() => {id})
-    }, 
+    },
+    createBelief(_, {adversityId, description}) {
+      return Belief.create({adversityId, description})
+    },
     createEvidence(_, {beliefId, description}) {
       return Evidence.create({beliefId, description})
     }
