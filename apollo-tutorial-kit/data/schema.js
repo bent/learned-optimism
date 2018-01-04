@@ -54,6 +54,7 @@ type Mutation {
   createAdversity(description: String!): Adversity
   deleteAdversity(id: ID!): Adversity
   createBelief(adversityId: ID!, description: String!): Belief
+  deleteBelief(id: ID!): Belief
   createEvidence(beliefId: ID!, description: String): Evidence
 }
 `;
