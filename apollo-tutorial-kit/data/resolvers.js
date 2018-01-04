@@ -50,6 +50,9 @@ const resolvers = {
     createAlternative(_, {beliefId, description}) {
       return Alternative.create({beliefId, description})
     },
+    deleteAlternative(_, {id}) {
+      return Alternative.destroy({where: {id}}).then(() => {id})
+    }
   }
   // Author: {
   //   posts(author) {
