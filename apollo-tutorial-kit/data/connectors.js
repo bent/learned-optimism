@@ -59,5 +59,8 @@ db.sync({ force: true }).then(() => {
 
 const Adversity = db.models.adversity;
 const Belief = db.models.belief;
+const Evidence = db.models.evidence;
+const Alternative = db.models.alternative;
+const Implication = db.models.implication;
 
-export { Adversity, Belief };
+export { Adversity, Belief, Evidence, Alternative, Implication };
