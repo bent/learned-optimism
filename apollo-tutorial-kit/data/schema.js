@@ -49,6 +49,7 @@ type Query {
   Belief(id: ID): Belief!
   evidencesForBelief(beliefId: ID): [Evidence!]!
   alternativesForBelief(beliefId: ID): [Alternative!]!
+  implicationsForBelief(beliefId: ID): [Implication!]!
 }
 
 type Mutation {

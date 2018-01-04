@@ -84,7 +84,7 @@ const Container = React.createClass({
         description={state.description}
         handleChange={this.handleChange}
         isSaving={state.isSaving}
-        implications={props.implicationsQuery.allImplications}
+        implications={props.implicationsQuery.implicationsForBelief}
         remove={this.remove}
       />
     );
@@ -116,7 +116,7 @@ const Container = React.createClass({
 // TODO Investigate how to merge into query done by Belief.js
 const IMPLICATIONS_QUERY = gql`
   query ImplicationsQuery($beliefId: ID!) {
-    allImplications(filter: {belief: {id: $beliefId}}) {
+    implicationsForBelief(beliefId: $beliefId) {
       id
       description
     }

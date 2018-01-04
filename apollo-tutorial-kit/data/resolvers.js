@@ -1,4 +1,4 @@
- import { Adversity, Belief, Evidence, Alternative } from './connectors'
+ import { Adversity, Belief, Evidence, Alternative, Implication } from './connectors'
 
 const resolvers = {
   Query: {
@@ -16,6 +16,9 @@ const resolvers = {
     },
     alternativesForBelief(_, {beliefId}) {
       return Alternative.findAll({where: {beliefId}})
+    },
+    implicationsForBelief(_, {beliefId}) {
+      return Implication.findAll({where: {beliefId}})
     }
   },
   Adversity: {
