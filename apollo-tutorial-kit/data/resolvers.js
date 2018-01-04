@@ -58,6 +58,9 @@ const resolvers = {
     },
     createImplication(_, {beliefId, description}) {
       return Implication.create({beliefId, description})
+    },
+    deleteImplication(_, {id}) {
+      return Implication.destroy({where: {id}}).then(() => {id})
     }
   }
   // Author: {
