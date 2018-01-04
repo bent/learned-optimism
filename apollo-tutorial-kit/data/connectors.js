@@ -48,11 +48,11 @@ db.sync({ force: true }).then(() => {
     }).then((adversity) => {
       return Promise.all(_.times(3, () => adversity.createBelief({
         description: casual.sentences(1),
-      }).then(belief => Promise.all([
-        belief.createEvidence({description: casual.sentences(1)}),
-        belief.createAlternative({description: casual.sentences(1)}),
-        belief.createImplication({description: casual.sentences(1)})
-      ]))))
+      }).then(belief => Promise.all(_.flatten([
+        _.times(2, () => belief.createEvidence({description: casual.sentences(1)})),
+        _.times(2, () => belief.createAlternative({description: casual.sentences(1)})),
+        _.times(2, () => belief.createImplication({description: casual.sentences(1)}))
+      ])))))
     });
   });
 });
