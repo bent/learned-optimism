@@ -48,6 +48,7 @@ type Query {
   Adversity(id: ID): Adversity!
   Belief(id: ID): Belief!
   evidencesForBelief(beliefId: ID): [Evidence!]!
+  alternativesForBelief(beliefId: ID): [Alternative!]!
 }
 
 type Mutation {
