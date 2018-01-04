@@ -46,6 +46,7 @@ type Implication @model {
 type Query {
   allAdversities: [Adversity!]!
   Adversity(id: ID): Adversity!
+  Belief(id: ID): Belief!
 }
 
 type Mutation {

@@ -7,11 +7,19 @@ const resolvers = {
     },
     Adversity(_, args) {
       return Adversity.findById(args.id)
-    }
+    },
+    Belief(_, {id}) {
+      return Belief.findById(id)
+    }  
   },
   Adversity: {
     beliefs(author) {
       return author.getBeliefs();
+    }
+  },
+  Belief: {
+    adversity(belief) {
+      return belief.getAdversity()
     }
   },
   Mutation: {
