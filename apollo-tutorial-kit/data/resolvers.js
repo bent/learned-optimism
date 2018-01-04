@@ -40,6 +40,9 @@ const resolvers = {
     },
     createEvidence(_, {beliefId, description}) {
       return Evidence.create({beliefId, description})
+    },
+    deleteEvidence(_, {id}) {
+      return Evidence.destroy({where: {id}}).then(() => {id})
     }
   }
   // Author: {
