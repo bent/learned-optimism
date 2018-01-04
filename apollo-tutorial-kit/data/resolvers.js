@@ -46,7 +46,10 @@ const resolvers = {
     },
     deleteEvidence(_, {id}) {
       return Evidence.destroy({where: {id}}).then(() => {id})
-    }
+    },
+    createAlternative(_, {beliefId, description}) {
+      return Alternative.create({beliefId, description})
+    },
   }
   // Author: {
   //   posts(author) {
