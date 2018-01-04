@@ -31,6 +31,9 @@ const resolvers = {
     },
     deleteAdversity(_, {id}) {
       return Adversity.destroy({where: {id}}).then(() => {id})
+    }, 
+    createEvidence(_, {beliefId, description}) {
+      return Evidence.create({beliefId, description})
     }
   }
   // Author: {
