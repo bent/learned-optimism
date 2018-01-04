@@ -61,6 +61,7 @@ type Mutation {
   deleteEvidence(id: ID!): Evidence
   createAlternative(beliefId: ID!, description: String): Alternative
   deleteAlternative(id: ID!): Alternative
+  createImplication(beliefId: ID!, description: String): Implication
 }
 `;
 
