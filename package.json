@@ -12,9 +12,12 @@
     "apollo-client": "^2.0.1",
     "apollo-link": "^1.0.0",
     "apollo-link-http": "^1.1.0",
+    "apollo-server": "^2.0.7",
+    "casual": "^1.5.19",
     "firebase": "^3.4.0",
-    "graphql": "^0.11.7",
+    "graphql": "^14.0.2",
     "graphql-tag": "^2.5.0",
+    "lodash": "^4.17.10",
     "pushstate-server": "^2.0.0",
     "react": "^15.3.2",
     "react-addons-css-transition-group": "^15.4.2",
@@ -23,7 +26,9 @@
     "react-dom": "^15.3.1",
     "react-router-dom": "next",
     "react-spinner": "^0.2.6",
-    "reactfire": "^1.0.0"
+    "reactfire": "^1.0.0",
+    "sequelize": "^4.38.1",
+    "sqlite3": "^4.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -31,7 +36,8 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "deploy": "firebase deploy",
-    "pushstate-server": "pushstate-server build"
+    "pushstate-server": "pushstate-server build",
+    "start-server": "node apollo2-server/index.js"
   },
   "eslintConfig": {
     "extends": "./node_modules/react-scripts/config/eslint.js"
