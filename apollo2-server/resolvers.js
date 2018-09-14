@@ -8,7 +8,7 @@ const resolvers = {
     getAdversity(_, args) {
       return Adversity.findById(args.id)
     },
-    Belief(_, {id}) {
+    getBelief(_, {id}) {
       return Belief.findById(id)
     },
     evidencesForBelief(_, {beliefId}) {

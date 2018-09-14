@@ -59,13 +59,13 @@ const Container = React.createClass({
     }
   },
   render() {
-    const { Belief } = this.props.beliefQuery;
-    const adversity = Belief && Belief.adversity
+    const { getBelief } = this.props.beliefQuery;
+    const adversity = getBelief && getBelief.adversity
 
     return (
       <Presentation
         beliefId={this.props.match.params.beliefId}
-        belief={Belief}
+        belief={getBelief}
         beliefs={adversity && adversity.beliefs}
         path={this.props.match.path}
         adversity={adversity}
@@ -76,7 +76,7 @@ const Container = React.createClass({
 
 const BELIEF_QUERY = gql`
   query BeliefQuery($id: ID!) {
-    Belief(id: $id) {
+    getBelief(id: $id) {
       id
       description
       adversity {

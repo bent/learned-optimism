@@ -41,7 +41,7 @@ module.exports = `
   type Query {
     getAllAdversities: [Adversity!]!
     getAdversity(id: ID): Adversity!
-    Belief(id: ID): Belief!
+    getBelief(id: ID): Belief!
     evidencesForBelief(beliefId: ID): [Evidence!]!
     alternativesForBelief(beliefId: ID): [Alternative!]!
     implicationsForBelief(beliefId: ID): [Implication!]!
