@@ -78,7 +78,7 @@ const Container = React.createClass({
         alternativeDescription={state.alternativeDescription}
         handleChange={this.handleChange}
         isSaving={state.isSaving}
-        alternatives={this.props.alternativesQuery.alternativesForBelief}
+        alternatives={this.props.alternativesQuery.getAlternativesForBelief}
         remove={this.remove}
       />
     );
@@ -110,7 +110,7 @@ const Container = React.createClass({
 // TODO Investigate how to merge into query done by Belief.js
 const ALTERNATIVES_QUERY = gql`
   query AlternativeQuery($beliefId: ID!) {
-    alternativesForBelief(beliefId: $beliefId) {
+    getAlternativesForBelief(beliefId: $beliefId) {
       id
       description
     }

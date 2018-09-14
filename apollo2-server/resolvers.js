@@ -14,7 +14,7 @@ const resolvers = {
     getEvidenceForBelief(_, {beliefId}) {
       return Evidence.findAll({where: {beliefId}})
     },
-    alternativesForBelief(_, {beliefId}) {
+    getAlternativesForBelief(_, {beliefId}) {
       return Alternative.findAll({where: {beliefId}})
     },
     implicationsForBelief(_, {beliefId}) {
