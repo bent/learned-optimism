@@ -83,7 +83,7 @@ const Container = React.createClass({
     return (
       <Presentation
         loaded={!this.props.allAdversitiesQuery.loading}
-        adversities={this.props.allAdversitiesQuery.allAdversities}
+        adversities={this.props.allAdversitiesQuery.getAllAdversities}
         newAdversityId={state.newAdversityId}
         handleSubmit={this.handleSubmit}
         description={state.description}
@@ -116,7 +116,7 @@ const Container = React.createClass({
 
 const ALL_ADVERSITIES_QUERY = gql`
   query AllAdversitiesQuery {
-    allAdversities {
+    getAllAdversities {
       id
       description
     }
