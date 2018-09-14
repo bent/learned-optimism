@@ -42,7 +42,7 @@ module.exports = `
     getAllAdversities: [Adversity!]!
     getAdversity(id: ID): Adversity!
     getBelief(id: ID): Belief!
-    evidencesForBelief(beliefId: ID): [Evidence!]!
+    getEvidenceForBelief(beliefId: ID): [Evidence!]!
     alternativesForBelief(beliefId: ID): [Alternative!]!
     implicationsForBelief(beliefId: ID): [Implication!]!
   }

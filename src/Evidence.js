@@ -83,7 +83,7 @@ const Container = React.createClass({
         description={state.description}
         handleChange={this.handleChange}
         isSaving={state.isSaving}
-        evidence={props.evidenceQuery.evidencesForBelief}
+        evidence={props.evidenceQuery.getEvidenceForBelief}
         remove={this.remove}
       />
     );
@@ -115,7 +115,7 @@ const Container = React.createClass({
 // TODO Investigate how to merge into query done by Belief.js
 const EVIDENCE_QUERY = gql`
   query EvidenceQuery($beliefId: ID!) {
-    evidencesForBelief(beliefId: $beliefId) {
+    getEvidenceForBelief(beliefId: $beliefId) {
       id
       description
     }
