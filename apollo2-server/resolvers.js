@@ -2,7 +2,7 @@
 
 const resolvers = {
   Query: {
-    allAdversities(_, args) {
+    allAdversities() {
       return Adversity.findAll();
     },
     Adversity(_, args) {
