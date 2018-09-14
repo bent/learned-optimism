@@ -5,7 +5,7 @@ const resolvers = {
     getAllAdversities() {
       return Adversity.findAll();
     },
-    Adversity(_, args) {
+    getAdversity(_, args) {
       return Adversity.findById(args.id)
     },
     Belief(_, {id}) {

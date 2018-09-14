@@ -79,17 +79,17 @@ const Container = React.createClass({
   },
   render() {
     const { state } = this;
-    const { Adversity } = this.props.adversityQuery
+    const { getAdversity } = this.props.adversityQuery
 
     return (
       <Presentation
         loaded={!this.props.adversityQuery.loading}
-        adversity={Adversity}
+        adversity={getAdversity}
         handleSubmit={this.handleSubmit}
         beliefDescription={state.beliefDescription}
         handleChange={this.handleChange}
         isSaving={state.isSaving}
-        beliefs={Adversity && Adversity.beliefs}
+        beliefs={getAdversity && getAdversity.beliefs}
         remove={this.remove}
       />
     );
@@ -122,7 +122,7 @@ const Container = React.createClass({
 
 const ADVERSITY_QUERY = gql`
   query AdversityQuery($id: ID!) {
-    Adversity(id: $id) {
+    getAdversity(id: $id) {
       description
       beliefs {
         id
