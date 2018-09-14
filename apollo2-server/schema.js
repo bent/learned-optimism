@@ -44,7 +44,7 @@ module.exports = `
     getBelief(id: ID): Belief!
     getEvidenceForBelief(beliefId: ID): [Evidence!]!
     getAlternativesForBelief(beliefId: ID): [Alternative!]!
-    implicationsForBelief(beliefId: ID): [Implication!]!
+    getImplicationsForBelief(beliefId: ID): [Implication!]!
   }
 
   type Mutation {
