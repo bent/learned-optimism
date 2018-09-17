@@ -7,7 +7,7 @@ import {
   FormGroup,
   InputGroup
 } from "react-bootstrap";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Spinner from "react-spinner";
 import firebase from "firebase";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
@@ -17,53 +17,48 @@ import gql from 'graphql-tag'
 import Remove from "./Remove";
 
 export const Presentation = props =>
-  props.loaded
-    ? // If we've just created a new adversity
-      props.newAdversityId
-        ? // Redirect to it
-          <Redirect to={`/adversities/${props.newAdversityId}`} />
-        : // Otherwise just display the regular form
-          <div>
-            <Form onSubmit={props.handleSubmit}>
-              <FormGroup>
-                <InputGroup>
-                  <FormControl
-                    type="text"
-                    placeholder="Adversity"
-                    value={props.description}
-                    onChange={props.handleChange}
-                  />
-                  <InputGroup.Button>
-                    <Button type="submit" disabled={props.isSaving}>
-                      Go
-                    </Button>
-                  </InputGroup.Button>
-                </InputGroup>
-              </FormGroup>
-            </Form>
-            <div className="list-group">
-              <ReactCSSTransitionGroup
-                transitionName="list-group-item"
-                transitionEnterTimeout={500}
-                transitionLeaveTimeout={300}
-              >
-                {props.adversities.map(adversity => {
-                  const { id } = adversity;
+  props.loaded ?
+    <div>
+      <Form onSubmit={props.handleSubmit}>
+        <FormGroup>
+          <InputGroup>
+            <FormControl
+              type="text"
+              placeholder="Todo"
+              value={props.description}
+              onChange={props.handleChange}
+            />
+            <InputGroup.Button>
+              <Button type="submit" disabled={props.isSaving}>
+                Go
+              </Button>
+            </InputGroup.Button>
+          </InputGroup>
+        </FormGroup>
+      </Form>
+      <div className="list-group">
+        <ReactCSSTransitionGroup
+          transitionName="list-group-item"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={300}
+        >
+          {props.adversities.map(adversity => {
+            const { id } = adversity;
 
-                  return (
-                    <Link
-                      key={id}
-                      className="adversity list-group-item"
-                      to={`/adversities/${id}`}
-                    >
-                      {adversity.description}
-                      <Remove remove={() => props.remove(id)} />
-                    </Link>
-                  );
-                })}
-              </ReactCSSTransitionGroup>
-            </div>
-          </div>
+            return (
+              <Link
+                key={id}
+                className="adversity list-group-item"
+                to={`/todos/${id}`}
+              >
+                {adversity.description}
+                <Remove remove={() => props.remove(id)} />
+              </Link>
+            );
+          })}
+        </ReactCSSTransitionGroup>
+      </div>
+    </div>
     : <Spinner />;
 
 const Container = React.createClass({
@@ -83,7 +78,7 @@ const Container = React.createClass({
     return (
       <Presentation
         loaded={!this.props.allAdversitiesQuery.loading}
-        adversities={this.props.allAdversitiesQuery.getAllAdversities}
+        adversities={this.props.allAdversitiesQuery.getAllTodos}
         newAdversityId={state.newAdversityId}
         handleSubmit={this.handleSubmit}
         description={state.description}
@@ -101,7 +96,7 @@ const Container = React.createClass({
     e.preventDefault();
     this.setState({ isSaving: true });
     this.props.createAdversityMutation({variables: { description: this.state.description}}).then(({data}) => {
-      this.setState({ newAdversityId: data.createAdversity.id });
+      this.setState({ description: "" });
     })
   },
   /**
@@ -116,7 +111,7 @@ const Container = React.createClass({
 
 const ALL_ADVERSITIES_QUERY = gql`
   query AllAdversitiesQuery {
-    getAllAdversities {
+    getAllTodos {
       id
       description
     }
@@ -124,7 +119,7 @@ const ALL_ADVERSITIES_QUERY = gql`
 `
 const CREATE_ADVERSITY_MUTATION = gql`
   mutation CreateAdversityMutation($description: String!) {
-    createAdversity(description: $description) {
+    createTodo(description: $description) {
       id
       description
     }
@@ -133,7 +128,7 @@ const CREATE_ADVERSITY_MUTATION = gql`
 
 const DELETE_ADVERSITY_MUTATION = gql`
   mutation DeleteAdversityMutation($id: ID!) {
-    deleteAdversity(id: $id) {
+    deleteTodo(id: $id) {
       id
     }
   }
@@ -147,7 +142,13 @@ export default compose(
     },
   }),
   graphql(CREATE_ADVERSITY_MUTATION, {
-    name: 'createAdversityMutation'
+    name: 'createAdversityMutation',
+    options: {
+      // TODO Something more efficient like a cache update or optimistic update
+      refetchQueries: [
+        'AllAdversitiesQuery'
+      ],
+    }
   }),
   graphql(DELETE_ADVERSITY_MUTATION, {
     name: 'deleteAdversityMutation',

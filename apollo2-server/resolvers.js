@@ -2,80 +2,37 @@
 
 const resolvers = {
   Query: {
-    getAllAdversities() {
+    getAllTodos() {
       return Adversity.findAll();
     },
-    getAdversity(_, args) {
+    getTodo(_, args) {
       return Adversity.findById(args.id)
-    },
-    getBelief(_, {id}) {
-      return Belief.findById(id)
-    },
-    getEvidenceForBelief(_, {beliefId}) {
-      return Evidence.findAll({where: {beliefId}})
-    },
-    getAlternativesForBelief(_, {beliefId}) {
-      return Alternative.findAll({where: {beliefId}})
-    },
-    getImplicationsForBelief(_, {beliefId}) {
-      return Implication.findAll({where: {beliefId}})
     }
   },
-  Adversity: {
-    beliefs(author) {
-      return author.getBeliefs();
+  Todo: {
+    subtasks(todo) {
+      return todo.getBeliefs();
     }
   },
-  Belief: {
-    adversity(belief) {
-      return belief.getAdversity()
+  Subtask: {
+    todo(subtask) {
+      return subtask.getAdversity()
     }
   },
   Mutation: {
-    createAdversity(_, {description}) {
+    createTodo(_, {description}) {
       return Adversity.create({description})
     },
-    deleteAdversity(_, {id}) {
+    deleteTodo(_, {id}) {
       return Adversity.destroy({where: {id}}).then(() => {id})
     },
-    createBelief(_, {adversityId, description}) {
-      return Belief.create({adversityId, description})
+    createSubtask(_, {todoId, description}) {
+      return Belief.create({adversityId: todoId, description})
     },
-    deleteBelief(_, {id}) {
+    deleteSubtask(_, {id}) {
       return Belief.destroy({where: {id}}).then(() => {id})
-    },
-    createEvidence(_, {beliefId, description}) {
-      return Evidence.create({beliefId, description})
-    },
-    deleteEvidence(_, {id}) {
-      return Evidence.destroy({where: {id}}).then(() => {id})
-    },
-    createAlternative(_, {beliefId, description}) {
-      return Alternative.create({beliefId, description})
-    },
-    deleteAlternative(_, {id}) {
-      return Alternative.destroy({where: {id}}).then(() => {id})
-    },
-    createImplication(_, {beliefId, description}) {
-      return Implication.create({beliefId, description})
-    },
-    deleteImplication(_, {id}) {
-      return Implication.destroy({where: {id}}).then(() => {id})
     }
   }
-  // Author: {
-  //   posts(author) {
-  //     return [
-  //       { id: 1, title: 'A post', text: 'Some text', views: 2 },
-  //       { id: 2, title: 'Another post', text: 'Some other text', views: 200 }
-  //     ];
-  //   }
-  // },
-  // Post: {
-  //   author(post) {
-  //     return { id: 1, firstName: 'Hello', lastName: 'World' };
-  //   }
-  // }
 };
 
 module.exports = resolvers;

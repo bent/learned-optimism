@@ -1,62 +1,27 @@
 module.exports = `
-  type Adversity {
+  type Todo {
     id: ID!
 
     description: String!
-    beliefs: [Belief!]!
+    subtasks: [Subtask!]!
   }
 
-  type Belief {
+  type Subtask {
     id: ID!
 
     description: String!
-    adversity: Adversity!
-
-    evidence: [Evidence!]!
-    alternatives: [Alternative!]!
-    implications: [Implication!]!
-  }
-
-  type Evidence {
-    id: ID!
-
-    description: String!
-    belief: Belief!
-  }
-
-  type Alternative {
-    id: ID!
-
-    description: String!
-    belief: Belief!
-  }
-
-  type Implication {
-    id: ID!
-
-    description: String!
-    belief: Belief!
+    todo: Todo!
   }
 
   type Query {
-    getAllAdversities: [Adversity!]!
-    getAdversity(id: ID): Adversity!
-    getBelief(id: ID): Belief!
-    getEvidenceForBelief(beliefId: ID): [Evidence!]!
-    getAlternativesForBelief(beliefId: ID): [Alternative!]!
-    getImplicationsForBelief(beliefId: ID): [Implication!]!
+    getAllTodos: [Todo!]!
+    getTodo(id: ID): Todo!
   }
 
   type Mutation {
-    createAdversity(description: String!): Adversity
-    deleteAdversity(id: ID!): Adversity
-    createBelief(adversityId: ID!, description: String!): Belief
-    deleteBelief(id: ID!): Belief
-    createEvidence(beliefId: ID!, description: String): Evidence
-    deleteEvidence(id: ID!): Evidence
-    createAlternative(beliefId: ID!, description: String): Alternative
-    deleteAlternative(id: ID!): Alternative
-    createImplication(beliefId: ID!, description: String): Implication
-    deleteImplication(id: ID!): Implication
+    createTodo(description: String!): Todo
+    deleteTodo(id: ID!): Todo
+    createSubtask(todoId: ID!, description: String!): Subtask
+    deleteSubtask(id: ID!): Subtask
   }
 `

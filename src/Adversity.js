@@ -2,14 +2,12 @@ import React from "react";
 import ReactFireMixin from "reactfire";
 import {
   Button,
-  ButtonToolbar,
   FormControl,
   Form,
   FormGroup,
   InputGroup,
   ControlLabel
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import Spinner from "react-spinner";
 import firebase from "firebase";
 import { graphql, compose } from 'react-apollo'
@@ -23,13 +21,13 @@ const Presentation = ({ beliefs, ...props }) =>
     ? <AdversityPanel value={props.adversity}>
         <Form onSubmit={props.handleSubmit}>
           <ControlLabel>
-            What beliefs do I have about this adversity?
+            Subtasks
           </ControlLabel>
           <FormGroup>
             <InputGroup>
               <FormControl
                 type="text"
-                placeholder="Belief"
+                placeholder="Enter subtask here"
                 value={props.beliefDescription}
                 onChange={props.handleChange}
               />
@@ -42,16 +40,6 @@ const Presentation = ({ beliefs, ...props }) =>
           </FormGroup>
         </Form>
         <List value={beliefs} remove={props.remove}/>
-        {beliefs.length > 0
-          ? <ButtonToolbar>
-              <Link
-                to={`/beliefs/${beliefs[0].id}/evidence`}
-                className="btn btn-primary btn-block"
-              >
-                Start Disputation
-              </Link>
-            </ButtonToolbar>
-          : <div />}
       </AdversityPanel>
     : <Spinner />;
 
@@ -79,17 +67,17 @@ const Container = React.createClass({
   },
   render() {
     const { state } = this;
-    const { getAdversity } = this.props.adversityQuery
+    const { getTodo } = this.props.adversityQuery
 
     return (
       <Presentation
         loaded={!this.props.adversityQuery.loading}
-        adversity={getAdversity}
+        adversity={getTodo}
         handleSubmit={this.handleSubmit}
         beliefDescription={state.beliefDescription}
         handleChange={this.handleChange}
         isSaving={state.isSaving}
-        beliefs={getAdversity && getAdversity.beliefs}
+        beliefs={getTodo && getTodo.subtasks}
         remove={this.remove}
       />
     );
@@ -104,7 +92,7 @@ const Container = React.createClass({
     this.props.createBeliefMutation({
       variables: { 
         description: this.state.beliefDescription,
-        adversityId: this.props.match.params.adversityId
+        todoId: this.props.match.params.adversityId
       }
     }).then(() => {
       this.setState({
@@ -122,9 +110,9 @@ const Container = React.createClass({
 
 const ADVERSITY_QUERY = gql`
   query AdversityQuery($id: ID!) {
-    getAdversity(id: $id) {
+    getTodo(id: $id) {
       description
-      beliefs {
+      subtasks {
         id
         description
       }
@@ -133,8 +121,8 @@ const ADVERSITY_QUERY = gql`
 `
 
 const CREATE_BELIEF_MUTATION = gql`
-  mutation CreateBeliefMutation($adversityId: ID!, $description: String!) {
-    createBelief(adversityId: $adversityId, description: $description) {
+  mutation CreateBeliefMutation($todoId: ID!, $description: String!) {
+    createSubtask(todoId: $todoId, description: $description) {
       id
     }
   }
@@ -142,7 +130,7 @@ const CREATE_BELIEF_MUTATION = gql`
 
 const DELETE_BELIEF_MUTATION = gql`
   mutation DeleteBeliefMutation($id: ID!) {
-    deleteBelief(id: $id) {
+    deleteSubtask(id: $id) {
       id
     }
   }

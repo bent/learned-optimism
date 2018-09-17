@@ -13,8 +13,6 @@ import PublicRoute from "./PublicRoute";
 
 import firebase from "./firebase";
 
-import logo from "./logo.svg";
-
 import { ApolloProvider } from 'react-apollo'
 import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
@@ -36,8 +34,7 @@ const Presentation = ({ user, ...props }) => (
         <Navbar.Header>
           <Navbar.Brand>
             <Link to="/">
-              <img src={logo} alt="Learned Optimism" />
-              <span>Learned Optimism</span>
+              <span>Yet Another Todo List</span>
             </Link>
           </Navbar.Brand>
           {user && <Navbar.Toggle />}
@@ -59,7 +56,7 @@ const Presentation = ({ user, ...props }) => (
               <PublicRoute path="/register" component={Register} user={user} />
 
               <PrivateRoute
-                path="/adversities/:adversityId"
+                path="/todos/:adversityId"
                 component={Adversity}
                 user={user}
               />
