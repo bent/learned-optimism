@@ -37,9 +37,9 @@ const Presentation = ({ user, ...props }) => (
               <span>Yet Another Todo List</span>
             </Link>
           </Navbar.Brand>
-          {user && <Navbar.Toggle />}
+          {/*user && */<Navbar.Toggle />}
         </Navbar.Header>
-        {user &&
+        {/*user &&*/
           <Navbar.Collapse>
             <Nav pullRight>
               <NavItem onClick={props.logout}>Logout</NavItem>

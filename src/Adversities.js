@@ -24,7 +24,7 @@ export const Presentation = props =>
           <InputGroup>
             <FormControl
               type="text"
-              placeholder="Todo"
+              placeholder="Enter todo here"
               value={props.description}
               onChange={props.handleChange}
             />
