@@ -9,7 +9,7 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import firebase from "./firebase";
+// import firebase from "./firebase";
 
 const Presentation = ({ errorMessage, isRegistering, ...props }) => (
   <Form onSubmit={props.handleSubmit}>
@@ -91,12 +91,12 @@ export default React.createClass({
     if (this.state.password === this.state.confirmPassword) {
       this.setState({ isRegistering: true });
 
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.state.email, this.state.password)
-        .catch(error => {
-          this.setState({ errorMessage: error.message, isRegistering: false });
-        });
+      // firebase
+      //   .auth()
+      //   .createUserWithEmailAndPassword(this.state.email, this.state.password)
+      //   .catch(error => {
+      //     this.setState({ errorMessage: error.message, isRegistering: false });
+      //   });
     } else {
       this.setState({ errorMessage: "Passwords do not match" });
     }

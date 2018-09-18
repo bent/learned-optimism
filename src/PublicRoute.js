@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route/*, Redirect*/ } from "react-router-dom";
 import matchPropTypes from "./matchPropTypes";
 
 /**
@@ -9,9 +9,9 @@ const PublicRoute = ({ component: Component, user, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      user
-        ? <Redirect to={{ pathname: "/" }} />
-        : <Component user={user} {...props} />}
+      /*user
+        ? <Redirect to={{ pathname: "/" }} /> 
+        : */<Component user={user} {...props} />}
   />
 );
 

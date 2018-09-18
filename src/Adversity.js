@@ -9,7 +9,7 @@ import {
   ControlLabel
 } from "react-bootstrap";
 import Spinner from "react-spinner";
-import firebase from "firebase";
+// import firebase from "firebase";
 import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
 
@@ -46,7 +46,7 @@ const Presentation = ({ beliefs, ...props }) =>
 const Container = React.createClass({
   mixins: [ReactFireMixin],
   propTypes: {
-    user: React.PropTypes.instanceOf(firebase.User).isRequired,
+    // user: React.PropTypes.instanceOf(firebase.User).isRequired,
     match: React.PropTypes.shape({
       params: React.PropTypes.shape({
         adversityId: React.PropTypes.string.isRequired

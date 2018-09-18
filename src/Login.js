@@ -9,7 +9,7 @@ import {
   Alert
 } from "react-bootstrap";
 
-import firebase from "./firebase";
+// import firebase from "./firebase";
 
 const Presentation = ({ errorMessage, isLoggingIn, ...props }) => (
   <Form onSubmit={props.handleSubmit}>
@@ -71,11 +71,11 @@ export default React.createClass({
     e.preventDefault();
     this.setState({ isLoggingIn: true });
 
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(this.state.email, this.state.password)
-      .catch(error => {
-        this.setState({ errorMessage: error.message, isLoggingIn: false });
-      });
+    // firebase
+    //   .auth()
+    //   .signInWithEmailAndPassword(this.state.email, this.state.password)
+    //   .catch(error => {
+    //     this.setState({ errorMessage: error.message, isLoggingIn: false });
+    //   });
   }
 });

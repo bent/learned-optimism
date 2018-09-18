@@ -9,7 +9,7 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Spinner from "react-spinner";
-import firebase from "firebase";
+// import firebase from "firebase";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
@@ -64,7 +64,7 @@ export const Presentation = props =>
 const Container = React.createClass({
   mixins: [ReactFireMixin],
   propTypes: {
-    user: React.PropTypes.instanceOf(firebase.User).isRequired
+    // user: React.PropTypes.instanceOf(firebase.User).isRequired
   },
   getInitialState() {
     return {

@@ -1,6 +1,6 @@
 import React from "react";
 import { Navbar, Nav, NavItem } from "react-bootstrap";
-import Spinner from "react-spinner";
+// import Spinner from "react-spinner";
 import { BrowserRouter, Link, Switch } from "react-router-dom";
 
 import Login from "./Login";
@@ -11,14 +11,14 @@ import Belief from "./Belief";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 
-import firebase from "./firebase";
+// import firebase from "./firebase";
 
 import { ApolloProvider } from 'react-apollo'
 import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 
-const auth = firebase.auth();
+// const auth = firebase.auth();
 
 const httpLink = new HttpLink({ uri: 'http://localhost:4000/graphql' })
 
@@ -49,8 +49,8 @@ const Presentation = ({ user, ...props }) => (
 
       {// If we know for sure whether we are logged-in or not, try to match the route. Otherwise
       // just show a spinner.
-      user !== undefined
-        ? <div className="container">
+      /* user !== undefined
+        ? */ <div className="container">
             <Switch>
               <PublicRoute path="/login" component={Login} user={user} />
               <PublicRoute path="/register" component={Register} user={user} />
@@ -73,7 +73,7 @@ const Presentation = ({ user, ...props }) => (
               />
             </Switch>
           </div>
-        : <Spinner />}
+        /*: <Spinner />*/}
     </div>
   </BrowserRouter>
 );
@@ -86,11 +86,11 @@ export default React.createClass({
     };
   },
   componentDidMount() {
-    this.unsubscribeAuthStateChanged = auth.onAuthStateChanged(user =>
-      this.setState({ user }));
+    // this.unsubscribeAuthStateChanged = auth.onAuthStateChanged(user =>
+    //   this.setState({ user }));
   },
   componentWillUnmount() {
-    this.unsubscribeAuthStateChanged();
+//    this.unsubscribeAuthStateChanged();
   },
   render() {
     return (
@@ -105,13 +105,13 @@ export default React.createClass({
     this.setState(state => ({ navbarExpanded: !state.navbarExpanded }));
   },
   logout() {
-    auth
-      .signOut()
-      .then(() => {
-        this.setState({ navbarExpanded: false });
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    // auth
+    //   .signOut()
+    //   .then(() => {
+    //     this.setState({ navbarExpanded: false });
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
   }
 });
